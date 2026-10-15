@@ -11,10 +11,10 @@ Claude reads this at the start of a session and updates it at the end. Keep it u
 - [ ] By Dec 31: CS50 README written by me, 3-minute video, submit50 (see `docs/cs50.md`)
 
 ## Now
-Next.js scaffold to be replaced with Expo. Docs set up.
+Expo SDK 57 app with Expo Router, TypeScript strict, Jest, ESLint (branch `chore/expo-setup`). One screen showing "UNI". Waiting for the Expo Go check on iPhone before merging to main.
 
 ## Next step
-Create the Expo project, connect Supabase, first migration.
+Supabase dev project and client in `src/data/supabase.ts`, then the first migration.
 
 ## Open questions
 - GPA conversion for the US 4.0 scale (see `business-rules.md` §3)

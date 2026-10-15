@@ -13,7 +13,7 @@ Rule for anything not on this list:
 | [x] | Enroll in the Apple Developer Program (individual), Oct 15 | Alessandro |
 | [ ] | Apple identity check approved (watch email) | Alessandro |
 | [ ] | Expo account (add Valeria to it); install Expo Go on iPhone | Alessandro |
-| [ ] | Replace Next.js with Expo (Expo Router, TypeScript, Jest, ESLint) | Claude Code |
+| [x] | Replace Next.js with Expo (Expo Router, TypeScript, Jest, ESLint) | Claude Code |
 | [ ] | Supabase dev project, client in `src/data/supabase.ts`, keys in Codespaces secrets | Claude Code |
 | [ ] | Database schema with RLS: profiles, programs, scholarships, saved_programs, feedback_rounds | Claude Code |
 | [ ] | `src/theme.ts`: colors, fonts, spacing from the design canvas | Copilot |
