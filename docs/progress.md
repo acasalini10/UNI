@@ -11,7 +11,8 @@ Claude reads this at the start of a session and updates it at the end. Keep it u
 - [ ] By Dec 31: CS50 README written by me, 3-minute video, submit50 (see `docs/cs50.md`)
 
 ## Now
-Expo SDK 57 app with Expo Router, TypeScript strict, Jest, ESLint (branch `chore/expo-setup`). One screen showing "UNI". Waiting for the Expo Go check on iPhone before merging to main.
+Expo SDK 57 app with Expo Router, TypeScript strict, Jest, ESLint, merged to main. One screen showing "UNI", checked on iPhone with Expo Go.
+Dev server: `npx expo start --tunnel` (installs `@expo/ngrok` globally on first run). If the ngrok tunnel fails, make port 8081 public in Codespaces and start with `EXPO_PACKAGER_PROXY_URL=<public 8081 URL> npx expo start`.
 
 ## Next step
 Supabase dev project and client in `src/data/supabase.ts`, then the first migration.
