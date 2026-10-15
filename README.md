@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UNI
 
-## Getting Started
+#### Video demo: <URL, to add after recording>
 
-First, run the development server:
+#### Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<!--
+CS50x final project README. Rules (cs50.harvard.edu/x/project):
+- Several hundred words at minimum; about 750 is typical.
+- Explain what the project is, what each file contains and does, and the design choices debated and why.
+- Fill the sections below in your own words as the project is built. Do not let AI write this file.
+Delete this comment before submitting.
+-->
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+UNI is an iOS app for international students of any nationality who want to study abroad. A student enters their grades, English test score, fields of interest and target countries once. UNI then shows real programs labelled by how well the student fits their published minimums (Match, Reach or Not yet eligible), what each program really costs after the grants the student qualifies for, and feedback on their CV and statement. v1 covers master's programs.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<!-- TODO (≈150 words): the problem. Why choosing a program abroad is hard; what students do today; why I built this. -->
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### How it works
 
-## Learn More
+<!-- TODO (≈150 words): the main flow a user goes through, screen by screen. -->
 
-To learn more about Next.js, take a look at the following resources:
+### Files
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<!-- TODO (≈250 words): one short paragraph per important file or folder. Start with:
+- app/ (screens)
+- src/lib/fit.ts, cost.ts, grades.ts (business rules)
+- src/data/ (database queries)
+- supabase/migrations/ (schema and Row Level Security)
+- supabase/functions/feedback/ (AI feedback)
+-->
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Design choices
 
-## Deploy on Vercel
+<!-- TODO (≈200 words): decisions I debated. Candidates from docs/decisions.md:
+- Expo instead of a Next.js website, to ship on the App Store
+- Fit labels instead of an admission probability (no outcome data)
+- Business logic as pure functions with tests, separate from the screens
+- AI called from a server function, never from the app (API key safety)
+- Initials instead of university logos; links to rankings instead of copying them
+-->
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Use of AI
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<!-- TODO: which tools (Claude Code, GitHub Copilot), for what, and which parts I wrote myself. Files with substantial AI help carry a comment at the top saying so. -->
+
+### Context
+
+UNI is also the team project for Strategic Sales Management at Universidad Panamericana (Mexico City, 2026) with Valeria Laparra Castro, who led market research, program data and design. The code in this repository is mine. The business case is in the course documents, not here.
+
+---
+
+## Run it (GitHub Codespaces)
+1. Open the repository's codespace from github.com/codespaces.
+2. Supabase keys load from the repository's Codespaces secrets. Outside Codespaces, copy `.env.example` to `.env` and fill it in.
+3. `npm install`
+4. `npx expo start --tunnel`
+5. On iPhone, scan the QR code with the Expo Go app.
+
+## Documentation
+| File | What it holds |
+| --- | --- |
+| `CLAUDE.md` | Instructions for Claude Code: stack, commands, rules |
+| `.github/copilot-instructions.md` | Code conventions for GitHub Copilot |
+| `docs/product.md` | v1 scope, screens, what is left out |
+| `docs/flows.md` | Every screen, tap and state |
+| `docs/business-rules.md` | Fit labels, grade conversion, net cost |
+| `docs/data.md` | Where program data comes from and the columns we collect |
+| `docs/decisions.md` | Decision log (feeds the course Decision Log and the Design choices above) |
+| `docs/progress.md` | Where we are and the next step |
+| `docs/tasks.md` | Task list with owners (Alessandro, Valeria, Claude Code, Copilot) |
+| `docs/app-store.md` | Release checklist for App Review |
+| `docs/cs50.md` | CS50 final project requirements and checklist |
