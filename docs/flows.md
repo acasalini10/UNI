@@ -131,7 +131,8 @@ Documents checked and program name. All issues shown, each with a priority badge
 | Element | Tap goes to |
 | --- | --- |
 | Upload a new version (PDF) | 6a |
-| Past rounds | List of previous results |
+
+Only the latest round is shown. A list of past rounds is not in v1.
 
 ## 8 · Careers
 Companies that hire graduates (2–3 roles each), where graduates work by continent (donut + legend), average salary (gross per year), % employed within 3 months, source link.
