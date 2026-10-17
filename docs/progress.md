@@ -17,7 +17,7 @@ Dev server: `npx expo start --tunnel` (installs `@expo/ngrok` globally on first 
 Oct 17: screen design final (canvas). `flows.md`, `product.md`, `business-rules.md`, `data.md`, `tasks.md` and `app-store.md` updated to match: Applications tab, profile step 2, AI consent, checklist, no living costs, feedback fully free, Apple and Google sign-in, English and Spanish.
 
 ## Next step
-Export the screens into `docs/screens/`. Then Supabase dev project and client in `src/data/supabase.ts`, then the first migration.
+Supabase dev project and client in `src/data/supabase.ts`, then the first migration.
 
 ## Open questions
 - Who collects the 30 to 50 programs (target Oct 25, columns in `docs/data.md`)

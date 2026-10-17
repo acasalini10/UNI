@@ -15,7 +15,7 @@ Rule for anything not on this list:
 | [ ] | Expo account (add Valeria to it); install Expo Go on iPhone | Alessandro |
 | [x] | Replace Next.js with Expo (Expo Router, TypeScript, Jest, ESLint) | Claude Code |
 | [x] | Final screen design on the canvas (Oct 17) | Alessandro + Valeria |
-| [ ] | Export one PNG per screen from the canvas into `docs/screens/` | Alessandro |
+| [x] | Export one PNG per screen from the canvas into `docs/screens/` | Alessandro |
 | [ ] | Supabase dev project, client in `src/data/supabase.ts`, keys in Codespaces secrets | Claude Code |
 | [ ] | Database schema with RLS: profiles (incl. step 2 fields, AI consent), programs, scholarships, applications (status, submitted_at), documents, feedback_rounds; private Storage bucket for PDFs | Claude Code |
 | [ ] | i18n setup (`i18n-js`, `expo-localization`, `locales/en.json`, `locales/es.json`) | Claude Code |
