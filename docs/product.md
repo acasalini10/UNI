@@ -24,7 +24,7 @@ App languages: English and Spanish.
 International students of any nationality applying to master's programs abroad. The course case tests the market in Mexico first; the app itself is not limited to Mexican students.
 
 ## Data for v1
-30 to 50 real programs, each with its official URL and the date it was checked. Countries: USA, UK, Spain, Netherlands (fee-charging systems from Checkpoint 2). No sample data, no logos, no copied ranking numbers: see `data.md`.
+30 to 50 real programs, each with its official URL and the date it was checked. Countries: USA, UK, Spain, Netherlands (fee-charging systems from Checkpoint 2). No sample data and no logos; ranking numbers only with source, year and link: see `data.md`.
 
 ## Out of v1, and why
 | Feature | Why it waits |

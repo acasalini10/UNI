@@ -90,7 +90,7 @@ Sections in order: campus image, badge, university, city · label, title, school
 | See all (Careers) | 8 |
 | Check official web page | Browser (domain shown under the link) |
 | Get feedback on my application | 6a with this program preselected |
-**DECIDE:** rankings. The canvas shows ranking numbers with source and year; `data.md` says link to the ranking page, no numbers (QS terms). Pick one and log it.
+Rankings: a grid with University and Program rows, national and world columns. Each cell shows the rank as published, the ranking name and year, and opens the ranking page in the browser. A cell without data is left out (see `data.md`).
 
 ## 5 · My Profile (tab)
 Header: name, university, gear → 13.

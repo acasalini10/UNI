@@ -9,7 +9,7 @@ Every number a student sees must be true and traceable. No sample data in produc
 | University fees, application fee | The program's or university's official fees page | Same: URL and date. |
 | Careers (recruiters, regions, salary, employment rate) | The program's official employment or career outcomes report | Only what the report publishes; store its URL and year. No estimates. |
 | Grants | Official grant page | Same. v1: only grants with clear eligibility rules. |
-| Rankings | QS, THE, US News | **Do not copy ranking numbers.** QS terms require written consent for commercial use and forbid altering the data. The app links to the university's page on the ranking site. Permission request: content@qs.com. |
+| Rankings | QS, THE, US News | Show the rank exactly as published, with the ranking's name, edition year and a link to the page (decision 2026-10-17). Never round, combine or recompute ranks. QS terms ask for written consent for commercial use: request it in parallel (content@qs.com) and remove QS numbers if they refuse. |
 | Logos | None | **No logos or crests.** Trademarks without permission are a common App Review rejection (guideline 5.2) and suggest the university endorses UNI. Use initials badges. Logos come later, with permission, from universities that pay for placement. |
 
 No scraping in v1: university pages and PDFs differ too much, and values change every intake. Later: Claude extracts fields from the official page, a person checks them before publishing.
@@ -43,6 +43,8 @@ One row per program. Column names match the database.
 | `careers_url` | https://… | Official career outcomes report; blank if none |
 | `checked_on` | 2026-10-20 | |
 | `checked_by` | Valeria | |
+
+Rankings go in a second sheet, one row per rank shown: `program` (or blank for a university-wide rank), `university`, `scope` (`university` or `program`), `area` (`national` or `world`), `ranking_name` (e.g. "QS World University Rankings"), `rank` (as published, e.g. "114" or "101–150"), `year`, `url`, `checked_on`.
 
 Careers figures (companies and roles, share by region, average salary, employment rate within 3 months, report year) go in a second sheet, one row per program, only for programs with a `careers_url`.
 

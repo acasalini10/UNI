@@ -56,7 +56,7 @@ Mobile app (iOS first) that helps international students of any nationality choo
 
 ## Data rules (see docs/data.md)
 - No university logos or crests anywhere: use initials badges (brand colors are allowed).
-- No ranking numbers copied from QS, THE or similar: link to the official ranking page instead.
+- Ranking numbers are shown with their source, edition year and a link to the ranking page (decision 2026-10-17). Never show a rank without its source.
 
 ## Working with me
 - I am learning to code. When you make a non-obvious choice, explain it in two or three lines.

@@ -16,5 +16,5 @@
 - Do not write or change code in `src/lib/`: the owner writes it himself. You may explain it or point out bugs.
 - Every file you create or substantially change starts with `// AI-assisted (GitHub Copilot): <what you did>`.
 - Do not edit README.md sections marked TODO.
-- No university logos and no ranking numbers copied from QS, THE or similar (see docs/data.md).
+- No university logos. Ranking numbers always show their source and year, with a link to the ranking page (see docs/data.md).
 - Before finishing a task, run `npx tsc --noEmit` and `npm test`.
