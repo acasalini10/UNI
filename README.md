@@ -64,6 +64,7 @@ UNI is also the team project for Strategic Sales Management at Universidad Panam
 | `.github/copilot-instructions.md` | Code conventions for GitHub Copilot |
 | `docs/product.md` | v1 scope, screens, what is left out |
 | `docs/flows.md` | Every screen, tap and state |
+| `docs/screens/` | Screenshots of the design, one per screen |
 | `docs/business-rules.md` | Fit labels, grade conversion, net cost |
 | `docs/data.md` | Where program data comes from and the columns we collect |
 | `docs/decisions.md` | Decision log (feeds the course Decision Log and the Design choices above) |

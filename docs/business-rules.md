@@ -39,12 +39,31 @@ Other scales: the student picks "Other" and gets no fit labels, only the program
 
 ## 4. Net cost (`src/lib/cost.ts`)
 
-`net cost = tuition (full program) + living costs (program length) − grants the student is eligible for`
+`total = tuition (full program) + university fees (full program)`
+`net cost = total − grants the student is eligible for`
 
+- Living costs are not included anywhere (decision 2026-10-17). Screens say "Living costs are not included" next to the total.
+- Programs list shows `total` as "Tuition and fees, full program". Program detail shows the breakdown and the net cost.
+- The application fee is shown on its own in the key facts, never added to the total.
 - Loans are shown separately and never subtracted.
 - All amounts stored in the program's currency; displayed in USD and MXN using one rate table with its date.
 - Net cost never shows below 0.
 
-## 5. Feedback paywall (v1)
+## 5. Feedback (v1)
 
-Free: the first issue of each feedback round. The rest is shown locked with "Coming soon". No purchase flow in v1 (see `product.md`).
+- Fully free: every issue is shown, ranked `fix_first` or `improve`. No locked items and no "Coming soon" (App Review rejects unfinished features).
+- Before the first round the student accepts sending CV and statement to Claude (Anthropic). Stored on the profile; the same switch is in Settings. The `feedback` Edge Function refuses the request if consent is false.
+- Input: PDF only, max 10 MB per file. The function adds the program's requirements from the database to the prompt; without them the feedback would be generic.
+- Daily limit per user: see the DECIDE item in `flows.md` (proposal: 3).
+
+## 6. Checklist (screen 12)
+
+- Requirements listed: only those the program asks for (GPA, English, GMAT/GRE if `test_required` is not `none`).
+- A requirement is met when the student's value reaches the program minimum, with the same conversion as the fit label. GMAT/GRE with no published minimum is met when the student has entered a score.
+- Documents: CV, motivational letter, reference letters (`letters_required`).
+- Items missing = unmet requirements + missing documents. Apply is enabled only at 0.
+- "Applied" is set by the student with "I've submitted my application".
+
+## 7. Careers (screen 8)
+
+Each block (recruiters, regions, salary, employment rate) is shown only if the program's official source publishes it. No estimates.
