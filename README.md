@@ -37,7 +37,7 @@ UNI is an iOS app for international students of any nationality who want to stud
 - Fit labels instead of an admission probability (no outcome data)
 - Business logic as pure functions with tests, separate from the screens
 - AI called from a server function, never from the app (API key safety)
-- Initials instead of university logos; links to rankings instead of copying them
+- Initials instead of university logos; ranking numbers shown only with their source and year
 -->
 
 ### Use of AI
