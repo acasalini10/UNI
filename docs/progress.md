@@ -20,8 +20,5 @@ Oct 17: screen design final (canvas). `flows.md`, `product.md`, `business-rules.
 Export the screens into `docs/screens/`. Then Supabase dev project and client in `src/data/supabase.ts`, then the first migration.
 
 ## Open questions
-- GPA conversion for the US 4.0 scale (see `business-rules.md` §3)
 - Who collects the 30 to 50 programs (target Oct 25, columns in `docs/data.md`)
-- Which student grade scales v1 supports (see `business-rules.md` §3)
 - Email content@qs.com to ask permission to show QS rankings (numbers are shown from Oct 17; remove them if QS refuses)
-- GPA below the program minimum = Not yet eligible: confirm (`business-rules.md` §1)

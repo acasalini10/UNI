@@ -34,7 +34,7 @@ App start
 | Continue with Google | Google sign-in, then 2 (first time) or 3 |
 | Terms, Privacy Policy | Browser |
 States: invalid email, no connection, loading.
-**DECIDE:** email confirmation required before using the app? (Simpler: no.)
+No email confirmation before using the app (decision 2026-10-17). The email is verified only through the password reset link.
 
 ## 1b · Set password (new account)
 Email shown with "Change" → 1. Password and Confirm password, each with show/hide.
@@ -56,7 +56,7 @@ First name, last name, country you live in, current university, currently studyi
 | Continue | 2b (only if step 1 is valid) |
 | Back | 1 (first setup) or 5 (editing) |
 States: missing required field, saving, save error. Closing the app halfway resumes at the same step.
-**DECIDE:** without an IELTS score, which label? (Proposal: "Not yet eligible" with "Add your English score" hint.)
+Without an IELTS score every program shows **Not yet eligible** with the hint "Add your English score" (business-rules §1).
 
 ## 2b · Profile setup, step 2 of 2 (budget and funding, all optional)
 Subtitle says why we ask: citizenship and origin find scholarships; budget and payer help us understand who uses UNI. Nothing is shared.
@@ -124,7 +124,7 @@ Counters 0, 0, "–". Card "No universities yet" explaining checklist, reminders
 3. AI consent: documents are sent to Claude (Anthropic) only to generate feedback; link "How we handle your documents"; checkbox. Asked once, stored on the account, same switch as in 13.
 **Get feedback** disabled until both documents and consent; helper text says what is missing → 6 (loading 15–30 s).
 States: wrong file type, file too large, analysis failed (retry), daily limit reached.
-**DECIDE:** rounds per user per day (proposal: 3, controls API cost).
+Limit: 3 rounds per user per day (business-rules §5).
 
 ## 6 · Feedback results
 Documents checked and program name. All issues shown, each with a priority badge (**Fix first**, **Improve**). No locked issues in v1.
