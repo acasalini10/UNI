@@ -8,11 +8,13 @@
 - Functional components and hooks only. Files in kebab-case, components in PascalCase.
 - Tests with Jest next to the file: `fit.ts` and `fit.test.ts`.
 
-- Screens follow `docs/flows.md` exactly: every tap destination and every state (loading, empty, error) listed there.
+- Screens follow `docs/flows.md` exactly: every tap destination and every state (loading, empty, error) listed there. Screenshots are in `docs/screens/`.
+- Every user-facing string uses `t('...')` from i18n with keys in `locales/en.json` and `locales/es.json`. No hard-coded text.
+- No button or row that does nothing: if a feature is not built, do not show it.
 
 ## CS50 rules (see docs/cs50.md)
 - Do not write or change code in `src/lib/`: the owner writes it himself. You may explain it or point out bugs.
 - Every file you create or substantially change starts with `// AI-assisted (GitHub Copilot): <what you did>`.
 - Do not edit README.md sections marked TODO.
-- No university logos and no ranking numbers copied from QS, THE or similar (see docs/data.md).
+- No university logos. Ranking numbers always show their source and year, with a link to the ranking page (see docs/data.md).
 - Before finishing a task, run `npx tsc --noEmit` and `npm test`.

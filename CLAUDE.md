@@ -4,7 +4,8 @@ Mobile app (iOS first) that helps international students of any nationality choo
 
 ## Stack
 - Expo (React Native) with Expo Router, TypeScript strict
-- Supabase: Postgres, Auth (email + password only), Row Level Security, Edge Functions (Deno)
+- Supabase: Postgres, Auth (email + password, Sign in with Apple, Google), Row Level Security, Storage (PDFs), Edge Functions (Deno)
+- i18n: `i18n-js` + `expo-localization`, strings in `locales/en.json` and `locales/es.json`
 - Claude API is called only from the `feedback` Edge Function, never from the app
 - EAS Build and EAS Submit for iOS (Apple Developer Program active). Expo web only as an emergency fallback: do not spend time on web compatibility unless I ask.
 - Styling: React Native StyleSheet with tokens from `src/theme.ts`. No UI library.
@@ -17,7 +18,7 @@ Mobile app (iOS first) that helps international students of any nationality choo
 - `eas build -p ios --profile production` and `eas submit -p ios`: run only when I ask
 
 ## Structure
-- `app/`: screens (Expo Router). `(auth)/`, `(tabs)/programs`, `(tabs)/feedback`, `(tabs)/profile`
+- `app/`: screens (Expo Router). `(auth)/`, `(tabs)/programs`, `(tabs)/applications`, `(tabs)/feedback`, `(tabs)/profile`
 - `src/lib/`: pure logic, no React, no Supabase: `fit.ts` (labels), `cost.ts` (net cost), `grades.ts` (conversion)
 - `src/data/`: Supabase queries, typed
 - `src/components/`: shared UI
@@ -27,7 +28,7 @@ Mobile app (iOS first) that helps international students of any nationality choo
 
 ## Docs (read only when relevant)
 - `docs/product.md`: v1 scope and what is out
-- `docs/flows.md`: every screen, tap and state. Before building a screen, check its section has no open DECIDE items; if it does, ask me.
+- `docs/flows.md`: every screen, tap and state; screenshots in `docs/screens/`. Before building a screen, check its section has no open DECIDE items; if it does, ask me.
 - `docs/business-rules.md`: fit labels and net cost. Source of truth. If code and doc disagree, stop and ask.
 - `docs/decisions.md`: append a row for every non-trivial technical decision
 - `docs/progress.md`: read at the start of a session, update at the end
@@ -42,6 +43,9 @@ Mobile app (iOS first) that helps international students of any nationality choo
 - No secrets in the app. Only `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` are public. `ANTHROPIC_API_KEY` lives only in Supabase function secrets.
 - No fake or placeholder data in production builds: App Review rejects it.
 - No payments in v1. Do not add Stripe or links to external payment pages: Apple requires In-App Purchase for digital goods.
+- Every user-facing string goes through i18n. No hard-coded text in screens.
+- No button or row that does nothing: if a feature is not built, it is not shown.
+- Documents reach Claude only after the user's AI consent, checked in the Edge Function too.
 - Prefer Expo SDK modules that run in Expo Go. Ask before adding any package.
 - One feature per branch. Run typecheck and tests before saying a task is done.
 
@@ -51,8 +55,8 @@ Mobile app (iOS first) that helps international students of any nationality choo
 - Never write or edit README.md sections marked TODO: I write those myself.
 
 ## Data rules (see docs/data.md)
-- No university logos or crests anywhere: use initials badges.
-- No ranking numbers copied from QS, THE or similar: link to the official ranking page instead.
+- No university logos or crests anywhere: use initials badges (brand colors are allowed).
+- Ranking numbers are shown with their source, edition year and a link to the ranking page (decision 2026-10-17). Never show a rank without its source.
 
 ## Working with me
 - I am learning to code. When you make a non-obvious choice, explain it in two or three lines.
