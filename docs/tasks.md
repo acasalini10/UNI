@@ -12,7 +12,7 @@ Rule for anything not on this list:
 | --- | --- | --- |
 | [x] | Enroll in the Apple Developer Program (individual), Oct 15 | Alessandro |
 | [ ] | Apple identity check approved (watch email) | Alessandro |
-| [ ] | Expo account (add Valeria to it); install Expo Go on iPhone | Alessandro |
+| [x] | Expo account (add Valeria to it); install Expo Go on iPhone | Alessandro |
 | [x] | Replace Next.js with Expo (Expo Router, TypeScript, Jest, ESLint) | Claude Code |
 | [x] | Final screen design on the canvas (Oct 17) | Alessandro + Valeria |
 | [x] | Export one PNG per screen from the canvas into `docs/screens/` | Alessandro |
