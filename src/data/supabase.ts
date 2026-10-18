@@ -1,8 +1,10 @@
-// AI-assisted (Claude Code): Supabase client with session stored in AsyncStorage and token refresh tied to app state.
+// AI-assisted (Claude Code): Supabase client typed with the generated Database types, session stored in AsyncStorage and token refresh tied to app state.
 import 'react-native-url-polyfill/auto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 import { AppState } from 'react-native';
+
+import type { Database } from './database.types';
 
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
@@ -13,7 +15,7 @@ if (!url || !anonKey) {
   );
 }
 
-export const supabase = createClient(url, anonKey, {
+export const supabase = createClient<Database>(url, anonKey, {
   auth: {
     storage: AsyncStorage,
     autoRefreshToken: true,

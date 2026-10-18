@@ -17,7 +17,7 @@ Rule for anything not on this list:
 | [x] | Final screen design on the canvas (Oct 17) | Alessandro + Valeria |
 | [x] | Export one PNG per screen from the canvas into `docs/screens/` | Alessandro |
 | [x] | Supabase dev project, client in `src/data/supabase.ts`, keys in Codespaces secrets | Claude Code |
-| [ ] | Database schema with RLS: profiles (incl. step 2 fields, AI consent), programs, scholarships, applications (status, submitted_at), documents, feedback_rounds; private Storage bucket for PDFs | Claude Code |
+| [x] | Database schema with RLS: profiles (incl. step 2 fields, AI consent), programs, scholarships, applications (status, submitted_at), documents, feedback_rounds; private Storage bucket for PDFs | Claude Code |
 | [ ] | i18n setup (`i18n-js`, `expo-localization`, `locales/en.json`, `locales/es.json`) | Claude Code |
 | [ ] | `src/theme.ts`: colors, fonts, spacing from the design canvas | Copilot |
 | [ ] | Tab bar: Programs · Applications · Feedback · Profile | Copilot |
