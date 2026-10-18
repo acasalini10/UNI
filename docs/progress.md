@@ -17,8 +17,11 @@ Dev server: `npx expo start --tunnel` (installs `@expo/ngrok` globally on first 
 
 Oct 17: screen design final (canvas). `flows.md`, `product.md`, `business-rules.md`, `data.md`, `tasks.md` and `app-store.md` updated to match: Applications tab, profile step 2, AI consent, checklist, no living costs, feedback fully free, Apple and Google sign-in, English and Spanish.
 
+Oct 18: Supabase client merged (PR #5). First migration `20261018223931_initial_schema.sql` pushed to the dev project (PR #6, branch `feat/db-schema`, waiting for merge): reference tables read-only, user tables with RLS, profile trigger on sign-up, private `documents` bucket (PDF, 10 MB). Client typed with `src/data/database.types.ts`.
+Database workflow: new SQL file in `supabase/migrations/`, then `npm run db:push` and `npm run db:types`. The CLI needs the Codespaces secrets `SUPABASE_ACCESS_TOKEN` and `SUPABASE_DB_PASSWORD` (set). The full local stack (`supabase start`) times out in the Codespace; test migrations on the bare `supabase/postgres` Docker image instead.
+
 ## Next step
-Supabase dev project and client in `src/data/supabase.ts`, then the first migration.
+Merge PR #6. Then i18n setup (`i18n-js`, `expo-localization`, `locales/`): new packages, ask before installing. After that, sign in screens 1, 1b, 1c.
 
 ## Open questions
 - Who collects the 30 to 50 programs (target Oct 25, columns in `docs/data.md`)
