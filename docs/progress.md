@@ -12,6 +12,7 @@ Claude reads this at the start of a session and updates it at the end. Keep it u
 
 ## Now
 Expo SDK 57 app with Expo Router, TypeScript strict, Jest, ESLint, merged to main. One screen showing "UNI", checked on iPhone with Expo Go.
+`expo start` regenerates `tsconfig.json` (drops `.expo/types` and `expo-env.d.ts` from `include`); the regenerated file is committed.
 Dev server: `npx expo start --tunnel` (installs `@expo/ngrok` globally on first run). If the ngrok tunnel fails, make port 8081 public in Codespaces and start with `EXPO_PACKAGER_PROXY_URL=<public 8081 URL> npx expo start`.
 
 Oct 17: screen design final (canvas). `flows.md`, `product.md`, `business-rules.md`, `data.md`, `tasks.md` and `app-store.md` updated to match: Applications tab, profile step 2, AI consent, checklist, no living costs, feedback fully free, Apple and Google sign-in, English and Spanish.
