@@ -10,6 +10,12 @@
     "ios": {
       "supportsTablet": false
     },
-    "plugins": ["expo-router"]
+    "web": {
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-localization"
+    ]
   }
 }
