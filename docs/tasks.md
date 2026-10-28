@@ -33,6 +33,7 @@ Rule for anything not on this list:
 | [ ] | `grades.ts` and tests | Alessandro |
 | [ ] | `fit.ts` and tests | Alessandro |
 | [ ] | `cost.ts` and tests (tuition + fees, no living costs) | Alessandro |
+| [x] | Upgrade Expo SDK 57 → 58 (Expo Go supports only 58) | Claude Code |
 | [ ] | Review of `src/lib` (comments only, no code) | Claude Code |
 | [ ] | Import the data sheet (CSV) into Supabase | Claude Code |
 | [ ] | Programs screen 3: list, filters, initials badge, label, tuition and fees | Copilot |
