@@ -17,8 +17,11 @@ Dev server: `npx expo start --tunnel` (installs `@expo/ngrok` globally on first 
 
 Oct 17: screen design final (canvas). `flows.md`, `product.md`, `business-rules.md`, `data.md`, `tasks.md` and `app-store.md` updated to match: Applications tab, profile step 2, AI consent, checklist, no living costs, feedback fully free, Apple and Google sign-in, English and Spanish.
 
+Oct 18: Supabase client (`src/data/supabase.ts`) and initial schema with RLS merged.
+Oct 28: i18n set up (`src/i18n.ts`, `locales/en.json`, `locales/es.json`); screens use `t("key")`. Behind schedule on the Oct 28 checkpoint: no data sheet in the repo, `src/lib` not started.
+
 ## Next step
-Supabase dev project and client in `src/data/supabase.ts`, then the first migration.
+Decide on the Oct 28 checkpoint (App Store or TestFlight only). Then: sign-in screens 1, 1b, 1c (Claude Code); theme and tab bar (Copilot).
 
 ## Open questions
 - Who collects the 30 to 50 programs (target Oct 25, columns in `docs/data.md`)
