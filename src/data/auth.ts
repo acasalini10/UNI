@@ -1,5 +1,6 @@
-// AI-assisted (Claude Code): email sign-up, sign-in, sign-out and password reset by emailed code; Supabase errors mapped to the few cases the screens show.
+// AI-assisted (Claude Code): email sign-up, sign-in, sign-out, password reset by emailed code and Sign in with Apple; Supabase errors mapped to the few cases the screens show.
 import { isAuthApiError, isAuthRetryableFetchError } from '@supabase/supabase-js';
+import * as AppleAuthentication from 'expo-apple-authentication';
 
 import { supabase } from './supabase';
 
@@ -59,6 +60,43 @@ export async function signUp(email: string, password: string): Promise<AuthResul
 export async function signIn(email: string, password: string): Promise<AuthResult> {
   const { error } = await supabase.auth.signInWithPassword({ email: normalize(email), password });
   return error ? { ok: false, error: toAuthError(error) } : { ok: true };
+}
+
+// Screen 1 "Continue with Apple". Native flow: Apple's sheet returns an identity token that Supabase verifies,
+// so no browser redirect and no Apple secret key. Closing the sheet is not an error: the screen shows nothing.
+export async function signInWithApple(): Promise<
+  { ok: true } | { ok: false; error: AuthError | 'cancelled' }
+> {
+  let credential: AppleAuthentication.AppleAuthenticationCredential;
+  try {
+    credential = await AppleAuthentication.signInAsync({
+      requestedScopes: [
+        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+      ],
+    });
+  } catch (error) {
+    const code = (error as { code?: string }).code;
+    return { ok: false, error: code === 'ERR_REQUEST_CANCELED' ? 'cancelled' : 'unknown' };
+  }
+  if (!credential.identityToken) return { ok: false, error: 'unknown' };
+
+  const { data, error } = await supabase.auth.signInWithIdToken({
+    provider: 'apple',
+    token: credential.identityToken,
+  });
+  if (error) return { ok: false, error: toAuthError(error) };
+
+  // Apple sends the name only on the very first sign-in, so it is saved now or never.
+  // A failure here is ignored: the user is signed in and can type the name in Profile.
+  const { givenName, familyName } = credential.fullName ?? {};
+  if (givenName || familyName) {
+    await supabase
+      .from('profiles')
+      .update({ first_name: givenName ?? null, last_name: familyName ?? null })
+      .eq('id', data.user.id);
+  }
+  return { ok: true };
 }
 
 // Settings 13 "Log out"; for now also the dev-only button on the home placeholder.

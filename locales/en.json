@@ -28,6 +28,7 @@
       "emailLabel": "Email",
       "emailPlaceholder": "you@example.com",
       "continueWithEmail": "Continue with email",
+      "or": "or",
       "invalidEmail": "Enter a valid email address."
     },
     "password": {
