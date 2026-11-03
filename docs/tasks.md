@@ -19,9 +19,9 @@ Rule for anything not on this list:
 | [x] | Supabase dev project, client in `src/data/supabase.ts`, keys in Codespaces secrets | Claude Code |
 | [x] | Database schema with RLS: profiles (incl. step 2 fields, AI consent), programs, scholarships, applications (status, submitted_at), documents, feedback_rounds; private Storage bucket for PDFs | Claude Code |
 | [x] | i18n setup (`i18n-js`, `expo-localization`, `locales/en.json`, `locales/es.json`) | Claude Code |
-| [ ] | `src/theme.ts`: colors, fonts, spacing from the design canvas | Copilot |
+| [x] | `src/theme.ts`: colors, fonts, spacing from the design canvas | Copilot |
 | [ ] | Tab bar: Programs · Applications · Feedback · Profile | Copilot |
-| [ ] | Sign in 1, 1b, 1c: email check, password rules, reset email, Sign in with Apple, Google | Claude Code |
+| [ ] | Sign in 1, 1b, 1c: email check, password rules, reset email, Sign in with Apple (Google postponed until after Programs, decision 2026-11-03) | Claude Code |
 | [ ] | Profile setup screens 2 and 2b | Copilot |
 | [ ] | Decide grade conversions for each scale (`business-rules.md` §3) | Alessandro + Valeria |
 | [ ] | Review `flows.md` and close every DECIDE item | Alessandro + Valeria |
@@ -39,7 +39,7 @@ Rule for anything not on this list:
 | [ ] | Programs screen 3: list, filters, initials badge, label, tuition and fees | Copilot |
 | [ ] | Program detail screen 4 (key facts, costs, official link) | Copilot |
 | [ ] | Careers screen 8: hide every block without an official source | Copilot |
-| [ ] | **Oct 28 checkpoint:** if Programs and fit labels do not work with real data, drop the App Store target and use TestFlight only | Alessandro |
+| [x] | **Oct 28 checkpoint:** if Programs and fit labels do not work with real data, drop the App Store target and use TestFlight only (decided Nov 3: TestFlight only) | Alessandro |
 
 ## Week 3: Oct 29 to Nov 2 (applications, feedback, release)
 | ✓ | Task | Who |
@@ -57,7 +57,7 @@ Rule for anything not on this list:
 | [ ] | Spanish strings in `locales/es.json` | Valeria |
 | [ ] | Privacy policy page (names Anthropic for AI feedback), support email | Valeria |
 | [ ] | Icon, screenshots, store description (ES and EN) | Valeria + Alessandro |
-| [ ] | EAS build, TestFlight test on iPhone, submit to review (Nov 2) | Alessandro, with Claude Code |
+| [ ] | EAS build, TestFlight on iPhone, external testing beta review (by about Nov 7) | Alessandro, with Claude Code |
 
 ## Week 4: Nov 3 to 11
 | ✓ | Task | Who |
