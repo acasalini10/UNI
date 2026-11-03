@@ -20,9 +20,10 @@ Oct 17: screen design final (canvas). `flows.md`, `product.md`, `business-rules.
 
 Oct 18: Supabase client (`src/data/supabase.ts`) and initial schema with RLS merged.
 Oct 28: i18n set up (`src/i18n.ts`, `locales/en.json`, `locales/es.json`); screens use `t("key")`. Upgraded to SDK 58, merged to main, app checked on iPhone. Behind schedule on the Oct 28 checkpoint: no data sheet in the repo, `src/lib` not started.
+Oct 29: design tokens from the canvas in `src/theme.ts` (colors, fit label colors, Plus Jakarta Sans fonts, typography, spacing, radius, sizes, layout), pushed on branch `feat/theme`, PR not opened yet. Root layout loads the five Plus Jakarta Sans weights (`@expo-google-fonts/plus-jakarta-sans`, `expo-font`), keeps the splash screen up until they load, and sets the `colors.bg` background and a light status bar.
 
 ## Next step
-Decide on the Oct 28 checkpoint (App Store or TestFlight only). Then: sign-in screens 1, 1b, 1c (Claude Code); theme and tab bar (Copilot).
+Open and merge the `feat/theme` PR. Decide on the Oct 28 checkpoint (App Store or TestFlight only). Then: sign-in screens 1, 1b, 1c (Claude Code); tab bar (Copilot).
 
 ## Open questions
 - Who collects the 30 to 50 programs (target Oct 25, columns in `docs/data.md`)
