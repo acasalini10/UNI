@@ -20,7 +20,7 @@ Rule for anything not on this list:
 | [x] | Database schema with RLS: profiles (incl. step 2 fields, AI consent), programs, scholarships, applications (status, submitted_at), documents, feedback_rounds; private Storage bucket for PDFs | Claude Code |
 | [x] | i18n setup (`i18n-js`, `expo-localization`, `locales/en.json`, `locales/es.json`) | Claude Code |
 | [x] | `src/theme.ts`: colors, fonts, spacing from the design canvas | Copilot |
-| [ ] | Tab bar: Programs · Applications · Feedback · Profile | Copilot |
+| [x] | Tab bar: Programs · Applications · Feedback · Profile | Copilot |
 | [ ] | Sign in 1, 1b, 1c: email check, password rules, reset email, Sign in with Apple (Google postponed until after Programs, decision 2026-11-03) | Claude Code |
 | [ ] | Profile setup screens 2 and 2b | Copilot |
 | [ ] | Decide grade conversions for each scale (`business-rules.md` §3) | Alessandro + Valeria |
