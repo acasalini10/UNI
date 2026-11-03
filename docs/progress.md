@@ -12,19 +12,16 @@ Claude reads this at the start of a session and updates it at the end. Keep it u
 - [ ] By Dec 31: CS50 README written by me, 3-minute video, submit50 (see `docs/cs50.md`)
 
 ## Now
-Expo SDK 58 app (upgraded from 57 on Oct 28 because Expo Go supports only 58) with Expo Router, TypeScript strict, Jest 30, ESLint, on main. One screen showing "UNI" through i18n, checked on iPhone with Expo Go.
-`package.json` overrides `react-dom` with `$react-dom`, so the version jest-expo pulls in always matches the direct dependency. `app.json` sets `web.output: "static"`.
-`expo start` regenerates `tsconfig.json` (drops `.expo/types` and `expo-env.d.ts` from `include`); the regenerated file is committed.
-Dev server: `npx expo start --tunnel` (installs `@expo/ngrok` globally on first run). If the ngrok tunnel fails, make port 8081 public in Codespaces and start with `EXPO_PACKAGER_PROXY_URL=<public 8081 URL> npx expo start`.
+Expo SDK 58 app (Expo Router, TypeScript 6 strict, Jest 30, ESLint), Supabase schema with RLS, i18n (en; es falls back to en), design tokens in `src/theme.ts`, Plus Jakarta Sans loaded in the root layout. Main has all of this up to PR #7.
+`package.json` overrides `react-dom` with `$react-dom`. `expo start` regenerates `tsconfig.json`; the regenerated file is committed. TypeScript 6 no longer loads `@types/jest` globally: test files start with `/// <reference types="jest" />`. If lint reports a stale "unresolved import", run `npx eslint --no-cache .`.
+Dev server: `npx expo start --tunnel` from the repo root (not from a subfolder). If the ngrok tunnel fails, make port 8081 public in Codespaces and start with `EXPO_PACKAGER_PROXY_URL=<public 8081 URL> npx expo start`.
 
-Oct 17: screen design final (canvas). `flows.md`, `product.md`, `business-rules.md`, `data.md`, `tasks.md` and `app-store.md` updated to match: Applications tab, profile step 2, AI consent, checklist, no living costs, feedback fully free, Apple and Google sign-in, English and Spanish.
-
-Oct 18: Supabase client (`src/data/supabase.ts`) and initial schema with RLS merged.
-Oct 28: i18n set up (`src/i18n.ts`, `locales/en.json`, `locales/es.json`); screens use `t("key")`. Upgraded to SDK 58, merged to main, app checked on iPhone. Behind schedule on the Oct 28 checkpoint: no data sheet in the repo, `src/lib` not started.
-Oct 29: design tokens from the canvas in `src/theme.ts` (colors, fit label colors, Plus Jakarta Sans fonts, typography, spacing, radius, sizes, layout), on branch `feat/theme`, PR opened Nov 3. Root layout loads the five Plus Jakarta Sans weights (`@expo-google-fonts/plus-jakarta-sans`, `expo-font`), keeps the splash screen up until they load, and sets the `colors.bg` background and a light status bar.
+Oct 17: screen design final (canvas); docs updated to match. Oct 18: Supabase client and initial schema with RLS. Oct 28: i18n; SDK 58. Oct 29: design tokens and fonts.
+Nov 3: PR #7 (theme) merged. Oct 28 checkpoint decided: TestFlight only; Google sign-in postponed. Email sign-in on `feat/auth-email`, PR #8 open: screens 1, 1b, 1c and new 1d (reset by 6-digit code) in `app/(auth)/`, session guard in `app/_layout.tsx` (`Stack.Protected` with `redirectTo`), shared components in `src/components/`, `src/data/auth.ts`, `src/data/session.ts`, `email_exists()` migration pushed to the dev project, icons from `expo-symbols`. Alessandro wrote `src/lib/password.ts` and `src/lib/email.ts`; Claude wrote their tests (15 pass). Tested on iPhone: sign-up, wrong password, reset by code. Placeholder home (`app/index.tsx`) has a dev-only Sign out.
+Supabase dashboard (set by hand): Confirm email off; password min 8, "Letters and digits"; custom SMTP via a dedicated Gmail with an app password; reset template shows `{{ .Token }}`.
 
 ## Next step
-Merge the `feat/theme` PR. Then: sign-in screens 1, 1b, 1c with email on `feat/auth-email`, then Apple (Claude Code); tab bar (Copilot). Terms and Privacy links on screen 1 are added once Alessandro has the page URLs.
+Merge PR #8. Then give Copilot the tab bar prompt (from the Nov 3 session; it replaces `app/index.tsx` with `app/(tabs)/` and moves the dev Sign out to Profile). Claude Code: Sign in with Apple on `feat/auth-apple`. Terms and Privacy links on screen 1 once Alessandro has the page URLs. Plan the TestFlight build for about Nov 7.
 
 ## Open questions
 - Who collects the 30 to 50 programs (target Oct 25, columns in `docs/data.md`)
