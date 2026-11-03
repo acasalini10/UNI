@@ -1,5 +1,61 @@
 {
   "app": {
     "name": "UNI"
+  },
+  "common": {
+    "back": "Back",
+    "change": "Change",
+    "signOut": "Sign out",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
+  },
+  "errors": {
+    "offline": "No connection. Check your internet and try again.",
+    "rateLimited": "Too many attempts. Wait a few minutes and try again.",
+    "unknown": "Something went wrong. Try again."
+  },
+  "auth": {
+    "signIn": {
+      "headlineStart": "Your master's abroad, ",
+      "headlineHighlight": "without the guesswork.",
+      "subtitle": "Programs you can get into, what they really cost after grants, and feedback on your application.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "continueWithEmail": "Continue with email",
+      "invalidEmail": "Enter a valid email address."
+    },
+    "password": {
+      "label": "Password",
+      "confirmLabel": "Confirm password",
+      "ruleLength": "At least 8 characters",
+      "ruleDigit": "At least one number",
+      "ruleUppercase": "At least one uppercase letter",
+      "mismatch": "Passwords don't match"
+    },
+    "setPassword": {
+      "title": "Set your password",
+      "subtitle": "For your new account",
+      "continue": "Continue",
+      "next": "Next: your academic profile. It takes about 2 minutes.",
+      "emailTaken": "This email already has an account. Go back and sign in."
+    },
+    "existing": {
+      "title": "Welcome back",
+      "signInAs": "Sign in as ",
+      "forgot": "Forgot password?",
+      "signIn": "Sign in",
+      "wrongPassword": "Wrong password. Try again or reset it.",
+      "newHint": "New to UNI? Go back and continue with your email to create an account."
+    },
+    "reset": {
+      "title": "Reset your password",
+      "sent": "We sent a code to %{email}. Enter it below with your new password.",
+      "resent": "We sent a new code to %{email}.",
+      "codeLabel": "Code from the email",
+      "newPasswordLabel": "New password",
+      "save": "Save password",
+      "resend": "Send a new code",
+      "invalidCode": "This code is wrong or has expired. Check the email or send a new code."
+    }
   }
 }
