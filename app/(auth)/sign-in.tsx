@@ -1,6 +1,7 @@
-// AI-assisted (Claude Code): screen 1, email entry; a new email goes to 1b, an existing one to 1c. Apple, Google, Terms and Privacy are added in later branches.
+// AI-assisted (Claude Code): screen 1, email entry (new email → 1b, existing → 1c) and Sign in with Apple. Google, Terms and Privacy are added in later branches.
+import * as AppleAuthentication from "expo-apple-authentication";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { AuthLayout } from "@/components/AuthLayout";
@@ -8,15 +9,32 @@ import { authErrorMessage } from "@/components/authErrorMessage";
 import { Button } from "@/components/Button";
 import { FormError } from "@/components/Message";
 import { TextField } from "@/components/TextField";
-import { type AuthError, emailExists } from "@/data/auth";
+import { type AuthError, emailExists, signInWithApple } from "@/data/auth";
 import { t } from "@/i18n";
 import { isValidEmail } from "@/lib/email";
-import { colors, spacing, typography } from "@/theme";
+import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<AuthError | "invalidEmail" | null>(null);
   const [loading, setLoading] = useState(false);
+  const [appleAvailable, setAppleAvailable] = useState(false);
+  const [appleLoading, setAppleLoading] = useState(false);
+
+  // Hidden where Apple sign-in is not supported (e.g. web), so the button never does nothing.
+  useEffect(() => {
+    void AppleAuthentication.isAvailableAsync().then(setAppleAvailable);
+  }, []);
+
+  async function onApple() {
+    if (loading || appleLoading) return;
+    setError(null);
+    setAppleLoading(true);
+    const result = await signInWithApple();
+    setAppleLoading(false);
+    // On success the session guard in app/_layout.tsx opens the tabs.
+    if (!result.ok && result.error !== "cancelled") setError(result.error);
+  }
 
   async function onContinue() {
     if (!isValidEmail(email)) {
@@ -38,12 +56,33 @@ export default function SignIn() {
   return (
     <AuthLayout
       footer={
-        <Button
-          label={t("auth.signIn.continueWithEmail")}
-          onPress={onContinue}
-          disabled={email.trim().length === 0}
-          loading={loading}
-        />
+        <>
+          <Button
+            label={t("auth.signIn.continueWithEmail")}
+            onPress={onContinue}
+            disabled={email.trim().length === 0 || appleLoading}
+            loading={loading}
+          />
+          {appleAvailable && (
+            <>
+              <View style={styles.divider}>
+                <View style={styles.line} />
+                <Text style={styles.or}>{t("auth.signIn.or")}</Text>
+                <View style={styles.line} />
+              </View>
+              {/* Apple's own button (required look, label translated by iOS); the wrapper adds the canvas border. */}
+              <View style={[styles.appleWrap, appleLoading && styles.busy]}>
+                <AppleAuthentication.AppleAuthenticationButton
+                  buttonType={AppleAuthentication.AppleAuthenticationButtonType.CONTINUE}
+                  buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+                  cornerRadius={radius.lg}
+                  style={styles.apple}
+                  onPress={onApple}
+                />
+              </View>
+            </>
+          )}
+        </>
       }
     >
       <View style={styles.hero}>
@@ -100,5 +139,31 @@ const styles = StyleSheet.create({
   },
   form: {
     gap: spacing.sm,
+  },
+  divider: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
+  },
+  line: {
+    flex: 1,
+    height: layout.borderWidth,
+    backgroundColor: colors.border,
+  },
+  or: {
+    ...typography.small,
+    color: colors.textMuted,
+  },
+  appleWrap: {
+    borderWidth: layout.borderWidth,
+    borderColor: colors.appleBorder,
+    borderRadius: radius.lg,
+    overflow: "hidden",
+  },
+  apple: {
+    height: sizes.button,
+  },
+  busy: {
+    opacity: 0.6,
   },
 });

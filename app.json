@@ -8,7 +8,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.acasalini.uni",
+      "usesAppleSignIn": true
     },
     "web": {
       "output": "static"
@@ -17,7 +19,8 @@
       "expo-router",
       "expo-localization",
       "expo-font",
-      "expo-splash-screen"
+      "expo-splash-screen",
+      "expo-apple-authentication"
     ]
   }
 }
