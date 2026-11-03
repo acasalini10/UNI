@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): root layout with custom fonts and themed screen background
+// AI-assisted (Claude Code): root layout with custom fonts, themed screen background, and session guard (signed out → (auth), signed in → app)
 import {
   PlusJakartaSans_400Regular,
   PlusJakartaSans_500Medium,
@@ -12,6 +12,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 
+import { useSession } from "@/data/session";
 import { colors } from "@/theme";
 
 void SplashScreen.preventAutoHideAsync();
@@ -24,12 +25,18 @@ export default function RootLayout() {
     PlusJakartaSans_700Bold,
     PlusJakartaSans_800ExtraBold,
   });
+  const { session, loading } = useSession();
+  const ready = fontsLoaded && !loading;
 
   useEffect(() => {
-    if (fontsLoaded) {
+    if (ready) {
       void SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+  }, [ready]);
+
+  if (!ready) {
+    return null;
+  }
 
   return (
     <>
@@ -38,7 +45,15 @@ export default function RootLayout() {
           headerShown: false,
           contentStyle: { backgroundColor: colors.bg },
         }}
-      />
+      >
+        {/* Without redirectTo, a guarded index falls back to itself and shows "Unmatched route". */}
+        <Stack.Protected guard={session !== null} redirectTo="/sign-in">
+          <Stack.Screen name="index" />
+        </Stack.Protected>
+        <Stack.Protected guard={session === null} redirectTo="/">
+          <Stack.Screen name="(auth)" />
+        </Stack.Protected>
+      </Stack>
       <StatusBar style="light" />
     </>
   );

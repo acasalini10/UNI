@@ -45,9 +45,15 @@ Rules under the first field, each turns green when met: 8+ characters, one numbe
 "Welcome back", email with "Change" → 1. Password with show/hide.
 | Element | Tap goes to |
 | --- | --- |
-| Forgot password? | Supabase reset email; banner "We sent a link…" |
+| Forgot password? | Supabase reset email with a 6-digit code → 1d |
 | Sign in | 3 Programs |
 States: wrong password ("Wrong password. Try again or reset it."), no connection, loading.
+
+## 1d · Reset password (added Nov 3, no canvas screen; same style as 1b)
+Banner "We sent a code to {email}…". Code field (number pad, iOS fills it from Mail), "Send a new code", then New password and Confirm with the same rules as 1b.
+**Save password** disabled until a code is typed, rules are met and both match → signs in → 3 Programs.
+States: wrong or expired code ("This code is wrong or has expired…"), too many attempts, no connection, loading.
+Decision 2026-11-03: a code instead of a link, because a link back into the app breaks in Expo Go.
 
 ## 2 · Profile setup, step 1 of 2 (academic)
 First name, last name, country you live in, current university, currently studying, fields you want to study, grade + grade scale (`10`, `4.0`, `100`, `30`, `uk_class`, Other), English test (IELTS score or "not taken yet"), **GMAT or GRE (optional)**, target countries (up to 3), planned start. Hint with typical deadlines for that start.
