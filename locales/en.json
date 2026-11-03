@@ -9,6 +9,12 @@
     "showPassword": "Show password",
     "hidePassword": "Hide password"
   },
+  "tabs": {
+    "programs": "Programs",
+    "applications": "Applications",
+    "feedback": "Feedback",
+    "profile": "Profile"
+  },
   "errors": {
     "offline": "No connection. Check your internet and try again.",
     "rateLimited": "Too many attempts. Wait a few minutes and try again.",

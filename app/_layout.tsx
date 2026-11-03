@@ -1,4 +1,5 @@
 // AI-assisted (Claude Code): root layout with custom fonts, themed screen background, and session guard (signed out → (auth), signed in → app)
+// AI-assisted (Copilot): wired the authenticated route to the four-tab navigation.
 import {
   PlusJakartaSans_400Regular,
   PlusJakartaSans_500Medium,
@@ -48,9 +49,9 @@ export default function RootLayout() {
       >
         {/* Without redirectTo, a guarded index falls back to itself and shows "Unmatched route". */}
         <Stack.Protected guard={session !== null} redirectTo="/sign-in">
-          <Stack.Screen name="index" />
+          <Stack.Screen name="(tabs)" />
         </Stack.Protected>
-        <Stack.Protected guard={session === null} redirectTo="/">
+        <Stack.Protected guard={session === null} redirectTo="/programs">
           <Stack.Screen name="(auth)" />
         </Stack.Protected>
       </Stack>
