@@ -38,5 +38,41 @@
 - [ ] `eas submit -p ios`, then submit for review in App Store Connect
 - [ ] Release: manual, so it goes live when we choose
 
+## TestFlight external testing (draft, Nov 5)
+Paste into App Store Connect → TestFlight. Test Information is per language: fill English and Spanish. Update "What to Test" for every build sent to testers.
+
+Before sending a build to beta review:
+- [ ] Privacy policy URL (Valeria): required in Test Information for external testing
+- [ ] Feedback email (the dedicated Gmail or a support address)
+- [ ] Demo account created in the Supabase project the build uses, with profile filled in; email and password added below in App Store Connect only, never in git
+- [ ] Contact for the reviewer: first name, last name, phone, email
+- [ ] Check the build against the risks below
+
+Risks in the current build (Nov 5, built before PR #11):
+- The four tabs show only a title. Beta review is lighter than App Review but can still reject an app with empty screens (guideline 2.1). Send the build that has at least profile setup (PR #11) and, if possible, Programs.
+- Sign out is shown only in development (`__DEV__` in `app/(tabs)/profile.tsx`), so testers cannot sign out in the TestFlight build.
+- No account deletion yet (guideline 5.1.1(v)). Usually not checked in beta review, but required for the App Store.
+
+### Beta App Description (English)
+UNI helps international students choose a master's program abroad and strengthen their application. This beta lets you create an account and set up your academic profile. Next builds add the program list with fit labels and net cost, application tracking, and AI feedback on your CV and statement.
+
+### Beta App Description (Spanish)
+UNI ayuda a estudiantes internacionales a elegir una maestría en el extranjero y a mejorar su solicitud. En esta beta puedes crear una cuenta y configurar tu perfil académico. Las próximas versiones agregan la lista de programas con etiqueta de compatibilidad y costo neto, el seguimiento de solicitudes y retroalimentación con IA sobre tu CV y tu carta de motivación.
+
+### What to Test (English)
+- Create an account with email and password, or with Sign in with Apple.
+- Fill in your academic profile.
+- If you already have an account: try a wrong password, then reset it with the 6-digit code sent by email.
+- Tell us anything that looks wrong or confusing: use the screenshot feedback in TestFlight.
+
+### What to Test (Spanish)
+- Crea una cuenta con correo y contraseña, o con Sign in with Apple.
+- Completa tu perfil académico.
+- Si ya tienes una cuenta: prueba una contraseña incorrecta y luego restablécela con el código de 6 dígitos que llega por correo.
+- Cuéntanos todo lo que se vea mal o sea confuso: usa la captura de pantalla con comentarios de TestFlight.
+
+### Review Notes (English only)
+UNI is a student project (Universidad Panamericana and Harvard CS50x) that helps international students choose master's programs abroad. Sign in with the demo account below, or create a new account with any email (no email confirmation is needed). Sign in with Apple is also available. This beta covers sign-in and profile setup; program data, application tracking and AI feedback are not in this build. The app has no purchases and no ads.
+
 ## Fallback if review is not done by Nov 10
 TestFlight public link: classmates install the TestFlight app and join with the link. Send the build to external testing on Oct 29, before the App Store submission, so the beta review is done early. Last resort: Expo web version at a public link.
