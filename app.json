@@ -24,6 +24,11 @@
       "expo-font",
       "expo-splash-screen",
       "expo-apple-authentication"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d378862c-0de6-4976-ad04-3fd75bf648f6"
+      }
+    }
   }
 }
