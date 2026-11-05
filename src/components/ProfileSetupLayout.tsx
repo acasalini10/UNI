@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): shared shell for the two profile setup screens.
+// AI-assisted (Claude Code): shared shell for the two profile setup screens; Back hidden when there is no previous screen.
 import { SymbolView } from "expo-symbols";
 import { router } from "expo-router";
 import type { ReactNode } from "react";
@@ -25,14 +25,19 @@ export function ProfileSetupLayout({ step, children, footer }: Props) {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.header}>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={t("common.back")}
-              onPress={() => router.back()}
-              style={styles.back}
-            >
-              <SymbolView name="chevron.left" tintColor={colors.text} size={sizes.icon} />
-            </Pressable>
+            {/* First setup starts here with nothing behind it: no Back, an empty slot keeps the logo centered. */}
+            {router.canGoBack() ? (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={t("common.back")}
+                onPress={() => router.back()}
+                style={styles.back}
+              >
+                <SymbolView name="chevron.left" tintColor={colors.text} size={sizes.icon} />
+              </Pressable>
+            ) : (
+              <View style={styles.back} />
+            )}
             <Logo />
             <Text style={styles.step}>{step}/2</Text>
           </View>

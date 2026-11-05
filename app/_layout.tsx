@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): root layout with custom fonts, themed screen background, and session guard (signed out → (auth), signed in → tabs and Settings)
+// AI-assisted (Claude Code): root layout with custom fonts, themed screen background, and guards (signed out → (auth); signed in without profile step 1 → (setup); otherwise tabs and Settings)
 // AI-assisted (Copilot): wired the authenticated route to the four-tab navigation.
 import {
   PlusJakartaSans_400Regular,
@@ -11,8 +11,10 @@ import {
 import * as SplashScreen from "expo-splash-screen";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
+import { useSetupStep } from "@/data/profile";
 import { useSession } from "@/data/session";
 import { colors } from "@/theme";
 
@@ -27,17 +29,28 @@ export default function RootLayout() {
     PlusJakartaSans_800ExtraBold,
   });
   const { session, loading } = useSession();
-  const ready = fontsLoaded && !loading;
+  const { step, loading: stepLoading } = useSetupStep(session?.user.id ?? null);
+  const ready = fontsLoaded && !loading && !stepLoading;
+  // After the first launch the Stack stays mounted (unmounting it would reset navigation);
+  // a later reload of setup_step, e.g. right after sign-in, is covered by a spinner instead.
+  const [started, setStarted] = useState(false);
+  if (ready && !started) {
+    setStarted(true);
+  }
 
   useEffect(() => {
-    if (ready) {
+    if (started) {
       void SplashScreen.hideAsync();
     }
-  }, [ready]);
+  }, [started]);
 
-  if (!ready) {
+  if (!ready && !started) {
     return null;
   }
+
+  const signedIn = session !== null;
+  // step null = profile could not be read (offline): open the tabs instead of trapping the user in setup.
+  const setupDone = step === null || step >= 1;
 
   return (
     <>
@@ -48,15 +61,33 @@ export default function RootLayout() {
         }}
       >
         {/* Without redirectTo, a guarded index falls back to itself and shows "Unmatched route". */}
-        <Stack.Protected guard={session !== null} redirectTo="/sign-in">
+        <Stack.Protected guard={signedIn && setupDone} redirectTo={signedIn ? "/profile-setup" : "/sign-in"}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="settings" />
         </Stack.Protected>
-        <Stack.Protected guard={session === null} redirectTo="/programs">
+        {/* Open to every signed-in user: first setup now, "Edit" from My Profile later. */}
+        <Stack.Protected guard={signedIn} redirectTo="/sign-in">
+          <Stack.Screen name="(setup)" />
+        </Stack.Protected>
+        <Stack.Protected guard={!signedIn} redirectTo={setupDone ? "/programs" : "/profile-setup"}>
           <Stack.Screen name="(auth)" />
         </Stack.Protected>
       </Stack>
+      {!ready && (
+        <View style={styles.loading}>
+          <ActivityIndicator color={colors.text} />
+        </View>
+      )}
       <StatusBar style="light" />
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  loading: {
+    ...StyleSheet.absoluteFill,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.bg,
+  },
+});
