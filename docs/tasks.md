@@ -22,7 +22,7 @@ Rule for anything not on this list:
 | [x] | `src/theme.ts`: colors, fonts, spacing from the design canvas | Copilot |
 | [x] | Tab bar: Programs · Applications · Feedback · Profile | Copilot |
 | [x] | Sign in 1, 1b, 1c: email check, password rules, reset email, Sign in with Apple (Google postponed until after Programs, decision 2026-11-03) | Claude Code |
-| [ ] | Profile setup screens 2 and 2b | Copilot |
+| [x] | Profile setup screens 2 and 2b (PR #11, Nov 5; routing first-time users to 2 still to do) | Copilot |
 | [ ] | Decide grade conversions for each scale (`business-rules.md` §3) | Alessandro + Valeria |
 | [ ] | Review `flows.md` and close every DECIDE item | Alessandro + Valeria |
 | [ ] | Program data sheet, 30 to 50 programs (`data.md`), by Oct 25 | Valeria |
@@ -57,7 +57,7 @@ Rule for anything not on this list:
 | [ ] | Spanish strings in `locales/es.json` | Valeria |
 | [ ] | Privacy policy page (names Anthropic for AI feedback), support email | Valeria |
 | [ ] | Icon, screenshots, store description (ES and EN) | Valeria + Alessandro |
-| [ ] | EAS build, TestFlight on iPhone, external testing beta review (by about Nov 7) | Alessandro, with Claude Code |
+| [ ] | EAS build, TestFlight on iPhone, external testing beta review (by about Nov 7). Done Nov 5: `eas.json`, certificates, first production build. To do: `eas submit`, internal tester, beta review (needs privacy policy URL and demo account) | Alessandro, with Claude Code |
 
 ## Week 4: Nov 3 to 11
 | ✓ | Task | Who |

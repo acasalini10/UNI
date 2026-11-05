@@ -2,9 +2,9 @@
 
 ## Accounts
 - [x] Apple Developer Program, individual, enrolled Oct 15, 2026 (valid one year; check auto-renewal before Oct 2027)
-- [ ] Identity check approved
+- [x] Identity check approved
 - [ ] Expo account; `eas login` in the codespace
-- [ ] App Store Connect: create the app record (name, bundle ID `com.uni.app` or similar)
+- [ ] App Store Connect: create the app record (name, bundle ID `com.acasalini.uni`, App ID already registered Nov 3)
 
 ## Required by App Review
 - [ ] Privacy policy URL (a public page is enough)
@@ -28,10 +28,11 @@
 ## Store listing
 - [ ] Check that the name "UNI" is free on the App Store; pick the final name before making icon and screenshots
 - [ ] App name, subtitle, description, keywords (Spanish and English)
-- [ ] Icon 1024×1024, no transparency
+- [ ] Icon 1024×1024, no transparency (`assets/icon.png` is still the Expo template icon)
 - [ ] Screenshots for 6.9" iPhone (at least 3)
 
 ## Build and submit
+- [x] `eas.json` with a `production` profile; build number managed by EAS (Nov 5)
 - [ ] `eas build -p ios --profile production`
 - [ ] Install from TestFlight and run the full flow on a real iPhone
 - [ ] `eas submit -p ios`, then submit for review in App Store Connect
