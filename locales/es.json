@@ -81,5 +81,11 @@
       "skip": "Omitir por ahora",
       "loading": "Cargando tu perfil..."
     }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "account": "CUENTA",
+    "email": "Correo",
+    "logOut": "Cerrar sesión"
   }
 }
