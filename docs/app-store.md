@@ -28,7 +28,7 @@
 ## Store listing
 - [ ] Check that the name "UNI" is free on the App Store; pick the final name before making icon and screenshots
 - [ ] App name, subtitle, description, keywords (Spanish and English)
-- [ ] Icon 1024×1024, no transparency (`assets/icon.png` is still the Expo template icon)
+- [x] Icon 1024×1024, no transparency: graduation cap on navy, in `assets/icon.png` (Nov 5)
 - [ ] Screenshots for 6.9" iPhone (at least 3)
 
 ## Build and submit
