@@ -61,7 +61,8 @@ First name, last name, country you live in, current university, currently studyi
 | --- | --- |
 | Continue | 2b (only if step 1 is valid) |
 | Back | 1 (first setup) or 5 (editing) |
-States: missing required field, saving, save error. Closing the app halfway resumes at the same step.
+States: missing required field, saving, save error. Closing the app halfway through step 1 resumes at step 1. After step 1 is saved the app opens on the tabs; step 2 can be completed later from 5 My Profile (decision 2026-11-05).
+Routing on every launch: signed in and step 1 not complete → 2; step 1 complete → 3 Programs.
 Without an IELTS score every program shows **Not yet eligible** with the hint "Add your English score" (business-rules §1).
 
 ## 2b · Profile setup, step 2 of 2 (budget and funding, all optional)
