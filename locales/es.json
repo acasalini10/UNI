@@ -1,5 +1,85 @@
 {
   "app": {
     "name": "UNI"
+  },
+  "errors": {
+    "offline": "Sin conexión. Comprueba internet e inténtalo de nuevo.",
+    "unknown": "Algo salió mal. Inténtalo de nuevo."
+  },
+  "profile": {
+    "countries": {
+      "US": "EE. UU.",
+      "GB": "Reino Unido",
+      "CH": "Suiza",
+      "DE": "Alemania",
+      "NL": "Países Bajos"
+    },
+    "citizenships": {
+      "IT": "Italiana",
+      "US": "Estadounidense",
+      "GB": "Británica",
+      "DE": "Alemana",
+      "IN": "India"
+    },
+    "setup": {
+      "title": "Tu perfil",
+      "subtitle": "Lo comparamos con los requisitos publicados de cada programa. Nada se comparte.",
+      "aboutYou": "SOBRE TI",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "residence": "País donde vives",
+      "university": "Universidad actual",
+      "studying": "Qué estudias actualmente",
+      "masters": "TU MÁSTER",
+      "fields": "Áreas que quieres estudiar",
+      "fieldsPlaceholder": "p. ej. Ingeniería Informática",
+      "grade": "Tu nota",
+      "scale": "Escala de calificación",
+      "gradeHint": "Usa la nota tal como aparece en tu expediente. UNI la convierte para compararla con cada programa.",
+      "english": "Nota de inglés",
+      "englishPlaceholder": "IELTS 7.0 o aún no lo he hecho",
+      "test": "GMAT o GRE (opcional)",
+      "testPlaceholder": "p. ej. GMAT Focus 675 o GRE 320",
+      "testHint": "Algunos programas lo piden. Déjalo vacío si aún no has hecho el examen.",
+      "targets": "Países de destino (hasta 3)",
+      "start": "¿Cuándo quieres empezar?",
+      "startPlaceholder": "AAAA-MM",
+      "deadline": "Para este inicio, la mayoría de los programas cierra solicitudes entre diciembre y enero.",
+      "continue": "Continuar",
+      "required": "Completa los campos obligatorios para continuar.",
+      "loading": "Cargando tu perfil..."
+    },
+    "funding": {
+      "title": "Presupuesto y financiación",
+      "subtitle": "Opcional. La ciudadanía y el país de origen muestran a qué becas puedes optar. El presupuesto y quién paga nos ayudan a entender quién usa UNI. Nada se comparte.",
+      "from": "DE DÓNDE ERES",
+      "citizenship": "Ciudadanía",
+      "secondCitizenship": "Segunda ciudadanía",
+      "addCitizenship": "+ Añadir una segunda ciudadanía",
+      "origin": "País de origen",
+      "euInfo": "La ciudadanía cambia lo que pagas: como ciudadano de la UE puedes pagar tasas locales en muchos países europeos.",
+      "budgetSection": "TU PRESUPUESTO",
+      "budget": "Máximo para matrícula y tasas",
+      "budgets": {
+        "under_10k": "Menos de 10k",
+        "10k_25k": "10k a 25k",
+        "25k_50k": "25k a 50k",
+        "over_50k": "Más de 50k",
+        "not_sure": "Aún no lo sé"
+      },
+      "livingCosts": "Los gastos de vida no están incluidos.",
+      "payer": "¿Quién pagará? (todas las opciones)",
+      "payers": {
+        "me": "Yo",
+        "family": "Mi familia",
+        "scholarship": "Una beca",
+        "loan": "Un préstamo",
+        "not_sure": "Aún no lo sé"
+      },
+      "scholarshipHint": "Añade tu ciudadanía para ver becas en tus países de destino.",
+      "showPrograms": "Ver mis programas",
+      "skip": "Omitir por ahora",
+      "loading": "Cargando tu perfil..."
+    }
   }
 }

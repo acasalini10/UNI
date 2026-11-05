@@ -20,6 +20,82 @@
     "rateLimited": "Too many attempts. Wait a few minutes and try again.",
     "unknown": "Something went wrong. Try again."
   },
+  "profile": {
+    "countries": {
+      "US": "USA",
+      "GB": "UK",
+      "CH": "Switzerland",
+      "DE": "Germany",
+      "NL": "Netherlands"
+    },
+    "citizenships": {
+      "IT": "Italian",
+      "US": "American",
+      "GB": "British",
+      "DE": "German",
+      "IN": "Indian"
+    },
+    "setup": {
+      "title": "Your profile",
+      "subtitle": "We compare it with each program's published requirements. Nothing is shared.",
+      "aboutYou": "ABOUT YOU",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "residence": "Country you live in",
+      "university": "Current university",
+      "studying": "Currently studying",
+      "masters": "YOUR MASTER'S",
+      "fields": "Fields you want to study",
+      "fieldsPlaceholder": "e.g. Computer Engineering",
+      "grade": "Your grade",
+      "scale": "Grading scale",
+      "gradeHint": "Use your grade as it appears on your transcript. UNI converts it to compare with each program.",
+      "english": "English score",
+      "englishPlaceholder": "IELTS 7.0 or not taken yet",
+      "test": "GMAT or GRE (optional)",
+      "testPlaceholder": "e.g. GMAT Focus 675 or GRE 320",
+      "testHint": "Some programs ask for one. Leave empty if you have not taken a test yet.",
+      "targets": "Target countries (up to 3)",
+      "start": "When do you want to start?",
+      "startPlaceholder": "YYYY-MM",
+      "deadline": "For this start, most programs close applications between December and January.",
+      "continue": "Continue",
+      "required": "Complete the required fields to continue.",
+      "loading": "Loading your profile..."
+    },
+    "funding": {
+      "title": "Budget and funding",
+      "subtitle": "Optional. Citizenship and country of origin show which scholarships you can apply for. Budget and who pays help us understand who uses UNI. Nothing is shared.",
+      "from": "WHERE YOU'RE FROM",
+      "citizenship": "Citizenship",
+      "secondCitizenship": "Second citizenship",
+      "addCitizenship": "+ Add a second citizenship",
+      "origin": "Country of origin",
+      "euInfo": "Citizenship changes what you pay: as an EU citizen you may pay home fees in many European countries.",
+      "budgetSection": "YOUR BUDGET",
+      "budget": "Most you can spend on tuition and fees",
+      "budgets": {
+        "under_10k": "Under 10k",
+        "10k_25k": "10k to 25k",
+        "25k_50k": "25k to 50k",
+        "over_50k": "Over 50k",
+        "not_sure": "Not sure yet"
+      },
+      "livingCosts": "Living costs are not included.",
+      "payer": "Who will pay? (all that apply)",
+      "payers": {
+        "me": "Me",
+        "family": "My family",
+        "scholarship": "A scholarship",
+        "loan": "A loan",
+        "not_sure": "Not sure yet"
+      },
+      "scholarshipHint": "Add your citizenship to see scholarships for your target countries.",
+      "showPrograms": "Show my programs",
+      "skip": "Skip for now",
+      "loading": "Loading your profile..."
+    }
+  },
   "auth": {
     "signIn": {
       "headlineStart": "Your master's abroad, ",
