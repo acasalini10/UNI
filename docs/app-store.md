@@ -41,6 +41,8 @@
 ## TestFlight external testing (draft, Nov 5)
 Paste into App Store Connect → TestFlight. Test Information is per language: fill English and Spanish. Update "What to Test" for every build sent to testers.
 
+Rule (Nov 5): builds go to internal testing only until PR #11 (profile setup) and the Settings sign out are merged. The first build for external beta review is made after both.
+
 Before sending a build to beta review:
 - [ ] Privacy policy URL (Valeria): required in Test Information for external testing
 - [ ] Feedback email (the dedicated Gmail or a support address)
@@ -49,8 +51,8 @@ Before sending a build to beta review:
 - [ ] Check the build against the risks below
 
 Risks in the current build (Nov 5, built before PR #11):
-- The four tabs show only a title. Beta review is lighter than App Review but can still reject an app with empty screens (guideline 2.1). Send the build that has at least profile setup (PR #11) and, if possible, Programs.
-- Sign out is shown only in development (`__DEV__` in `app/(tabs)/profile.tsx`), so testers cannot sign out in the TestFlight build.
+- The four tabs show only a title. Beta review is lighter than App Review but can still reject an app with empty screens (guideline 2.1). Hence the rule above; add Programs too if it is ready.
+- Sign out is shown only in development (`__DEV__` in `app/(tabs)/profile.tsx`), so testers cannot sign out in the TestFlight build. Fix: real Log out in a minimal Settings 13.
 - No account deletion yet (guideline 5.1.1(v)). Usually not checked in beta review, but required for the App Store.
 
 ### Beta App Description (English)
