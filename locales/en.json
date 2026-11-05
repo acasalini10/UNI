@@ -5,7 +5,6 @@
   "common": {
     "back": "Back",
     "change": "Change",
-    "signOut": "Sign out",
     "showPassword": "Show password",
     "hidePassword": "Hide password"
   },
@@ -140,5 +139,11 @@
       "resend": "Send a new code",
       "invalidCode": "This code is wrong or has expired. Check the email or send a new code."
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "ACCOUNT",
+    "email": "Email",
+    "logOut": "Log out"
   }
 }
