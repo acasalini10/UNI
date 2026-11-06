@@ -225,13 +225,7 @@ export default function ProfileSetup() {
               <Choice key={value} label={intakeLabel(value)} selected={plannedStart === value} onPress={() => setPlannedStart(value)} />
             ))}
           </View>
-          {plannedStart.length > 0 && (
-            <View style={styles.deadline}>
-              <Text style={styles.deadlineText}>
-                {t(plannedStart.endsWith("-01") ? "profile.setup.deadlineJanuary" : "profile.setup.deadlineSeptember")}
-              </Text>
-            </View>
-          )}
+          <View style={styles.deadline}><Text style={styles.deadlineText}>{t("profile.setup.deadline")}</Text></View>
         </>
       )}
     </ProfileSetupLayout>

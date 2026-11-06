@@ -41,8 +41,7 @@
         "gre": "p. ej. 320"
       },
       "intake": "%{month} %{year}",
-      "deadlineSeptember": "Para empezar en septiembre, la mayoría de los programas cierra solicitudes entre diciembre y marzo.",
-      "deadlineJanuary": "Para empezar en enero, la mayoría de los programas cierra solicitudes entre mayo y septiembre."
+      "deadline": "La mayoría de los programas cierra solicitudes entre 6 y 9 meses antes del inicio. Revisa la fecha límite de cada programa."
     },
     "funding": {
       "title": "Presupuesto y financiación",

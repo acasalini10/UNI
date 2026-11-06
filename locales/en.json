@@ -54,8 +54,7 @@
         "gre": "e.g. 320"
       },
       "intake": "%{month} %{year}",
-      "deadlineSeptember": "For a September start, most programs close applications between December and March.",
-      "deadlineJanuary": "For a January start, most programs close applications between May and September."
+      "deadline": "Most programs close applications 6 to 9 months before the start. Check each program's deadline."
     },
     "funding": {
       "title": "Budget and funding",
