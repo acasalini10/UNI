@@ -1,4 +1,4 @@
-# AI-assisted (Claude): publishes the site/ folder (privacy policy) to GitHub Pages.
+# AI-assisted (Claude): publishes the site/ folder (privacy policy and terms of service) to GitHub Pages.
 name: Deploy site to GitHub Pages
 
 on:
