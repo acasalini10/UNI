@@ -144,6 +144,16 @@
     "title": "Settings",
     "account": "ACCOUNT",
     "email": "Email",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "support": "SUPPORT",
+    "terms": "Terms of service",
+    "privacy": "Privacy policy"
+  },
+  "legal": {
+    "agreeStart": "By continuing you agree to our ",
+    "terms": "Terms",
+    "and": " and ",
+    "privacy": "Privacy Policy",
+    "agreeEnd": "."
   }
 }
