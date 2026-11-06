@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): i18n setup; picks English or Spanish from the phone language
+// AI-assisted (Claude Code): i18n setup; picks English or Spanish from the phone language; exposes the current language
 import { getLocales } from "expo-localization";
 import { I18n } from "i18n-js";
 
@@ -24,6 +24,10 @@ i18n.locale = phoneLanguage();
 // Used later by the Language row in Settings (screen 13).
 export function setLanguage(language: Language): void {
   i18n.locale = language;
+}
+
+export function currentLanguage(): Language {
+  return i18n.locale === "es" ? "es" : "en";
 }
 
 export function t(key: string, options?: Record<string, unknown>): string {

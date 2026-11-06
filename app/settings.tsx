@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): minimal Settings 13 with the account email and a real Log out; other rows wait for their features.
+// AI-assisted (Claude Code): minimal Settings 13 with the account email, Terms and Privacy links, and a real Log out; other rows wait for their features.
 import { SymbolView } from "expo-symbols";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import { FormError } from "@/components/Message";
 import { signOut } from "@/data/auth";
 import { useSession } from "@/data/session";
 import { t } from "@/i18n";
+import { openLegalPage } from "@/legal";
 import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
 
 export default function Settings() {
@@ -55,6 +56,13 @@ export default function Settings() {
           </View>
         </View>
 
+        <Text style={[styles.groupLabel, styles.groupSpacing]}>{t("settings.support")}</Text>
+        <View style={styles.group}>
+          <LinkRow label={t("settings.terms")} onPress={() => void openLegalPage("terms")} />
+          <View style={styles.divider} />
+          <LinkRow label={t("settings.privacy")} onPress={() => void openLegalPage("privacy")} />
+        </View>
+
         <View style={styles.bottom}>
           <Pressable
             accessibilityRole="button"
@@ -74,6 +82,20 @@ export default function Settings() {
         </View>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function LinkRow({ label, onPress }: { label: string; onPress: () => void }) {
+  return (
+    <Pressable
+      accessibilityRole="link"
+      accessibilityLabel={label}
+      onPress={onPress}
+      style={({ pressed }) => [styles.row, pressed && styles.pressed]}
+    >
+      <Text style={styles.rowLabel}>{label}</Text>
+      <SymbolView name="chevron.right" tintColor={colors.textMuted} size={sizes.icon} />
+    </Pressable>
   );
 }
 
@@ -118,6 +140,13 @@ const styles = StyleSheet.create({
     gap: spacing.md,
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
+  },
+  groupSpacing: {
+    marginTop: spacing.xxl,
+  },
+  divider: {
+    height: layout.borderWidth,
+    backgroundColor: colors.border,
   },
   rowLabel: {
     ...typography.body,

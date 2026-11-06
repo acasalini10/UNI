@@ -41,7 +41,9 @@
         "gre": "p. ej. 320"
       },
       "intake": "%{month} %{year}",
-      "deadline": "La mayoría de los programas cierra solicitudes entre 6 y 9 meses antes del inicio. Revisa la fecha límite de cada programa."
+      "deadline": "La mayoría de los programas cierra solicitudes entre 6 y 9 meses antes del inicio. Revisa la fecha límite de cada programa.",
+      "testPlaceholder": "p. ej. GMAT Focus 675 o GRE 320",
+      "startPlaceholder": "AAAA-MM"
     },
     "funding": {
       "title": "Presupuesto y financiación",
@@ -107,7 +109,10 @@
     "title": "Ajustes",
     "account": "CUENTA",
     "email": "Correo",
-    "logOut": "Cerrar sesión"
+    "logOut": "Cerrar sesión",
+    "support": "SOPORTE",
+    "terms": "Términos de servicio",
+    "privacy": "Aviso de privacidad"
   },
   "countries": {
     "AD": "Andorra",
@@ -364,5 +369,12 @@
   "months": {
     "1": "Enero",
     "9": "Septiembre"
+  },
+  "legal": {
+    "agreeStart": "Al continuar aceptas nuestros ",
+    "terms": "Términos",
+    "and": " y nuestro ",
+    "privacy": "Aviso de privacidad",
+    "agreeEnd": "."
   }
 }

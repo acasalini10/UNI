@@ -54,7 +54,9 @@
         "gre": "e.g. 320"
       },
       "intake": "%{month} %{year}",
-      "deadline": "Most programs close applications 6 to 9 months before the start. Check each program's deadline."
+      "deadline": "Most programs close applications 6 to 9 months before the start. Check each program's deadline.",
+      "testPlaceholder": "e.g. GMAT Focus 675 or GRE 320",
+      "startPlaceholder": "YYYY-MM"
     },
     "funding": {
       "title": "Budget and funding",
@@ -165,7 +167,10 @@
     "title": "Settings",
     "account": "ACCOUNT",
     "email": "Email",
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "support": "SUPPORT",
+    "terms": "Terms of service",
+    "privacy": "Privacy policy"
   },
   "countries": {
     "AD": "Andorra",
@@ -422,5 +427,12 @@
   "months": {
     "1": "January",
     "9": "September"
+  },
+  "legal": {
+    "agreeStart": "By continuing you agree to our ",
+    "terms": "Terms",
+    "and": " and ",
+    "privacy": "Privacy Policy",
+    "agreeEnd": "."
   }
 }
