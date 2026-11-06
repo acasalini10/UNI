@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): screen 1, email entry (new email → 1b, existing → 1c) and Sign in with Apple. Google, Terms and Privacy are added in later branches.
+// AI-assisted (Claude Code): screen 1, email entry (new email → 1b, existing → 1c) and Sign in with Apple, Terms and Privacy links. Google is added in a later branch.
 import * as AppleAuthentication from "expo-apple-authentication";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import { FormError } from "@/components/Message";
 import { TextField } from "@/components/TextField";
 import { type AuthError, emailExists, signInWithApple } from "@/data/auth";
 import { t } from "@/i18n";
+import { openLegalPage } from "@/legal";
 import { isValidEmail } from "@/lib/email";
 import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
 
@@ -82,6 +83,17 @@ export default function SignIn() {
               </View>
             </>
           )}
+          <Text style={styles.legal}>
+            {t("legal.agreeStart")}
+            <Text accessibilityRole="link" style={styles.legalLink} onPress={() => void openLegalPage("terms")}>
+              {t("legal.terms")}
+            </Text>
+            {t("legal.and")}
+            <Text accessibilityRole="link" style={styles.legalLink} onPress={() => void openLegalPage("privacy")}>
+              {t("legal.privacy")}
+            </Text>
+            {t("legal.agreeEnd")}
+          </Text>
         </>
       }
     >
@@ -165,5 +177,14 @@ const styles = StyleSheet.create({
   },
   busy: {
     opacity: 0.6,
+  },
+  legal: {
+    ...typography.small,
+    color: colors.textMuted,
+    textAlign: "center",
+  },
+  legalLink: {
+    color: colors.link,
+    textDecorationLine: "underline",
   },
 });
