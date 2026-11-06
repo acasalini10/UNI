@@ -1,23 +1,25 @@
-// AI-assisted (Claude Code): screen 2b, optional budget and funding profile setup.
+// AI-assisted (Claude Code): screen 2b, optional budget and funding profile setup; citizenship and origin with the searchable country picker.
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Button } from "@/components/Button";
+import { CountryPicker } from "@/components/CountryPicker";
 import { FormError } from "@/components/Message";
 import { ProfileSetupLayout } from "@/components/ProfileSetupLayout";
 import { getProfile, updateProfile } from "@/data/profile";
 import { t } from "@/i18n";
 import { colors, layout, radius, spacing, typography } from "@/theme";
 
-const countries = ["IT", "US", "GB", "DE", "IN"] as const;
 const budgets = ["under_10k", "10k_25k", "25k_50k", "over_50k", "not_sure"] as const;
 const payers = ["me", "family", "scholarship", "loan", "not_sure"] as const;
 const currencies = ["EUR", "USD", "GBP"] as const;
 
 export default function ProfileFunding() {
-  const [citizenships, setCitizenships] = useState<string[]>([]);
-  const [origin, setOrigin] = useState("");
+  const [citizenship, setCitizenship] = useState<string[]>([]);
+  const [secondCitizenship, setSecondCitizenship] = useState<string[]>([]);
+  const [showSecond, setShowSecond] = useState(false);
+  const [origin, setOrigin] = useState<string[]>([]);
   const [budget, setBudget] = useState<(typeof budgets)[number] | null>(null);
   const [currency, setCurrency] = useState("EUR");
   const [selectedPayers, setSelectedPayers] = useState<string[]>([]);
@@ -32,8 +34,12 @@ export default function ProfileFunding() {
         setError(result.error);
         return;
       }
-      setCitizenships(result.data.citizenships);
-      setOrigin(result.data.country_of_origin ?? "");
+      // Older saves could hold an empty second citizenship: drop it.
+      const [first, second] = result.data.citizenships.filter(Boolean);
+      setCitizenship(first ? [first] : []);
+      setSecondCitizenship(second ? [second] : []);
+      setShowSecond(Boolean(second));
+      setOrigin(result.data.country_of_origin ? [result.data.country_of_origin] : []);
       setBudget(result.data.budget_band as (typeof budgets)[number] | null);
       setCurrency(result.data.budget_currency ?? "EUR");
       setSelectedPayers(result.data.payers);
@@ -44,6 +50,11 @@ export default function ProfileFunding() {
     setSelectedPayers((current) => current.includes(value) ? current.filter((item) => item !== value) : [...current, value]);
   }
 
+  function removeSecond() {
+    setSecondCitizenship([]);
+    setShowSecond(false);
+  }
+
   async function finish(skip = false) {
     setError(null);
     if (skip) {
@@ -51,9 +62,11 @@ export default function ProfileFunding() {
       return;
     }
     setSaving(true);
+    // Only real picks are saved; the same country twice counts once.
+    const citizenships = [...new Set([...citizenship, ...secondCitizenship])];
     const result = await updateProfile({
       citizenships,
-      country_of_origin: origin || null,
+      country_of_origin: origin[0] ?? null,
       budget_band: budget,
       budget_currency: budget ? currency : null,
       payers: selectedPayers,
@@ -87,25 +100,22 @@ export default function ProfileFunding() {
       {loading ? <Text style={styles.subtitle}>{t("profile.funding.loading")}</Text> : (
         <>
           <Text style={styles.section}>{t("profile.funding.from")}</Text>
-          <Text style={styles.label}>{t("profile.funding.citizenship")}</Text>
-          <View style={styles.chips}>{countries.map((code) => (
-            <Choice key={code} label={t(`profile.citizenships.${code}`)} selected={citizenships[0] === code} onPress={() => setCitizenships([code, ...citizenships.slice(1)])} />
-          ))}</View>
-          <Pressable accessibilityRole="button" onPress={() => setCitizenships((current) => current.length < 2 ? [...current, ""] : current)} style={styles.add}>
-            <Text style={styles.addText}>{t("profile.funding.addCitizenship")}</Text>
-          </Pressable>
-          {citizenships.length > 1 && (
+          <CountryPicker label={t("profile.funding.citizenship")} value={citizenship} onChange={setCitizenship} />
+          {showSecond ? (
             <>
-              <Text style={styles.label}>{t("profile.funding.secondCitizenship")}</Text>
-              <View style={styles.chips}>{countries.map((code) => (
-                <Choice key={code} label={t(`profile.citizenships.${code}`)} selected={citizenships[1] === code} onPress={() => setCitizenships([citizenships[0], code])} />
-              ))}</View>
+              <CountryPicker label={t("profile.funding.secondCitizenship")} value={secondCitizenship} onChange={setSecondCitizenship} />
+              <Pressable accessibilityRole="button" onPress={removeSecond} style={styles.add}>
+                <Text style={styles.addText}>{t("profile.funding.removeCitizenship")}</Text>
+              </Pressable>
             </>
+          ) : (
+            citizenship.length > 0 && (
+              <Pressable accessibilityRole="button" onPress={() => setShowSecond(true)} style={styles.add}>
+                <Text style={styles.addText}>{t("profile.funding.addCitizenship")}</Text>
+              </Pressable>
+            )
           )}
-          <Text style={styles.label}>{t("profile.funding.origin")}</Text>
-          <View style={styles.chips}>{countries.map((code) => (
-            <Choice key={code} label={t(`profile.countries.${code}`)} selected={origin === code} onPress={() => setOrigin(code)} />
-          ))}</View>
+          <CountryPicker label={t("profile.funding.origin")} value={origin} onChange={setOrigin} />
           <View style={styles.info}><Text style={styles.infoText}>{t("profile.funding.euInfo")}</Text></View>
           <Text style={styles.section}>{t("profile.funding.budgetSection")}</Text>
           <View style={styles.budgetHeader}><Text style={styles.label}>{t("profile.funding.budget")}</Text><View style={styles.currencyChips}>{currencies.map((value) => <Choice key={value} label={value} selected={currency === value} onPress={() => setCurrency(value)} />)}</View></View>
@@ -130,7 +140,7 @@ const styles = StyleSheet.create({
   subtitle: { ...typography.body, color: colors.textMuted },
   section: { ...typography.overline, color: colors.textSecondary, marginTop: spacing.md },
   label: { ...typography.label, color: colors.text },
-  add: { paddingVertical: spacing.sm },
+  add: { paddingVertical: spacing.sm, minHeight: 44, justifyContent: "center" },
   addText: { ...typography.bodyStrong, color: colors.link, textDecorationLine: "underline" },
   info: { padding: spacing.lg, borderRadius: radius.md, borderWidth: layout.borderWidth, borderColor: colors.infoBannerBorder, backgroundColor: colors.infoBannerBg },
   infoText: { ...typography.body, color: colors.infoBannerText },

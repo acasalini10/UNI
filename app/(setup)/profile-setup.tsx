@@ -1,9 +1,10 @@
-// AI-assisted (Claude Code): screen 2, academic profile setup with typed profile persistence.
+// AI-assisted (Claude Code): screen 2, academic profile setup with typed profile persistence; country pickers with search, translated scale labels, GMAT/GRE choice and start-date chips.
 import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Button } from "@/components/Button";
+import { CountryPicker } from "@/components/CountryPicker";
 import { FormError } from "@/components/Message";
 import { ProfileSetupLayout } from "@/components/ProfileSetupLayout";
 import { TextField } from "@/components/TextField";
@@ -11,33 +12,56 @@ import { getProfile, updateProfile } from "@/data/profile";
 import { t } from "@/i18n";
 import { colors, layout, radius, spacing, typography } from "@/theme";
 
-const countries = ["US", "GB", "CH", "DE", "NL"] as const;
 const scales = ["10", "4.0", "100", "30", "uk_class", "other"] as const;
-const targets = countries;
+const ukClasses = ["first", "2:1", "2:2", "third"] as const;
+const tests = ["none", "gmat", "gre"] as const;
+type Scale = (typeof scales)[number];
+type Test = (typeof tests)[number];
 
-function parseTest(value: string): { testType: "gmat" | "gre" | null; testScore: number | null } {
-  const match = value.match(/(gmat|gre)[^\d]*(\d+)/i);
-  if (!match) return { testType: null, testScore: null };
-  return { testType: match[1].toLowerCase() as "gmat" | "gre", testScore: Number(match[2]) };
+// Master's programs start in September or January. Offer the next four intakes that are at least
+// six months away, so there is still time to apply. Values are "YYYY-MM".
+function upcomingIntakes(today = new Date()): string[] {
+  const earliest = new Date(today.getFullYear(), today.getMonth() + 6, 1);
+  const intakes: string[] = [];
+  for (let year = earliest.getFullYear(); intakes.length < 4; year++) {
+    for (const month of [1, 9]) {
+      if (new Date(year, month - 1, 1) >= earliest && intakes.length < 4) {
+        intakes.push(`${year}-${String(month).padStart(2, "0")}`);
+      }
+    }
+  }
+  return intakes;
+}
+
+function intakeLabel(value: string): string {
+  const [year, month] = value.split("-");
+  return t("profile.setup.intake", { month: t(`months.${Number(month)}`), year });
 }
 
 export default function ProfileSetup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [residence, setResidence] = useState("");
+  const [residence, setResidence] = useState<string[]>([]);
   const [university, setUniversity] = useState("");
   const [studies, setStudies] = useState("");
   const [fields, setFields] = useState("");
   const [grade, setGrade] = useState("");
-  const [scale, setScale] = useState<(typeof scales)[number]>("10");
+  const [scale, setScale] = useState<Scale>("10");
   const [gradeClass, setGradeClass] = useState("");
   const [ielts, setIelts] = useState("");
-  const [test, setTest] = useState("");
-  const [selectedTargets, setSelectedTargets] = useState<string[]>([]);
+  const [testType, setTestType] = useState<Test>("none");
+  const [testScore, setTestScore] = useState("");
+  const [targets, setTargets] = useState<string[]>([]);
   const [plannedStart, setPlannedStart] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<"offline" | "unknown" | "invalid" | null>(null);
+
+  // A start saved earlier stays selectable even when it is no longer among the next intakes.
+  const intakes = useMemo(() => {
+    const next = upcomingIntakes();
+    return plannedStart && !next.includes(plannedStart) ? [plannedStart, ...next] : next;
+  }, [plannedStart]);
 
   useEffect(() => {
     void getProfile().then((result) => {
@@ -46,37 +70,32 @@ export default function ProfileSetup() {
         setError(result.error);
         return;
       }
-      setFirstName(result.data.first_name ?? "");
-      setLastName(result.data.last_name ?? "");
-      setResidence(result.data.country_of_residence ?? "");
-      setUniversity(result.data.current_university ?? "");
-      setStudies(result.data.current_studies ?? "");
-      setFields(result.data.fields.join(", "));
-      setGrade(result.data.grade?.toString() ?? "");
-      setScale((result.data.grade_scale as (typeof scales)[number]) ?? "10");
-      setGradeClass(result.data.grade_class ?? "");
-      setIelts(result.data.ielts?.toString() ?? "");
-      setTest(result.data.test_type && result.data.test_score ? `${result.data.test_type.toUpperCase()} ${result.data.test_score}` : "");
-      setSelectedTargets(result.data.target_countries);
-      setPlannedStart(result.data.planned_start?.slice(0, 7) ?? "");
+      const profile = result.data;
+      setFirstName(profile.first_name ?? "");
+      setLastName(profile.last_name ?? "");
+      setResidence(profile.country_of_residence ? [profile.country_of_residence] : []);
+      setUniversity(profile.current_university ?? "");
+      setStudies(profile.current_studies ?? "");
+      setFields(profile.fields.join(", "));
+      setGrade(profile.grade?.toString() ?? "");
+      setScale((profile.grade_scale as Scale | null) ?? "10");
+      setGradeClass(profile.grade_class ?? "");
+      setIelts(profile.ielts?.toString() ?? "");
+      setTestType((profile.test_type as Test | null) ?? "none");
+      setTestScore(profile.test_score?.toString() ?? "");
+      setTargets(profile.target_countries);
+      setPlannedStart(profile.planned_start?.slice(0, 7) ?? "");
     });
   }, []);
 
-  const canContinue = useMemo(
-    () =>
-      !loading &&
-      [firstName, lastName, residence, university, studies, fields, plannedStart].every((value) => value.trim()) &&
-      /^\d{4}-(0[1-9]|1[0-2])$/.test(plannedStart) &&
-      selectedTargets.length > 0 &&
-      ((scale === "uk_class" && gradeClass.length > 0) || (scale !== "uk_class" && grade.trim().length > 0)),
-    [fields, firstName, grade, gradeClass, lastName, loading, plannedStart, residence, scale, selectedTargets, studies, university],
-  );
-
-  function toggleTarget(code: string) {
-    setSelectedTargets((current) =>
-      current.includes(code) ? current.filter((value) => value !== code) : current.length < 3 ? [...current, code] : current,
-    );
-  }
+  const canContinue =
+    !loading &&
+    [firstName, lastName, university, studies, fields].every((value) => value.trim()) &&
+    residence.length === 1 &&
+    targets.length > 0 &&
+    plannedStart.length > 0 &&
+    (scale === "uk_class" ? gradeClass.length > 0 : grade.trim().length > 0) &&
+    (testType === "none" || testScore.trim().length > 0);
 
   async function onContinue() {
     if (!canContinue) {
@@ -85,21 +104,20 @@ export default function ProfileSetup() {
     }
     setError(null);
     setSaving(true);
-    const parsedTest = parseTest(test);
     const result = await updateProfile({
       first_name: firstName.trim(),
       last_name: lastName.trim(),
-      country_of_residence: residence,
+      country_of_residence: residence[0],
       current_university: university.trim(),
       current_studies: studies.trim(),
       fields: fields.split(",").map((value) => value.trim()).filter(Boolean),
-      grade: scale === "uk_class" ? null : Number(grade),
+      grade: scale === "uk_class" ? null : Number(grade.replace(",", ".")),
       grade_class: scale === "uk_class" ? gradeClass : null,
       grade_scale: scale,
-      ielts: ielts.trim() ? Number(ielts) : null,
-      test_type: parsedTest.testType,
-      test_score: parsedTest.testScore,
-      target_countries: selectedTargets,
+      ielts: ielts.trim() ? Number(ielts.replace(",", ".")) : null,
+      test_type: testType === "none" ? null : testType,
+      test_score: testType === "none" ? null : Number(testScore),
+      target_countries: targets,
       planned_start: `${plannedStart}-01`,
       setup_step: 1,
     });
@@ -131,41 +149,89 @@ export default function ProfileSetup() {
         <>
           <Text style={styles.section}>{t("profile.setup.aboutYou")}</Text>
           <View style={styles.row}>
-            <TextField label={t("profile.setup.firstName")} value={firstName} onChangeText={setFirstName} />
-            <TextField label={t("profile.setup.lastName")} value={lastName} onChangeText={setLastName} />
-          </View>
-          <Text style={styles.label}>{t("profile.setup.residence")}</Text>
-          <View style={styles.chips}>{countries.map((code) => (
-            <Choice key={code} label={t(`profile.countries.${code}`)} selected={residence === code} onPress={() => setResidence(code)} />
-          ))}</View>
-          <TextField label={t("profile.setup.university")} value={university} onChangeText={setUniversity} />
-          <TextField label={t("profile.setup.studying")} value={studies} onChangeText={setStudies} />
-          <Text style={styles.section}>{t("profile.setup.masters")}</Text>
-          <TextField label={t("profile.setup.fields")} value={fields} onChangeText={setFields} placeholder={t("profile.setup.fieldsPlaceholder")} />
-          <View style={styles.row}>
-            <TextField label={t("profile.setup.grade")} value={grade} onChangeText={setGrade} keyboardType="decimal-pad" />
-            <View style={styles.choiceColumn}>
-              <Text style={styles.label}>{t("profile.setup.scale")}</Text>
-              <View style={styles.chips}>{scales.map((value) => (
-                <Choice key={value} label={value} selected={scale === value} onPress={() => setScale(value)} />
-              ))}</View>
+            <View style={styles.half}>
+              <TextField label={t("profile.setup.firstName")} value={firstName} onChangeText={setFirstName} textContentType="givenName" />
+            </View>
+            <View style={styles.half}>
+              <TextField label={t("profile.setup.lastName")} value={lastName} onChangeText={setLastName} textContentType="familyName" />
             </View>
           </View>
-          {scale === "uk_class" && (
-            <View style={styles.chips}>{["first", "2:1", "2:2", "third"].map((value) => (
-              <Choice key={value} label={value} selected={gradeClass === value} onPress={() => setGradeClass(value)} />
-            ))}</View>
+          <CountryPicker label={t("profile.setup.residence")} value={residence} onChange={setResidence} />
+          <TextField label={t("profile.setup.university")} value={university} onChangeText={setUniversity} />
+          <TextField label={t("profile.setup.studying")} value={studies} onChangeText={setStudies} />
+
+          <Text style={styles.section}>{t("profile.setup.masters")}</Text>
+          <TextField label={t("profile.setup.fields")} value={fields} onChangeText={setFields} placeholder={t("profile.setup.fieldsPlaceholder")} />
+
+          <Text style={styles.label}>{t("profile.setup.scale")}</Text>
+          <View style={styles.chips}>
+            {scales.map((value) => (
+              <Choice key={value} label={t(`profile.scales.${value}`)} selected={scale === value} onPress={() => setScale(value)} />
+            ))}
+          </View>
+          {scale === "uk_class" ? (
+            <>
+              <Text style={styles.label}>{t("profile.setup.grade")}</Text>
+              <View style={styles.chips}>
+                {ukClasses.map((value) => (
+                  <Choice key={value} label={t(`profile.ukClasses.${value}`)} selected={gradeClass === value} onPress={() => setGradeClass(value)} />
+                ))}
+              </View>
+            </>
+          ) : (
+            <TextField
+              label={t("profile.setup.grade")}
+              value={grade}
+              onChangeText={setGrade}
+              placeholder={t(`profile.gradePlaceholders.${scale}`)}
+              keyboardType="decimal-pad"
+            />
           )}
           <Text style={styles.hint}>{t("profile.setup.gradeHint")}</Text>
+
           <TextField label={t("profile.setup.english")} value={ielts} onChangeText={setIelts} placeholder={t("profile.setup.englishPlaceholder")} keyboardType="decimal-pad" />
-          <TextField label={t("profile.setup.test")} value={test} onChangeText={setTest} placeholder={t("profile.setup.testPlaceholder")} />
+          <Text style={styles.hint}>{t("profile.setup.englishHint")}</Text>
+
+          <Text style={styles.label}>{t("profile.setup.test")}</Text>
+          <View style={styles.chips}>
+            {tests.map((value) => (
+              <Choice
+                key={value}
+                label={t(`profile.tests.${value}`)}
+                selected={testType === value}
+                onPress={() => {
+                  setTestType(value);
+                  if (value === "none") setTestScore("");
+                }}
+              />
+            ))}
+          </View>
+          {testType !== "none" && (
+            <TextField
+              label={t(`profile.setup.testScore.${testType}`)}
+              value={testScore}
+              onChangeText={setTestScore}
+              placeholder={t(`profile.setup.testScorePlaceholder.${testType}`)}
+              keyboardType="number-pad"
+            />
+          )}
           <Text style={styles.hint}>{t("profile.setup.testHint")}</Text>
-          <Text style={styles.label}>{t("profile.setup.targets")}</Text>
-          <View style={styles.chips}>{targets.map((code) => (
-            <Choice key={code} label={t(`profile.countries.${code}`)} selected={selectedTargets.includes(code)} onPress={() => toggleTarget(code)} />
-          ))}</View>
-          <TextField label={t("profile.setup.start")} value={plannedStart} onChangeText={setPlannedStart} placeholder={t("profile.setup.startPlaceholder")} />
-          <View style={styles.deadline}><Text style={styles.deadlineText}>{t("profile.setup.deadline")}</Text></View>
+
+          <CountryPicker label={t("profile.setup.targets")} value={targets} onChange={setTargets} max={3} />
+
+          <Text style={styles.label}>{t("profile.setup.start")}</Text>
+          <View style={styles.chips}>
+            {intakes.map((value) => (
+              <Choice key={value} label={intakeLabel(value)} selected={plannedStart === value} onPress={() => setPlannedStart(value)} />
+            ))}
+          </View>
+          {plannedStart.length > 0 && (
+            <View style={styles.deadline}>
+              <Text style={styles.deadlineText}>
+                {t(plannedStart.endsWith("-01") ? "profile.setup.deadlineJanuary" : "profile.setup.deadlineSeptember")}
+              </Text>
+            </View>
+          )}
         </>
       )}
     </ProfileSetupLayout>
@@ -186,8 +252,8 @@ const styles = StyleSheet.create({
   subtitle: { ...typography.body, color: colors.textMuted },
   section: { ...typography.overline, color: colors.textSecondary, marginTop: spacing.md },
   row: { flexDirection: "row", gap: spacing.md },
+  half: { flex: 1 },
   label: { ...typography.label, color: colors.text },
-  choiceColumn: { flex: 1, gap: spacing.sm },
   chips: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
   choice: { minHeight: 40, paddingHorizontal: spacing.lg, borderRadius: radius.pill, borderWidth: layout.borderWidth, borderColor: colors.border, backgroundColor: colors.surface, justifyContent: "center" },
   choiceSelected: { borderColor: colors.accent, backgroundColor: colors.accentTint },
