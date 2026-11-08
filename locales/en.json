@@ -6,7 +6,8 @@
     "back": "Back",
     "change": "Change",
     "showPassword": "Show password",
-    "hidePassword": "Hide password"
+    "hidePassword": "Hide password",
+    "cancel": "Cancel"
   },
   "tabs": {
     "programs": "Programs",
@@ -170,7 +171,11 @@
     "logOut": "Log out",
     "support": "SUPPORT",
     "terms": "Terms of service",
-    "privacy": "Privacy policy"
+    "privacy": "Privacy policy",
+    "deleteAccount": "Delete account",
+    "deleteConfirmTitle": "Delete your account?",
+    "deleteConfirmMessage": "Your profile, applications and documents will be deleted. This can't be undone.",
+    "deleteConfirmButton": "Delete"
   },
   "countries": {
     "AD": "Andorra",
