@@ -1,12 +1,13 @@
-// AI-assisted (Claude Code): minimal Settings 13 with the account email, Terms and Privacy links, and a real Log out; other rows wait for their features.
+// AI-assisted (Claude Code): minimal Settings 13 with the account email, Terms and Privacy links, a real Log out and Delete account with a confirm alert; other rows wait for their features.
 import { SymbolView } from "expo-symbols";
 import { router } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { authErrorMessage } from "@/components/authErrorMessage";
 import { FormError } from "@/components/Message";
+import { deleteAccount } from "@/data/account";
 import { signOut } from "@/data/auth";
 import { useSession } from "@/data/session";
 import { t } from "@/i18n";
@@ -16,7 +17,9 @@ import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
 export default function Settings() {
   const { session } = useSession();
   const [signingOut, setSigningOut] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const busy = signingOut || deleting;
 
   async function onLogOut() {
     setSigningOut(true);
@@ -25,6 +28,24 @@ export default function Settings() {
     // On success the session guard in app/_layout.tsx sends the user to screen 1.
     if (!result.ok) {
       setSigningOut(false);
+      setError(authErrorMessage(result.error));
+    }
+  }
+
+  function confirmDelete() {
+    Alert.alert(t("settings.deleteConfirmTitle"), t("settings.deleteConfirmMessage"), [
+      { text: t("common.cancel"), style: "cancel" },
+      { text: t("settings.deleteConfirmButton"), style: "destructive", onPress: () => void onDelete() },
+    ]);
+  }
+
+  async function onDelete() {
+    setDeleting(true);
+    setError(null);
+    const result = await deleteAccount();
+    // On success the session is gone and the guard opens screen 1.
+    if (!result.ok) {
+      setDeleting(false);
       setError(authErrorMessage(result.error));
     }
   }
@@ -67,8 +88,8 @@ export default function Settings() {
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={t("settings.logOut")}
-            accessibilityState={{ disabled: signingOut, busy: signingOut }}
-            disabled={signingOut}
+            accessibilityState={{ disabled: busy, busy: signingOut }}
+            disabled={busy}
             onPress={() => void onLogOut()}
             style={({ pressed }) => [styles.group, styles.logOut, pressed && styles.pressed]}
           >
@@ -76,6 +97,20 @@ export default function Settings() {
               <ActivityIndicator color={colors.text} />
             ) : (
               <Text style={styles.logOutText}>{t("settings.logOut")}</Text>
+            )}
+          </Pressable>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={t("settings.deleteAccount")}
+            accessibilityState={{ disabled: busy, busy: deleting }}
+            disabled={busy}
+            onPress={confirmDelete}
+            style={({ pressed }) => [styles.logOut, pressed && styles.pressed]}
+          >
+            {deleting ? (
+              <ActivityIndicator color={colors.error} />
+            ) : (
+              <Text style={styles.deleteText}>{t("settings.deleteAccount")}</Text>
             )}
           </Pressable>
           {error && <FormError text={error} />}
@@ -170,6 +205,10 @@ const styles = StyleSheet.create({
   logOutText: {
     ...typography.bodyStrong,
     color: colors.text,
+  },
+  deleteText: {
+    ...typography.bodyStrong,
+    color: colors.error,
   },
   pressed: {
     opacity: 0.7,
