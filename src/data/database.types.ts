@@ -194,11 +194,11 @@ export type Database = {
           ai_consent: boolean
           ai_consent_at: string | null
           budget_band: string | null
-          budget_currency: string | null
           citizenships: string[]
           country_of_origin: string | null
           country_of_residence: string | null
           created_at: string
+          currency: string | null
           current_studies: string | null
           current_university: string | null
           fields: string[]
@@ -221,11 +221,11 @@ export type Database = {
           ai_consent?: boolean
           ai_consent_at?: string | null
           budget_band?: string | null
-          budget_currency?: string | null
           citizenships?: string[]
           country_of_origin?: string | null
           country_of_residence?: string | null
           created_at?: string
+          currency?: string | null
           current_studies?: string | null
           current_university?: string | null
           fields?: string[]
@@ -248,11 +248,11 @@ export type Database = {
           ai_consent?: boolean
           ai_consent_at?: string | null
           budget_band?: string | null
-          budget_currency?: string | null
           citizenships?: string[]
           country_of_origin?: string | null
           country_of_residence?: string | null
           created_at?: string
+          currency?: string | null
           current_studies?: string | null
           current_university?: string | null
           fields?: string[]

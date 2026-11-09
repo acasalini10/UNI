@@ -1,9 +1,24 @@
-// AI-assisted (Claude Code): typed profile reads and updates for profile setup screens, plus useSetupStep() for first-time routing.
+// AI-assisted (Claude Code): typed profile reads and updates for profile setup screens, useSetupStep() for first-time routing, and the student's display currency with the rates from rates.json.
 import { useEffect, useState } from "react";
 
+import { defaultCurrencyFor, type Rates } from "@/lib/cost";
+
+import ratesJson from "./rates.json";
 import { supabase } from "./supabase";
 
 import type { Database } from "./database.types";
+
+// Hand-updated exchange rates (business-rules.md §4); pass them to cost.ts.
+export const rates: Rates = ratesJson;
+
+// The currencies a student can pick: every currency in rates.json.
+export const currencyOptions = Object.keys(rates.rates);
+
+// Picked currency, or the default for the country of residence when the student
+// has not picked one yet (2b skipped).
+export function displayCurrency(profile: Pick<Profile, "currency" | "country_of_residence">): string {
+  return profile.currency ?? defaultCurrencyFor(profile.country_of_residence ?? "");
+}
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 export type ProfileUpdate = Database["public"]["Tables"]["profiles"]["Update"];

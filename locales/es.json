@@ -10,6 +10,10 @@
     "unknown": "Algo salió mal. Inténtalo de nuevo."
   },
   "profile": {
+    "currency": {
+      "label": "Tu moneda",
+      "hint": "Se usa para tu presupuesto y para mostrar el costo de los programas como estimación en tu moneda."
+    },
     "setup": {
       "title": "Tu perfil",
       "subtitle": "Lo comparamos con los requisitos publicados de cada programa. Nada se comparte.",
@@ -58,7 +62,7 @@
       "origin": "País de origen",
       "euInfo": "La ciudadanía cambia lo que pagas: como ciudadano de la UE puedes pagar tasas locales en muchos países europeos.",
       "budgetSection": "TU PRESUPUESTO",
-      "budget": "Máximo para matrícula y tasas",
+      "budget": "Máximo para matrícula y tasas ({{currency}})",
       "budgets": {
         "under_10k": "Menos de 10k",
         "10k_25k": "10k a 25k",
@@ -107,6 +111,13 @@
       "gmat": "GMAT",
       "gre": "GRE"
     }
+  },
+  "currencies": {
+    "USD": "Dólar estadounidense",
+    "MXN": "Peso mexicano",
+    "EUR": "Euro",
+    "GBP": "Libra esterlina",
+    "CHF": "Franco suizo"
   },
   "settings": {
     "title": "Ajustes",
