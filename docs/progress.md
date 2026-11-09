@@ -4,7 +4,7 @@ Claude reads this at the start of a session and updates it at the end. Keep it u
 
 ## Milestones
 - [ ] Oct 21: Expo app running in Expo Go; Supabase schema with RLS; sign in and profile setup
-- [ ] Oct 28 (Checkpoint 3): Programs and detail with real data; fit label and net cost tested
+- [ ] Oct 28 (Checkpoint 3): Programs and detail with real data; fit label and cost display tested
 - [ ] ~~Nov 2: submit to App Review~~ Dropped Nov 3: TestFlight only (decision 2026-11-03)
 - [ ] By about Nov 7: TestFlight build with external testing beta review submitted
 - [ ] Until Nov 17: fix issues; rehearse demo

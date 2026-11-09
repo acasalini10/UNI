@@ -1,21 +1,35 @@
 # Business rules
 
-Source of truth for the logic the app applies. Same rules as Checkpoint 2, section 3.1. If code and this file disagree, the file wins until we change it on purpose and log it in `decisions.md`.
+Source of truth for the logic the app applies. Based on Checkpoint 2, section 3.1; changed on 2026-11-09 (missing minimums, scholarships, costs and currency). If code and this file disagree, the file wins until we change it on purpose and log it in `decisions.md`.
+
+The only business rule is the fit label (`grades.ts`, `fit.ts`). `cost.ts` only formats the published cost and converts currency for display (section 4).
 
 ## 1. Fit label (`src/lib/fit.ts`)
 
-Inputs: student GPA on 0 to 10, student English score, program minimum GPA (converted to 0 to 10), program minimum English score, program `highly_selective` flag.
+Inputs: student GPA on 0 to 10 (missing when the scale is "Other"), student English score (may be missing), program minimum GPA (converted to 0 to 10, may be missing), program minimum English score (may be missing), program `highly_selective` flag.
+
+Output: a label key (`safety`, `match`, `reach`, `not_yet_eligible`, `not_rated`) and the status of each requirement (`met`, `below`, `no_minimum`, `missing_score`). `src/lib` returns keys, never display text: screens translate them with `t()` (`fit.labels.*` in `locales/*.json`).
+
+### Missing minimums (decision 2026-11-09)
+
+A missing minimum means our data has no published value, not that the program has no requirement. The same rule applies to every requirement (here and in the checklist, section 6).
+- The requirement row shows **"No published minimum"** with the subtext "Check with the university". Never "Not required".
+- Program IELTS minimum missing → the English check is skipped; the label comes from the GPA only.
+- Program GPA minimum missing → no Reach, Match or Safety: the chip shows **Not rated**, unless the student's English score is below a published minimum (**Not yet eligible**).
+- Both minimums missing → **Not rated**.
+
+Student with no English score yet (decision 2026-11-09): status `missing_score`. It does not change the label, which comes from the GPA; the English row shows the hint "Add your IELTS score".
 
 Order of checks:
-1. No English score yet → **Not yet eligible**, with the hint "Add your English score".
-2. English score below the program minimum → **Not yet eligible**.
-3. `margin = student GPA − program minimum GPA` (both on 0 to 10)
+1. The student has an English score below a published minimum → **Not yet eligible**. This wins over everything, also when the GPA minimum is missing.
+2. Program GPA minimum missing, or student GPA missing (scale "Other") → **Not rated**.
+3. `margin = student GPA − program minimum GPA` (both on 0 to 10):
    - `margin < −0.5` → **Not yet eligible**
    - `−0.5 ≤ margin ≤ 0.5` → **Reach** (up to half a point below the minimum still counts as Reach)
    - `0.5 < margin ≤ 1.0` → **Match**
    - `margin > 1.0` → **Safety**, except highly selective programs, which stay **Match**.
 
-Boundaries to test: margin exactly −0.5, 0, 0.5, 1.0; just below −0.5 (Not yet eligible); English exactly at the minimum (eligible); no English score.
+Boundaries to test: margin exactly −0.5, 0, 0.5, 1.0; just below −0.5 (Not yet eligible); English exactly at the minimum (eligible); no English score (label from the GPA, status `missing_score`). Missing minimums: IELTS minimum missing (GPA only); GPA minimum missing with English met or no English score (Not rated) and with English below the minimum (Not yet eligible); both missing (Not rated). Scale "Other" (Not rated, or Not yet eligible with English below the minimum).
 
 Shown next to every label: "This is not an admission probability." When the GPA is below the minimum, the reason says so: "Your grade is below the published minimum (8.0)".
 
@@ -27,28 +41,42 @@ v1 accepts IELTS only (0 to 9, step 0.5). TOEFL and others: later, with a publis
 
 Students come from any country, so both the student's grade and the program's minimum are stored on their original scale and converted to 0 to 10 before comparing.
 
-v1 scales (decision 2026-10-17):
-- `10`: 0 to 10 (Mexico, Spain and others): unchanged.
-- `4.0`: US GPA: linear, `gpa4 × 2.5` (3.0 → 7.5, 3.6 → 9.0, 4.0 → 10).
-- `100`: percentage: `pct / 10`.
-- `30`: Italian university average (18 to 30): `avg30 / 3` (18 → 6.0, 27 → 9.0, 30 → 10). "30 e lode" counts as 30.
-- `uk_class`: UK degree classification, fixed table: First → 9.0, 2:1 → 8.0, 2:2 → 7.0, Third → 6.0.
+Rule (decision 2026-11-09, replaces the 2026-10-17 conversions): the scale's passing grade maps to 6.0 (the Mexican passing grade), its best grade to 10, linear in between:
+`on10 = 6 + (grade − pass) / (best − pass) × 4`, kept between 0 and 10, rounded to 0.1.
+
+v1 scales (ids as stored in `profiles.grade_scale`):
+- `10`: 0 to 10 (Mexico, Spain and others), pass 6: unchanged.
+- `4.0`: US GPA, pass 2.0: 2.0 → 6.0, 3.0 → 8.0, 3.6 → 9.2, 4.0 → 10.
+- `100`: percentage, pass 60: 60 → 6.0, 80 → 8.0, 90 → 9.0.
+- `30`: Italian university average (18 to 30), pass 18: 18 → 6.0, 27 → 9.0, 30 → 10. "30 e lode" counts as 30.
+- `uk_class`: UK degree classification (`profiles.grade_class`: `first`, `2:1`, `2:2`, `third`), fixed table with the middle of each band: First → 9.5, 2:1 → 8.5, 2:2 → 7.5, Third → 6.5. Assumption to validate.
+- `other`: no conversion (null).
 
 The program's minimum goes through the same function as the student's grade, so both sides of the comparison use the same scale.
 
-Other scales: the student picks "Other" and gets no fit labels, only the program's requirements. Linear conversion is a simplification: say so in the app next to the label.
+Other scales: the student picks "Other" and gets no fit labels (Not rated, section 1), only the program's requirements. Linear conversion is a simplification: say so in the app next to the label.
 
-## 4. Net cost (`src/lib/cost.ts`)
+## 4. Cost display and currency (`src/lib/cost.ts`)
 
-`total = tuition (full program) + university fees (full program)`
-`net cost = total − grants the student is eligible for`
+No net cost (decision 2026-11-09). The app shows only the cost published on the university's site.
+- Fee: the international one only (non-EU / overseas).
+- Unit: the site's unit (per year, total or per credit), shown next to the amount. No conversion into a total.
+- Living costs are not included anywhere (decision 2026-10-17). Screens say "Living costs are not included" next to the cost.
+- The academic year of the amount is not stored for now.
+- The application fee is shown on its own in the key facts, never added to the cost.
 
-- Living costs are not included anywhere (decision 2026-10-17). Screens say "Living costs are not included" next to the total.
-- Programs list shows `total` as "Tuition and fees, full program". Program detail shows the breakdown and the net cost.
-- The application fee is shown on its own in the key facts, never added to the total.
-- Loans are shown separately and never subtracted.
-- All amounts stored in the program's currency; displayed in USD and MXN using one rate table with its date.
-- Net cost never shows below 0.
+Currency:
+- The student picks a currency in profile setup (not at sign-in). Default from the country of residence for 10 countries (MX → MXN, US → USD, GB → GBP, CH → CHF; IT, ES, DE, FR, NL, IE → EUR); every other country falls back to USD. It can be changed from Profile.
+- The main amount is always the original one, in the site's currency. Next to it: "≈" + the amount in the student's currency + the date of the rate.
+- Rates and their date live in a `rates.json` file, updated by hand for the MVP. `cost.ts` receives the rates as a parameter, so it stays pure.
+- The conversion is for display only: every comparison and stored value uses the site's currency.
+- `cost.ts` returns values (amount, currency code, unit key, rate date), never display text. Screens translate the unit with `t()` (`cost.units.*`) and pass the active locale to `formatMoney`.
+- Currency codes are case-insensitive (normalized to uppercase) and checked with `isValidCurrency(code, rates)` when program data is imported: valid only if it is a 3-letter code present in `rates.json`. `formatMoney` falls back to "CODE amount" if `Intl` rejects the code.
+
+## 4b. Scholarships
+
+- Listed in Program detail, nothing more.
+- Never subtracted from the cost. No eligibility check.
 
 ## 5. Feedback (v1)
 
@@ -60,7 +88,8 @@ Other scales: the student picks "Other" and gets no fit labels, only the program
 ## 6. Checklist (screen 12)
 
 - Requirements listed: only those the program asks for (GPA, English, GMAT/GRE if `test_required` is not `none`).
-- A requirement is met when the student's value reaches the program minimum, with the same conversion as the fit label. GMAT/GRE with no published minimum is met when the student has entered a score.
+- A requirement is met when the student's value reaches the program minimum, with the same conversion as the fit label.
+- Missing minimum (decision 2026-11-09, same rule as section 1): the row is still listed and shows "No published minimum" with "Check with the university". GPA or English with no published minimum never counts as missing. GMAT/GRE with no published minimum is met when the student has entered a score.
 - GPA up to 0.5 below the minimum (a Reach) shows an amber warning "Below the published minimum" but does not count as missing, so the student can still apply. More than 0.5 below counts as missing.
 - Documents: CV, motivational letter, reference letters (`letters_required`).
 - Items missing = unmet requirements + missing documents. Apply is enabled only at 0.

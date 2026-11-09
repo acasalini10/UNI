@@ -10,7 +10,7 @@ Screen numbers match `flows.md` and the design canvas.
 | 1, 1b, 1c Sign in | Email and password (with password rules and reset), Sign in with Apple, Google | |
 | 2, 2b Profile setup | Step 1 academic (grade, English, optional GMAT/GRE, fields, countries, start). Step 2 optional: citizenship, origin, budget, who pays | |
 | 3 Programs | List with filters, label, tuition and fees per program | Fit label, cost |
-| 4 Program detail | Key facts, requirements vs the student, costs and net cost, funding, careers preview, official link | Fit label, net cost |
+| 4 Program detail | Key facts, requirements vs the student, published cost, scholarships list, careers preview, official link | Fit label, cost display |
 | 8 Careers | Recruiters, roles, where graduates work, salary, employment rate; only figures with an official source | |
 | 5a, 5b, 9, 10, 11 Applications | Programs the student is applying to, with status, progress and days to deadline; add from search | |
 | 12 Checklist | Requirements and documents per program; Apply opens the university page; student marks it as submitted | Fit label (requirements) |
@@ -33,7 +33,7 @@ International students of any nationality applying to master's programs abroad. 
 | "Send to a parent to pay" | External payment link, not allowed on the Mexican storefront |
 | CV and motivation letter builders | Pass features, after payments |
 | Sponsored placements (B2B) | Shares student data with universities; starts after a user base exists |
-| Living costs in totals | Estimates that vary by student; v1 shows only tuition and university fees |
+| Living costs, net cost, scholarship eligibility | Estimates we cannot verify; v1 shows only the published international fee and lists scholarships (decision 2026-11-09) |
 | Notifications other than deadline reminders | Not built in v1; no switch without a feature behind it |
 | Face ID, cost-currency setting, "Download my data" | Not built in v1 |
 | Admission probability | No outcome data to support it |

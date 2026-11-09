@@ -12,7 +12,7 @@ CS50x final project README. Rules (cs50.harvard.edu/x/project):
 Delete this comment before submitting.
 -->
 
-UNI is an iOS app for international students of any nationality who want to study abroad. A student enters their grades, English test score, fields of interest and target countries once. UNI then shows real programs labelled by how well the student fits their published minimums (Match, Reach or Not yet eligible), what each program really costs after the grants the student qualifies for, and feedback on their CV and statement. v1 covers master's programs.
+UNI is an iOS app for international students of any nationality who want to study abroad. A student enters their grades, English test score, fields of interest and target countries once. UNI then shows real programs labelled by how well the student fits their published minimums (Match, Reach or Not yet eligible), what each program costs, and feedback on their CV and statement. v1 covers master's programs.
 
 <!-- TODO (≈150 words): the problem. Why choosing a program abroad is hard; what students do today; why I built this. -->
 
@@ -65,7 +65,7 @@ UNI is also the team project for Strategic Sales Management at Universidad Panam
 | `docs/product.md` | v1 scope, screens, what is left out |
 | `docs/flows.md` | Every screen, tap and state |
 | `docs/screens/` | Screenshots of the design, one per screen |
-| `docs/business-rules.md` | Fit labels, grade conversion, net cost |
+| `docs/business-rules.md` | Fit labels, grade conversion, cost |
 | `docs/data.md` | Where program data comes from and the columns we collect |
 | `docs/decisions.md` | Decision log (feeds the course Decision Log and the Design choices above) |
 | `docs/progress.md` | Where we are and the next step |

@@ -32,7 +32,7 @@ Rule for anything not on this list:
 | --- | --- | --- |
 | [ ] | `grades.ts` and tests | Alessandro |
 | [ ] | `fit.ts` and tests | Alessandro |
-| [ ] | `cost.ts` and tests (tuition + fees, no living costs) | Alessandro |
+| [ ] | `cost.ts` and tests (published fee with its unit, "≈" conversion with rates passed in; no net cost, decision 2026-11-09) | Alessandro |
 | [x] | Upgrade Expo SDK 57 → 58 (Expo Go supports only 58) | Claude Code |
 | [ ] | Review of `src/lib` (comments only, no code) | Claude Code |
 | [x] | Import the data sheet (CSV) into Supabase | Claude Code |
@@ -64,6 +64,7 @@ Rule for anything not on this list:
 | --- | --- | --- |
 | [ ] | Fix review issues | Depends on the issue (rule above) |
 | [ ] | Revoke the Sign in with Apple token on Delete account (before App Store release, decision 2026-11-08) | Claude Code |
+| [ ] | Display currency: `currency` column in `profiles` (migration), picker in profile setup 2/2b with default from country of residence, change from Profile; `rates.json` (decision 2026-11-09) | Claude Code |
 | [ ] | Rehearse the live demo | Alessandro + Valeria |
 
 ## After Nov 11
