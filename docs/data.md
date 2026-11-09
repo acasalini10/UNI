@@ -8,7 +8,8 @@ Every number a student sees must be true and traceable. No sample data in produc
 | Requirements, tuition, deadlines, length, language | The program's official page | Collected by hand. Store the URL and the date checked; the app shows "Checked on <date> · official page". |
 | University fees, application fee | The program's or university's official fees page | Same: URL and date. |
 | Careers (recruiters, regions, salary, employment rate) | The program's official employment or career outcomes report | Only what the report publishes; store its URL and year. No estimates. |
-| Grants | Official grant page | Same. v1: only grants with clear eligibility rules. |
+| Grants | Official grant page | Same. v1: listed only, never subtracted from the cost, no eligibility check (decision 2026-11-09). |
+| Exchange rates | One public reference rate source, chosen when `rates.json` is created | Updated by hand for the MVP; the file stores the rates and their date, and the app shows the date next to every "≈" amount. |
 | Rankings | QS, THE, US News | Show the rank exactly as published, with the ranking's name, edition year and a link to the page (decision 2026-10-17). Never round, combine or recompute ranks. QS terms ask for written consent for commercial use: request it in parallel (content@qs.com) and remove QS numbers if they refuse. |
 | Logos | None | **No logos or crests.** Trademarks without permission are a common App Review rejection (guideline 5.2) and suggest the university endorses UNI. Use initials badges. Logos come later, with permission, from universities that pay for placement. |
 

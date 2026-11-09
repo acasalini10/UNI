@@ -19,7 +19,7 @@ Mobile app (iOS first) that helps international students of any nationality choo
 
 ## Structure
 - `app/`: screens (Expo Router). `(auth)/`, `(tabs)/programs`, `(tabs)/applications`, `(tabs)/feedback`, `(tabs)/profile`
-- `src/lib/`: pure logic, no React, no Supabase: `fit.ts` (labels), `cost.ts` (net cost), `grades.ts` (conversion)
+- `src/lib/`: pure logic, no React, no Supabase: `fit.ts` (labels), `cost.ts` (cost display and currency conversion), `grades.ts` (conversion)
 - `src/data/`: Supabase queries, typed
 - `src/components/`: shared UI
 - `supabase/migrations/`: one SQL file per change
@@ -29,7 +29,7 @@ Mobile app (iOS first) that helps international students of any nationality choo
 ## Docs (read only when relevant)
 - `docs/product.md`: v1 scope and what is out
 - `docs/flows.md`: every screen, tap and state; screenshots in `docs/screens/`. Before building a screen, check its section has no open DECIDE items; if it does, ask me.
-- `docs/business-rules.md`: fit labels and net cost. Source of truth. If code and doc disagree, stop and ask.
+- `docs/business-rules.md`: fit labels, cost display and currency. Source of truth. If code and doc disagree, stop and ask.
 - `docs/decisions.md`: append a row for every non-trivial technical decision
 - `docs/progress.md`: read at the start of a session, update at the end
 - `docs/app-store.md`: release checklist

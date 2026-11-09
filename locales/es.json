@@ -50,7 +50,7 @@
     },
     "funding": {
       "title": "Presupuesto y financiación",
-      "subtitle": "Opcional. La ciudadanía y el país de origen muestran a qué becas puedes optar. El presupuesto y quién paga nos ayudan a entender quién usa UNI. Nada se comparte.",
+      "subtitle": "Opcional. La ciudadanía y el país de origen sirven para mostrarte las becas de tus países de destino. El presupuesto y quién paga nos ayudan a entender quién usa UNI. Nada se comparte.",
       "from": "DE DÓNDE ERES",
       "citizenship": "Ciudadanía",
       "secondCitizenship": "Segunda ciudadanía",
@@ -383,5 +383,24 @@
     "and": " y nuestro ",
     "privacy": "Aviso de privacidad",
     "agreeEnd": "."
+  },
+  "fit": {
+    "labels": {
+      "safety": "Safety",
+      "match": "Match",
+      "reach": "Reach",
+      "not_yet_eligible": "Aún no elegible",
+      "not_rated": "Sin evaluar"
+    },
+    "noMinimum": "Sin mínimo publicado",
+    "checkWithUniversity": "Consulta con la universidad",
+    "missingIelts": "Agrega tu puntaje de IELTS"
+  },
+  "cost": {
+    "units": {
+      "per_year": "/ año",
+      "total": "total",
+      "per_credit": "/ crédito"
+    }
   }
 }

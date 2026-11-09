@@ -61,7 +61,7 @@
     },
     "funding": {
       "title": "Budget and funding",
-      "subtitle": "Optional. Citizenship and country of origin show which scholarships you can apply for. Budget and who pays help us understand who uses UNI. Nothing is shared.",
+      "subtitle": "Optional. Citizenship and country of origin are used to show you the scholarships in your target countries. Budget and who pays help us understand who uses UNI. Nothing is shared.",
       "from": "WHERE YOU'RE FROM",
       "citizenship": "Citizenship",
       "secondCitizenship": "Second citizenship",
@@ -123,7 +123,7 @@
     "signIn": {
       "headlineStart": "Your master's abroad, ",
       "headlineHighlight": "without the guesswork.",
-      "subtitle": "Programs you can get into, what they really cost after grants, and feedback on your application.",
+      "subtitle": "Programs you can get into, what they cost, and feedback on your application.",
       "emailLabel": "Email",
       "emailPlaceholder": "you@example.com",
       "continueWithEmail": "Continue with email",
@@ -439,5 +439,24 @@
     "and": " and ",
     "privacy": "Privacy Policy",
     "agreeEnd": "."
+  },
+  "fit": {
+    "labels": {
+      "safety": "Safety",
+      "match": "Match",
+      "reach": "Reach",
+      "not_yet_eligible": "Not yet eligible",
+      "not_rated": "Not rated"
+    },
+    "noMinimum": "No published minimum",
+    "checkWithUniversity": "Check with the university",
+    "missingIelts": "Add your IELTS score"
+  },
+  "cost": {
+    "units": {
+      "per_year": "/ year",
+      "total": "total",
+      "per_credit": "/ credit"
+    }
   }
 }

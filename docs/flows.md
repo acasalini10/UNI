@@ -6,7 +6,7 @@ Every screen, every tap, every state. The visual design is the canvas; screensho
 - Tab bar: **Programs · Applications · Feedback · Profile**.
 - All text through i18n (`en`, `es`).
 - Uploads: PDF only, max 10 MB, from My Profile or the phone (iOS file picker).
-- Costs = tuition + university fees. Living costs are never shown in totals.
+- Cost = the international fee published on the university's site, in the site's unit (per year, total or per credit), with "≈" in the student's currency and the rate date. No net cost, no living costs (`business-rules.md` §4).
 - Every visible button or row works. If it does not work in v1, it is not in the build.
 - States to handle on every data screen: loading, empty, error, no connection.
 
@@ -88,7 +88,7 @@ Each card: initials badge, university, program, country and length, label, one-l
 States: loading, no programs match filters ("Clear filters"), grade scale "Other" (cards without labels + banner), no connection.
 
 ## 4 · Program detail (4b = scrolled, header pinned)
-Sections in order: campus image, badge, university, city · label, title, school, length, language · key facts **Deadline · Tuition · Application fee** · requirements vs you (GPA, English, background) with the reason for the label and "This is not an admission probability" · application timeline (opens, deadline, decisions, start) and requirements list · rankings · careers preview (top recruiters, top roles) · what it costs (tuition, university fees, total, grants, **net cost**, "Living costs are not included") · funding · "Checked on <date> · official page".
+Sections in order: campus image, badge, university, city · label, title, school, length, language · key facts **Deadline · Tuition · Application fee** · requirements vs you (GPA, English, background) with the reason for the label and "This is not an admission probability" · application timeline (opens, deadline, decisions, start) and requirements list · rankings · careers preview (top recruiters, top roles) · what it costs (published international fee with its unit, "≈" in the student's currency with the rate date, "Living costs are not included") · scholarships (list only, never subtracted) · funding · "Checked on <date> · official page".
 | Element | Tap goes to |
 | --- | --- |
 | Back | 3 (same scroll position and filters) |

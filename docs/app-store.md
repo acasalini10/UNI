@@ -54,10 +54,10 @@ Risks in the current build (Nov 5, built before PR #11):
 - No account deletion yet (guideline 5.1.1(v)). Usually not checked in beta review, but required for the App Store.
 
 ### Beta App Description (English)
-UNI helps international students choose a master's program abroad and strengthen their application. This beta lets you create an account and set up your academic profile. Next builds add the program list with fit labels and net cost, application tracking, and AI feedback on your CV and statement.
+UNI helps international students choose a master's program abroad and strengthen their application. This beta lets you create an account and set up your academic profile. Next builds add the program list with fit labels and official costs, application tracking, and AI feedback on your CV and statement.
 
 ### Beta App Description (Spanish)
-UNI ayuda a estudiantes internacionales a elegir una maestría en el extranjero y a mejorar su solicitud. En esta beta puedes crear una cuenta y configurar tu perfil académico. Las próximas versiones agregan la lista de programas con etiqueta de compatibilidad y costo neto, el seguimiento de solicitudes y retroalimentación con IA sobre tu CV y tu carta de motivación.
+UNI ayuda a estudiantes internacionales a elegir una maestría en el extranjero y a mejorar su solicitud. En esta beta puedes crear una cuenta y configurar tu perfil académico. Las próximas versiones agregan la lista de programas con etiqueta de compatibilidad y costos oficiales, el seguimiento de solicitudes y retroalimentación con IA sobre tu CV y tu carta de motivación.
 
 ### What to Test (English)
 - Create an account with email and password, or with Sign in with Apple.
