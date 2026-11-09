@@ -21,6 +21,10 @@
     "unknown": "Something went wrong. Try again."
   },
   "profile": {
+    "currency": {
+      "label": "Your currency",
+      "hint": "Used for your budget and to show program costs as an estimate in your currency."
+    },
     "setup": {
       "title": "Your profile",
       "subtitle": "We compare it with each program's published requirements. Nothing is shared.",
@@ -69,7 +73,7 @@
       "origin": "Country of origin",
       "euInfo": "Citizenship changes what you pay: as an EU citizen you may pay home fees in many European countries.",
       "budgetSection": "YOUR BUDGET",
-      "budget": "Most you can spend on tuition and fees",
+      "budget": "Most you can spend on tuition and fees ({{currency}})",
       "budgets": {
         "under_10k": "Under 10k",
         "10k_25k": "10k to 25k",
@@ -118,6 +122,13 @@
       "gmat": "GMAT",
       "gre": "GRE"
     }
+  },
+  "currencies": {
+    "USD": "US dollar",
+    "MXN": "Mexican peso",
+    "EUR": "Euro",
+    "GBP": "British pound",
+    "CHF": "Swiss franc"
   },
   "auth": {
     "signIn": {

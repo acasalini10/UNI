@@ -1,19 +1,19 @@
-// AI-assisted (Claude Code): screen 2b, optional budget and funding profile setup; citizenship and origin with the searchable country picker.
+// AI-assisted (Claude Code): screen 2b, optional budget and funding profile setup; citizenship and origin with the searchable country picker; display currency (also used for the budget), default from the country of residence.
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Button } from "@/components/Button";
 import { CountryPicker } from "@/components/CountryPicker";
+import { CurrencyPicker } from "@/components/CurrencyPicker";
 import { FormError } from "@/components/Message";
 import { ProfileSetupLayout } from "@/components/ProfileSetupLayout";
-import { getProfile, updateProfile } from "@/data/profile";
+import { displayCurrency, getProfile, updateProfile } from "@/data/profile";
 import { t } from "@/i18n";
 import { colors, layout, radius, spacing, typography } from "@/theme";
 
 const budgets = ["under_10k", "10k_25k", "25k_50k", "over_50k", "not_sure"] as const;
 const payers = ["me", "family", "scholarship", "loan", "not_sure"] as const;
-const currencies = ["EUR", "USD", "GBP"] as const;
 
 export default function ProfileFunding() {
   const [citizenship, setCitizenship] = useState<string[]>([]);
@@ -21,7 +21,7 @@ export default function ProfileFunding() {
   const [showSecond, setShowSecond] = useState(false);
   const [origin, setOrigin] = useState<string[]>([]);
   const [budget, setBudget] = useState<(typeof budgets)[number] | null>(null);
-  const [currency, setCurrency] = useState("EUR");
+  const [currency, setCurrency] = useState("USD");
   const [selectedPayers, setSelectedPayers] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -41,7 +41,7 @@ export default function ProfileFunding() {
       setShowSecond(Boolean(second));
       setOrigin(result.data.country_of_origin ? [result.data.country_of_origin] : []);
       setBudget(result.data.budget_band as (typeof budgets)[number] | null);
-      setCurrency(result.data.budget_currency ?? "EUR");
+      setCurrency(displayCurrency(result.data));
       setSelectedPayers(result.data.payers);
     });
   }, []);
@@ -68,7 +68,7 @@ export default function ProfileFunding() {
       citizenships,
       country_of_origin: origin[0] ?? null,
       budget_band: budget,
-      budget_currency: budget ? currency : null,
+      currency,
       payers: selectedPayers,
       setup_step: 2,
     });
@@ -118,7 +118,8 @@ export default function ProfileFunding() {
           <CountryPicker label={t("profile.funding.origin")} value={origin} onChange={setOrigin} />
           <View style={styles.info}><Text style={styles.infoText}>{t("profile.funding.euInfo")}</Text></View>
           <Text style={styles.section}>{t("profile.funding.budgetSection")}</Text>
-          <View style={styles.budgetHeader}><Text style={styles.label}>{t("profile.funding.budget")}</Text><View style={styles.currencyChips}>{currencies.map((value) => <Choice key={value} label={value} selected={currency === value} onPress={() => setCurrency(value)} />)}</View></View>
+          <CurrencyPicker label={t("profile.currency.label")} hint={t("profile.currency.hint")} value={currency} onChange={setCurrency} />
+          <Text style={styles.label}>{t("profile.funding.budget", { currency })}</Text>
           <View style={styles.chips}>{budgets.map((value) => <Choice key={value} label={t(`profile.funding.budgets.${value}`)} selected={budget === value} onPress={() => setBudget(value)} />)}</View>
           <Text style={styles.hint}>{t("profile.funding.livingCosts")}</Text>
           <Text style={styles.label}>{t("profile.funding.payer")}</Text>
@@ -144,8 +145,6 @@ const styles = StyleSheet.create({
   addText: { ...typography.bodyStrong, color: colors.link, textDecorationLine: "underline" },
   info: { padding: spacing.lg, borderRadius: radius.md, borderWidth: layout.borderWidth, borderColor: colors.infoBannerBorder, backgroundColor: colors.infoBannerBg },
   infoText: { ...typography.body, color: colors.infoBannerText },
-  budgetHeader: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  currencyChips: { flexDirection: "row", gap: spacing.xs },
   chips: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
   choice: { minHeight: 40, paddingHorizontal: spacing.lg, borderRadius: radius.pill, borderWidth: layout.borderWidth, borderColor: colors.border, backgroundColor: colors.surface, justifyContent: "center" },
   choiceSelected: { borderColor: colors.accent, backgroundColor: colors.accentTint },

@@ -1,74 +1,71 @@
 # Tasks v1
 
-Who does what, decided once so we don't have to decide again for every task. Tick tasks as they are done. Screen numbers match `flows.md`.
+Who does what. The first open row of **Next up** is the next task. Tick a row when it is done and move it to **Done** at the end of the session. Screen numbers match `flows.md`.
 
 Rule for anything not on this list:
-- Touches the database, login, storage, API keys or more than one part of the app → **Claude Code**
-- A screen or piece you can check just by looking at the app → **Copilot** (agent mode or a GitHub issue assigned to Copilot)
 - Anything in `src/lib/` → **Alessandro** (CS50)
+- Everything else in the code → **Claude Code** (screens moved from Copilot on Nov 9: nothing had started and the demo is on Nov 18)
+- Copilot only for small UI fixes Alessandro assigns by hand
 
-## Week 1: Oct 15 to 21 (setup)
+## Next up: to the Nov 18 demo (in order)
+| ✓ | When | Task | Who |
+| --- | --- | --- | --- |
+| [ ] | Nov 10 | Cost unit for each program (per year, total, per credit): new CSV column + migration, needed by `cost.ts` | Claude Code; units filled by Valeria |
+| [ ] | Nov 10–11 | Programs screen 3: list, filters, initials badge, fit label, published cost | Claude Code |
+| [ ] | Nov 10–11 | Program detail screen 4: key facts, requirements vs you, costs with "≈", scholarships listed, official link | Claude Code |
+| [ ] | Nov 11–12 | PDF upload to Storage and file picker sheet 12d (PDF only, 10 MB) | Claude Code |
+| [ ] | Nov 11–12 | My Profile 5 with per-document upload | Claude Code |
+| [ ] | Nov 12–13 | Applications screens 5a, 5b, 9, 10, 11 | Claude Code |
+| [ ] | Nov 12–13 | Checklist 12 (requirements, documents, Apply, "I've submitted") | Claude Code |
+| [ ] | Nov 13–14 | Feedback Edge Function: consent check, 3 rounds a day, program requirements in the prompt, Claude API call | Claude Code |
+| [ ] | Nov 13–14 | Feedback screens 6a (with AI consent) and 6 | Claude Code |
+| [ ] | Nov 15 | Deadline reminders (local notifications) | Claude Code |
+| [ ] | Nov 15 | Careers screen 8, only if time: hide every block without an official source | Claude Code |
+| [ ] | Nov 16–17 | Production build, TestFlight install, fixes | Alessandro, with Claude Code |
+| [ ] | Nov 17 | Rehearse the live demo | Alessandro + Valeria |
+
+## In parallel (not code)
 | ✓ | Task | Who |
 | --- | --- | --- |
-| [x] | Enroll in the Apple Developer Program (individual), Oct 15 | Alessandro |
-| [x] | Apple identity check approved (watch email) | Alessandro |
-| [x] | Expo account (add Valeria to it); install Expo Go on iPhone | Alessandro |
-| [x] | Replace Next.js with Expo (Expo Router, TypeScript, Jest, ESLint) | Claude Code |
-| [x] | Final screen design on the canvas (Oct 17) | Alessandro + Valeria |
-| [x] | Export one PNG per screen from the canvas into `docs/screens/` | Alessandro |
-| [x] | Supabase dev project, client in `src/data/supabase.ts`, keys in Codespaces secrets | Claude Code |
-| [x] | Database schema with RLS: profiles (incl. step 2 fields, AI consent), programs, scholarships, applications (status, submitted_at), documents, feedback_rounds; private Storage bucket for PDFs | Claude Code |
-| [x] | i18n setup (`i18n-js`, `expo-localization`, `locales/en.json`, `locales/es.json`) | Claude Code |
-| [x] | `src/theme.ts`: colors, fonts, spacing from the design canvas | Copilot |
-| [x] | Tab bar: Programs · Applications · Feedback · Profile | Copilot |
-| [x] | Sign in 1, 1b, 1c: email check, password rules, reset email, Sign in with Apple (Google postponed until after Programs, decision 2026-11-03) | Claude Code |
-| [x] | Profile setup screens 2 and 2b (PR #11, Nov 5; first-time routing #17; country pickers #25) | Copilot |
-| [ ] | Decide grade conversions for each scale (`business-rules.md` §3) | Alessandro + Valeria |
-| [ ] | Review `flows.md` and close every DECIDE item | Alessandro + Valeria |
-| [x] | Program data sheet, 30 to 50 programs (`data.md`), by Oct 25 (31 programs, 24 universities, imported Nov 6) | Valeria |
+| [ ] | TestFlight build with #11, #16, #21 sent to external beta review (build log must show both `EXPO_PUBLIC_SUPABASE_*` variables; demo account with 2 and 2b filled; Test Information checked against `app-store.md`) | Alessandro |
+| [ ] | TestFlight public link for classmates; track sign-ups and feedback rounds for the defense | Alessandro |
+| [ ] | Validate the UK class mid-band values (First 9.5, 2:1 8.5, 2:2 7.5, Third 6.5) | Alessandro |
+| [ ] | Program data: set `checked_by` to the real checker, fix Duke and Oxford deadlines (already passed), decide whether IE Business School and IE University become one university | Valeria |
+| [ ] | Spanish strings: switch `locales/es.json` from Spain forms ("máster", "nota") to Mexican Spanish | Valeria |
+| [ ] | Screenshots and store description (ES and EN) | Valeria + Alessandro |
+| [ ] | Email content@qs.com for permission to show QS rankings | Alessandro |
 
-## Week 2: Oct 22 to 28 (business rules, Checkpoint 3)
+## After the demo
 | ✓ | Task | Who |
 | --- | --- | --- |
-| [ ] | `grades.ts` and tests | Alessandro |
-| [ ] | `fit.ts` and tests | Alessandro |
-| [ ] | `cost.ts` and tests (published fee with its unit, "≈" conversion with rates passed in; no net cost, decision 2026-11-09) | Alessandro |
-| [x] | Upgrade Expo SDK 57 → 58 (Expo Go supports only 58) | Claude Code |
-| [ ] | Review of `src/lib` (comments only, no code) | Claude Code |
-| [x] | Import the data sheet (CSV) into Supabase | Claude Code |
-| [ ] | Programs screen 3: list, filters, initials badge, label, tuition and fees | Copilot |
-| [ ] | Program detail screen 4 (key facts, costs, official link) | Copilot |
-| [ ] | Careers screen 8: hide every block without an official source | Copilot |
-| [x] | **Oct 28 checkpoint:** if Programs and fit labels do not work with real data, drop the App Store target and use TestFlight only (decided Nov 3: TestFlight only) | Alessandro |
-
-## Week 3: Oct 29 to Nov 2 (applications, feedback, release)
-| ✓ | Task | Who |
-| --- | --- | --- |
-| [ ] | TestFlight public link for classmates from Oct 29 (external testing needs a short beta review): track sign-ups and feedback rounds for the defense | Alessandro |
-| [ ] | Applications screens 5a, 5b, 9, 10, 11 | Copilot |
-| [ ] | Checklist 12 (requirements, documents, Apply, "I've submitted") | Copilot |
-| [ ] | PDF upload to Storage and file picker sheet 12d (PDF only, 10 MB) | Claude Code |
-| [ ] | My Profile 5 with per-document upload | Copilot |
-| [ ] | Feedback function: consent check, daily limit, program requirements in the prompt, Claude API call | Claude Code |
-| [ ] | Feedback screens 6a (with AI consent) and 6 | Copilot |
-| [ ] | Settings 13 (minimal version done: email, Terms, Privacy, Log out, Delete account; other rows wait for their features) | Copilot |
-| [ ] | Deadline reminders (local notifications) | Claude Code |
-| [x] | Delete account (all rows and files), Nov 8; Apple token revocation postponed (row in Week 4) | Claude Code |
-| [ ] | Spanish strings in `locales/es.json` | Valeria |
-| [x] | Privacy policy page (names Anthropic for AI feedback), support email (#19; terms of service #23) | Valeria |
-| [ ] | Icon, screenshots, store description (ES and EN) (icon done, #18) | Valeria + Alessandro |
-| [ ] | EAS build, TestFlight on iPhone, external testing beta review (by about Nov 7). Done Nov 5: `eas.json`, certificates, first production build. To do: `eas submit`, internal tester, beta review (needs privacy policy URL and demo account) | Alessandro, with Claude Code |
-
-## Week 4: Nov 3 to 11
-| ✓ | Task | Who |
-| --- | --- | --- |
-| [ ] | Fix review issues | Depends on the issue (rule above) |
 | [ ] | Revoke the Sign in with Apple token on Delete account (before App Store release, decision 2026-11-08) | Claude Code |
-| [ ] | Display currency: `currency` column in `profiles` (migration), picker in profile setup 2/2b with default from country of residence, change from Profile; `rates.json` (decision 2026-11-09) | Claude Code |
-| [ ] | Rehearse the live demo | Alessandro + Valeria |
-
-## After Nov 11
-| ✓ | Task | Who |
-| --- | --- | --- |
+| [ ] | Google sign-in (postponed, decision 2026-11-03) | Claude Code |
+| [ ] | Settings 13: remaining rows (Language, AI consent switch) as their features exist | Claude Code |
 | [ ] | CS50 README sections, written by me | Alessandro |
 | [ ] | CS50 video (max 3 min) and submit50, by Dec 31 | Alessandro |
+
+## Done
+| Date | Task | Who |
+| --- | --- | --- |
+| Oct 15 | Apple Developer Program enrolled; identity check approved | Alessandro |
+| Oct 15 | Expo account (Valeria added); Expo Go on iPhone | Alessandro |
+| Oct 15 | Next.js replaced with Expo (Expo Router, TypeScript, Jest, ESLint) | Claude Code |
+| Oct 17 | Final screen design on the canvas; one PNG per screen in `docs/screens/` | Alessandro + Valeria |
+| Oct 18 | Supabase project and client; schema with RLS; private Storage bucket for PDFs | Claude Code |
+| Oct 28 | i18n setup; upgrade to Expo SDK 58 | Claude Code |
+| Oct 29 | `src/theme.ts` (colors, fonts, spacing) | Copilot |
+| Nov 3 | Tab bar (#9) | Copilot |
+| Nov 3 | Sign in 1, 1b, 1c, 1d (#8) and Sign in with Apple (#10) | Claude Code |
+| Nov 3 | Oct 28 checkpoint decided: TestFlight only | Alessandro |
+| Nov 5 | Profile setup 2 and 2b (#11); first-time routing (#17) | Copilot, Claude Code |
+| Nov 5 | Settings 13 minimal: email, Log out (#16); Terms and Privacy (#24); Delete account (#28) | Claude Code |
+| Nov 5 | `eas.json`, certificates, first production builds on TestFlight internal testing (#12, #20, #21) | Alessandro, with Claude Code |
+| Nov 5 | App icon (#18) | Valeria + Alessandro |
+| Nov 5 | Privacy policy page, support email (#19) | Valeria |
+| Nov 6 | Terms of service (#23); country pickers on 2 and 2b (#25) | Claude Code |
+| Nov 6 | Program data sheet: 31 programs, 24 universities, imported into Supabase (#26) | Valeria, Claude Code |
+| Nov 8 | Delete account: Edge Function, all rows and files (#28) | Claude Code |
+| Nov 9 | Business rules closed: grade conversion, missing minimums, cost display, currency (#29) | Alessandro + Valeria |
+| Nov 9 | Every DECIDE item in `flows.md` closed | Alessandro + Valeria |
+| Nov 9 | Display currency: `profiles.currency`, picker on 2b, row on the Profile tab, `rates.json`; tested in Expo Go | Claude Code |
+| Nov 9 | `grades.ts`, `fit.ts`, `cost.ts` (#30); review and tests by Claude Code at Alessandro's request | Alessandro |

@@ -67,7 +67,7 @@ Without an IELTS score every program shows **Not yet eligible** with the hint "A
 
 ## 2b · Profile setup, step 2 of 2 (budget and funding, all optional)
 Subtitle says why we ask: citizenship and origin find scholarships; budget and payer help us understand who uses UNI. Nothing is shared.
-Citizenship (+ add a second), country of origin, info box on EU home fees. Budget for tuition and fees (chips: under 10k, 10–25k, 25–50k, over 50k, not sure; currency selectable). Who will pay (multi: me, family, scholarship, loan, not sure). Scholarship hint based on citizenship.
+Citizenship (+ add a second), country of origin, info box on EU home fees. Your currency (sheet with the currencies in `rates.json`; default from the country of residence; used for the budget and for the "≈" cost). Budget for tuition and fees in that currency (chips: under 10k, 10–25k, 25–50k, over 50k, not sure). "Skip for now" saves nothing: the currency stays the default for the country of residence. The currency can be changed later from the Profile tab. Who will pay (multi: me, family, scholarship, loan, not sure). Scholarship hint based on citizenship.
 | Element | Tap goes to |
 | --- | --- |
 | Show my programs | 3 |
