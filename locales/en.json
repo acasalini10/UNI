@@ -469,5 +469,78 @@
       "total": "total",
       "per_credit": "/ credit"
     }
+  },
+  "programs": {
+    "loading": "Loading programs...",
+    "retry": "Try again",
+    "summary": {
+      "gpa": "GPA {{gpa}}",
+      "ielts": "IELTS {{ielts}}",
+      "noIelts": "No IELTS yet",
+      "edit": "Edit"
+    },
+    "filters": {
+      "title": "Filters",
+      "reset": "Reset",
+      "clear": "Clear",
+      "all": "all",
+      "country": "Country",
+      "field": "Field",
+      "fit": "Fit",
+      "deadline": "Deadline",
+      "sort": "Sort",
+      "deadlines": {
+        "any": "Any deadline",
+        "open": "Still open",
+        "3m": "Closes in 3 months",
+        "6m": "Closes in 6 months"
+      },
+      "sorts": {
+        "fit": "best fit",
+        "cost": "lowest cost",
+        "deadline": "nearest deadline"
+      }
+    },
+    "otherScale": "We can’t convert your grading scale, so programs have no fit label. You still see each program’s requirements.",
+    "disclaimer": "Labels compare your profile with published minimums. They are not an admission probability.",
+    "empty": {
+      "title": "No programs match your filters.",
+      "clear": "Clear filters"
+    },
+    "reason": {
+      "highlySelective": "Highly selective",
+      "englishBelow": "Needs IELTS {{min}}, you have {{you}}",
+      "noGpaMinimum": "No published GPA minimum",
+      "noStudentGpa": "Your grading scale can’t be compared",
+      "gpaBelow": "Your grade is below the published minimum ({{min}})",
+      "gpaAt": "GPA at the minimum ({{min}})",
+      "gpaAbove": "GPA {{diff}} above the minimum ({{min}})",
+      "englishMet": "IELTS meets {{min}}"
+    },
+    "card": {
+      "months": {
+        "one": "1 month",
+        "other": "{{count}} months"
+      },
+      "years": {
+        "one": "1 year",
+        "other": "{{count}} years"
+      },
+      "cost": {
+        "withFees": {
+          "total": "Tuition and fees, full program",
+          "per_year": "Tuition and fees, per year",
+          "per_credit": "Tuition and fees, per credit"
+        },
+        "tuitionOnly": {
+          "total": "Tuition, full program",
+          "per_year": "Tuition, per year",
+          "per_credit": "Tuition, per credit"
+        }
+      },
+      "approx": "≈ {{amount}} · rate of {{date}}",
+      "deadline": "Deadline {{date}}",
+      "noDeadline": "No published deadline"
+    }
   }
 }
