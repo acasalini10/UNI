@@ -279,11 +279,12 @@ export type Database = {
           careers_url: string | null
           checked_by: string
           checked_on: string
+          cost_unit: string
           created_at: string
           currency: string
           deadline: string | null
           degree: string
-          fees_total: number
+          fees_total: number | null
           field: string
           highly_selective: boolean
           id: string
@@ -306,11 +307,12 @@ export type Database = {
           careers_url?: string | null
           checked_by: string
           checked_on: string
+          cost_unit?: string
           created_at?: string
           currency: string
           deadline?: string | null
           degree?: string
-          fees_total?: number
+          fees_total?: number | null
           field: string
           highly_selective?: boolean
           id?: string
@@ -333,11 +335,12 @@ export type Database = {
           careers_url?: string | null
           checked_by?: string
           checked_on?: string
+          cost_unit?: string
           created_at?: string
           currency?: string
           deadline?: string | null
           degree?: string
-          fees_total?: number
+          fees_total?: number | null
           field?: string
           highly_selective?: boolean
           id?: string

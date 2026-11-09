@@ -32,8 +32,9 @@ One row per program. Column names match the database.
 | `min_gpa_scale` | 4.0 | `4.0`, `10`, `100`, `uk_class` |
 | `min_ielts` | 7.0 | Blank if not published |
 | `highly_selective` | TRUE | Acceptance rate under ~20% or stated as highly selective |
-| `tuition_total` | 45000 | Whole program |
-| `fees_total` | 3600 | Mandatory university fees, whole program |
+| `tuition_total` | 45000 | International tuition, in the unit of `cost_unit` |
+| `fees_total` | 3600 | Mandatory university fees, same unit. Blank if not published (0 only if the site says there are none) |
+| `cost_unit` | total | `per_year`, `total` or `per_credit`, as the site publishes tuition and fees |
 | `application_fee` | 85 | |
 | `test_required` | optional | `none`, `optional`, `required` (GMAT or GRE) |
 | `letters_required` | 3 | Reference letters |
