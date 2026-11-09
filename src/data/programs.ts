@@ -24,6 +24,39 @@ export async function getPrograms(): Promise<ProgramsResult> {
   return { ok: true, data };
 }
 
+export type ProgramResult = { ok: true; data: ProgramWithUniversity } | { ok: false; error: "offline" | "unknown" | "not_found" };
+
+export async function getProgram(id: string): Promise<ProgramResult> {
+  const { data, error } = await supabase
+    .from("programs")
+    .select("*, universities!inner(name, city, country, initials, brand_color)")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) return { ok: false, error: error.code ? "unknown" : "offline" };
+  if (!data) return { ok: false, error: "not_found" };
+  return { ok: true, data };
+}
+
+// Tuition and fees as separate lines for Program detail; total only when getCardCost could sum them.
+export interface DetailCosts {
+  tuition: CostValues;
+  fees: CostValues | null; // null = fees not published
+  total: CostValues | null;
+}
+
+export function detailCosts(program: ProgramWithUniversity, profile: Profile): DetailCosts {
+  const currency = displayCurrency(profile);
+  const unit = program.cost_unit as CostUnit;
+  const tuition = { amount: program.tuition_total, currency: program.currency, unit };
+  const fees = program.fees_total === null ? null : { amount: program.fees_total, currency: program.currency, unit };
+  const card = getCardCost({ tuition, fees });
+  return {
+    tuition: getCostValues(tuition, currency, rates),
+    fees: fees && getCostValues(fees, currency, rates),
+    total: card.includesFees ? getCostValues(card.cost, currency, rates) : null,
+  };
+}
+
 // Student side of the fit check: grade converted to 0–10 (null for scale "Other").
 export function studentScores(profile: Profile): StudentScores {
   const scale = profile.grade_scale as GradeScaleId | null;

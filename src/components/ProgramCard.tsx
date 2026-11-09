@@ -1,5 +1,5 @@
-// AI-assisted (Claude Code): program card for Programs 3: badge, names, fit label with a one-line reason, published cost with "≈", deadline.
-import { StyleSheet, Text, View } from "react-native";
+// AI-assisted (Claude Code): program card for Programs 3 (opens Program detail 4): badge, names, fit label with a one-line reason, published cost with "≈", deadline.
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { countryName } from "@/countries";
 import type { ProgramRow } from "@/data/programs";
@@ -44,12 +44,17 @@ export function lengthText(months: number): string {
     : t("programs.card.months", { count: months });
 }
 
-export function ProgramCard({ row, showLabel }: { row: ProgramRow; showLabel: boolean }) {
+export function ProgramCard({ row, showLabel, onPress }: { row: ProgramRow; showLabel: boolean; onPress: () => void }) {
   const { original, converted } = row.cost;
   const costLabel = t(`programs.card.cost.${row.includesFees ? "withFees" : "tuitionOnly"}.${original.unit}`);
 
   return (
-    <View style={styles.card}>
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={`${row.program}, ${row.university}`}
+      onPress={onPress}
+      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
+    >
       <View style={styles.top}>
         <InitialsBadge initials={row.initials} color={row.brandColor} />
         <View style={styles.names}>
@@ -75,7 +80,7 @@ export function ProgramCard({ row, showLabel }: { row: ProgramRow; showLabel: bo
           {row.deadline ? t("programs.card.deadline", { date: monthYear(row.deadline) }) : t("programs.card.noDeadline")}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     backgroundColor: colors.surface,
   },
+  pressed: { opacity: 0.8 },
   top: { flexDirection: "row", gap: spacing.md, alignItems: "flex-start" },
   names: { flex: 1, gap: spacing.xxs },
   university: { ...typography.caption, color: colors.textMuted },

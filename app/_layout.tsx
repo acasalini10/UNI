@@ -64,6 +64,7 @@ export default function RootLayout() {
         <Stack.Protected guard={signedIn && setupDone} redirectTo={signedIn ? "/profile-setup" : "/sign-in"}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="settings" />
+          <Stack.Screen name="program/[id]" />
         </Stack.Protected>
         {/* Open to every signed-in user: first setup now, "Edit" from My Profile later. */}
         <Stack.Protected guard={signedIn} redirectTo="/sign-in">

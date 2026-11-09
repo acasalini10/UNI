@@ -212,7 +212,9 @@ export default function Programs() {
         data={visible}
         keyExtractor={(row) => row.id}
         ListHeaderComponent={header}
-        renderItem={({ item }) => <ProgramCard row={item} showLabel={canRate} />}
+        renderItem={({ item }) => (
+          <ProgramCard row={item} showLabel={canRate} onPress={() => router.push({ pathname: "/program/[id]", params: { id: item.id } })} />
+        )}
         ItemSeparatorComponent={() => <View style={styles.gap} />}
         contentContainerStyle={styles.list}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => void refresh()} tintColor={colors.textMuted} />}
