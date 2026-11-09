@@ -1,5 +1,6 @@
 // Returns the international fee as published by the university,
 // plus an approximate conversion into the user's currency.
+// Tuition and fees stay separate; getCardCost sums them for the program card.
 // Returns values, not display text: screens translate the unit with t().
 
 export type CostUnit = 'per_year' | 'total' | 'per_credit';
@@ -8,6 +9,18 @@ export interface ProgramCost {
     amount: number;   // international fee, as published on the university site
     currency: string; // ISO 4217 code
     unit: CostUnit;   // unit as published on the university site
+}
+
+// Tuition and fees as published, kept separate for the detail screen.
+// fees is null when the university doesn't publish them (not the same as 0).
+export interface ProgramFees {
+    tuition: ProgramCost;
+    fees: ProgramCost | null;
+}
+
+export interface CardCost {
+    cost: ProgramCost;
+    includesFees: boolean; // false: the card shows tuition only, label it that way
 }
 
 // Shape of rates.json: how many units of each currency equal 1 unit of `base`.
@@ -78,6 +91,24 @@ export function getCostValues(
     return {
         original,
         converted: { amount, currency: to, rateDate: rates.date },
+    };
+}
+
+// One amount for the program card: tuition + fees, in the published currency.
+// Sums only when both share currency and unit; otherwise returns tuition alone,
+// so the card never shows a sum of incompatible amounts.
+export function getCardCost({ tuition, fees }: ProgramFees): CardCost {
+    if (fees === null) {
+        return { cost: tuition, includesFees: false };
+    }
+    const sameCurrency = tuition.currency.toUpperCase() === fees.currency.toUpperCase();
+    const sameUnit = tuition.unit === fees.unit;
+    if (!sameCurrency || !sameUnit) {
+        return { cost: tuition, includesFees: false };
+    }
+    return {
+        cost: { ...tuition, amount: tuition.amount + fees.amount },
+        includesFees: true,
     };
 }
 
