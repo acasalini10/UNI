@@ -413,5 +413,78 @@
       "total": "total",
       "per_credit": "/ crédito"
     }
+  },
+  "programs": {
+    "loading": "Cargando programas...",
+    "retry": "Intentar de nuevo",
+    "summary": {
+      "gpa": "Promedio {{gpa}}",
+      "ielts": "IELTS {{ielts}}",
+      "noIelts": "Sin IELTS todavía",
+      "edit": "Editar"
+    },
+    "filters": {
+      "title": "Filtros",
+      "reset": "Restablecer",
+      "clear": "Borrar",
+      "all": "todos",
+      "country": "País",
+      "field": "Área",
+      "fit": "Ajuste",
+      "deadline": "Fecha límite",
+      "sort": "Orden",
+      "deadlines": {
+        "any": "Cualquier fecha",
+        "open": "Aún abiertos",
+        "3m": "Cierran en 3 meses",
+        "6m": "Cierran en 6 meses"
+      },
+      "sorts": {
+        "fit": "mejor ajuste",
+        "cost": "menor costo",
+        "deadline": "fecha más próxima"
+      }
+    },
+    "otherScale": "No podemos convertir tu escala de calificaciones, así que los programas no tienen etiqueta. Sigues viendo los requisitos de cada programa.",
+    "disclaimer": "Las etiquetas comparan tu perfil con los mínimos publicados. No son una probabilidad de admisión.",
+    "empty": {
+      "title": "Ningún programa coincide con tus filtros.",
+      "clear": "Borrar filtros"
+    },
+    "reason": {
+      "highlySelective": "Muy selectivo",
+      "englishBelow": "Pide IELTS {{min}}, tienes {{you}}",
+      "noGpaMinimum": "Sin promedio mínimo publicado",
+      "noStudentGpa": "Tu escala de calificaciones no se puede comparar",
+      "gpaBelow": "Tu promedio está por debajo del mínimo publicado ({{min}})",
+      "gpaAt": "Promedio en el mínimo ({{min}})",
+      "gpaAbove": "Promedio {{diff}} por encima del mínimo ({{min}})",
+      "englishMet": "IELTS cumple {{min}}"
+    },
+    "card": {
+      "months": {
+        "one": "1 mes",
+        "other": "{{count}} meses"
+      },
+      "years": {
+        "one": "1 año",
+        "other": "{{count}} años"
+      },
+      "cost": {
+        "withFees": {
+          "total": "Colegiatura y cuotas, programa completo",
+          "per_year": "Colegiatura y cuotas, por año",
+          "per_credit": "Colegiatura y cuotas, por crédito"
+        },
+        "tuitionOnly": {
+          "total": "Colegiatura, programa completo",
+          "per_year": "Colegiatura, por año",
+          "per_credit": "Colegiatura, por crédito"
+        }
+      },
+      "approx": "≈ {{amount}} · tipo de cambio del {{date}}",
+      "deadline": "Cierra {{date}}",
+      "noDeadline": "Sin fecha límite publicada"
+    }
   }
 }
