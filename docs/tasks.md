@@ -10,11 +10,8 @@ Rule for anything not on this list:
 ## Next up: to the Nov 18 demo (in order)
 | ✓ | When | Task | Who |
 | --- | --- | --- | --- |
-| [ ] | Nov 10 | Cost unit for each program (per year, total, per credit): new CSV column + migration, needed by `cost.ts` | Claude Code; units filled by Valeria |
-| [ ] | Nov 10–11 | Programs screen 3: list, filters, initials badge, fit label, published cost | Claude Code |
-| [ ] | Nov 10–11 | Program detail screen 4: key facts, requirements vs you, costs with "≈", scholarships listed, official link | Claude Code |
-| [ ] | Nov 11–12 | PDF upload to Storage and file picker sheet 12d (PDF only, 10 MB) | Claude Code |
-| [ ] | Nov 11–12 | My Profile 5 with per-document upload | Claude Code |
+| [ ] | Nov 10–11 | PDF upload to Storage and file picker sheet 12d (PDF only, 10 MB) | Claude Code |
+| [ ] | Nov 10–11 | My Profile 5 with per-document upload | Claude Code |
 | [ ] | Nov 12–13 | Applications screens 5a, 5b, 9, 10, 11 | Claude Code |
 | [ ] | Nov 12–13 | Checklist 12 (requirements, documents, Apply, "I've submitted") | Claude Code |
 | [ ] | Nov 13–14 | Feedback Edge Function: consent check, 3 rounds a day, program requirements in the prompt, Claude API call | Claude Code |
@@ -30,7 +27,7 @@ Rule for anything not on this list:
 | [ ] | TestFlight build with #11, #16, #21 sent to external beta review (build log must show both `EXPO_PUBLIC_SUPABASE_*` variables; demo account with 2 and 2b filled; Test Information checked against `app-store.md`) | Alessandro |
 | [ ] | TestFlight public link for classmates; track sign-ups and feedback rounds for the defense | Alessandro |
 | [ ] | Validate the UK class mid-band values (First 9.5, 2:1 8.5, 2:2 7.5, Third 6.5) | Alessandro |
-| [ ] | Program data: set `checked_by` to the real checker, fix Duke and Oxford deadlines (already passed), decide whether IE Business School and IE University become one university | Valeria |
+| [ ] | Program data: fill `cost_unit` (default `total`) and leave `fees_total` blank when fees are not published (0 only if the site says none); set `checked_by` to the real checker, fix Duke and Oxford deadlines (already passed), decide whether IE Business School and IE University become one university | Valeria |
 | [ ] | Spanish strings: switch `locales/es.json` from Spain forms ("máster", "nota") to Mexican Spanish | Valeria |
 | [ ] | Screenshots and store description (ES and EN) | Valeria + Alessandro |
 | [ ] | Email content@qs.com for permission to show QS rankings | Alessandro |
@@ -69,3 +66,6 @@ Rule for anything not on this list:
 | Nov 9 | Every DECIDE item in `flows.md` closed | Alessandro + Valeria |
 | Nov 9 | Display currency: `profiles.currency`, picker on 2b, row on the Profile tab, `rates.json`; tested in Expo Go | Claude Code |
 | Nov 9 | `grades.ts`, `fit.ts`, `cost.ts` (#30); review and tests by Claude Code at Alessandro's request | Alessandro |
+| Nov 9 | Cost unit per program (`programs.cost_unit`, nullable `fees_total`); `getCardCost` by Alessandro (#33) | Claude Code, Alessandro |
+| Nov 9 | Programs 3: list, filters, sort, fit labels, published cost with "≈" (#34); tested in Expo Go | Claude Code |
+| Nov 9 | Program detail 4: key facts, requirements vs you, costs, official page (#35); tested in Expo Go | Claude Code |
