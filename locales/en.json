@@ -542,5 +542,64 @@
       "deadline": "Deadline {{date}}",
       "noDeadline": "No published deadline"
     }
+  },
+  "programDetail": {
+    "share": "Share",
+    "notFound": "This program is no longer available.",
+    "notPublished": "Not published",
+    "taughtIn": "taught in {{language}}",
+    "facts": {
+      "deadline": "Deadline",
+      "tuition": "Tuition",
+      "applicationFee": "Application fee"
+    },
+    "vsYou": {
+      "title": "Requirements vs you",
+      "gpa": "GPA",
+      "english": "English",
+      "gpaMinimum": "Minimum {{min}} (converted)",
+      "ieltsMinimum": "Minimum IELTS {{min}}",
+      "notConverted": "Not converted",
+      "why": "Why {{label}}: {{reason}}.",
+      "disclaimer": "Grades are converted to a 0–10 scale with a linear formula, a simplification. This is not an admission probability."
+    },
+    "application": {
+      "title": "Application",
+      "deadline": "DEADLINE",
+      "applicationDeadline": "Application deadline",
+      "daysLeft": {
+        "one": "1 day left",
+        "other": "{{count}} days left"
+      },
+      "closed": "closed",
+      "requirements": "REQUIREMENTS",
+      "minGrade": "Minimum grade {{min}}",
+      "noMinGrade": "No published minimum grade",
+      "converted": "{{min}} / 10 on our converted scale",
+      "ielts": "English: IELTS {{min}}",
+      "noIelts": "English: no published minimum",
+      "test": {
+        "none": "No GMAT or GRE",
+        "optional": "GMAT or GRE optional",
+        "required": "GMAT or GRE required"
+      },
+      "letters": {
+        "one": "1 recommendation letter",
+        "other": "{{count}} recommendation letters"
+      }
+    },
+    "costs": {
+      "title": "What it costs",
+      "fees": {
+        "total": "University fees, full program",
+        "per_year": "University fees, per year",
+        "per_credit": "University fees, per credit"
+      },
+      "feesLabel": "University fees",
+      "note": "International fee as published by the university. Living costs are not included. Scholarships are never subtracted."
+    },
+    "official": "Check official web page",
+    "opensInBrowser": "{{domain}} · opens in your browser",
+    "checkedOn": "Checked on {{date}} · official page"
   }
 }

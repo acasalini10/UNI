@@ -15,6 +15,12 @@ export function monthYear(iso: string): string {
   return utc(iso).toLocaleDateString(locale(), { month: "short", year: "numeric", timeZone: "UTC" });
 }
 
+// Whole days from today (local calendar day) to the date; negative once it has passed.
+export function daysUntil(iso: string, today = new Date()): number {
+  const start = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  return Math.round((utc(iso).getTime() - start) / 86_400_000);
+}
+
 // "Nov 9, 2026"
 export function shortDate(iso: string): string {
   return utc(iso).toLocaleDateString(locale(), { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
