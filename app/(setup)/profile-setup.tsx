@@ -1,5 +1,5 @@
-// AI-assisted (Claude Code): screen 2, academic profile setup with typed profile persistence; country pickers with search, translated scale labels, GMAT/GRE choice and start-date chips.
-import { router } from "expo-router";
+// AI-assisted (Claude Code): screen 2, academic profile setup with typed profile persistence; country pickers with search, translated scale labels, GMAT/GRE choice and start-date chips. Edit mode (?edit=1, from My Profile): Save goes back and keeps setup_step.
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -39,6 +39,7 @@ function intakeLabel(value: string): string {
 }
 
 export default function ProfileSetup() {
+  const editing = useLocalSearchParams<{ edit?: string }>().edit === "1";
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [residence, setResidence] = useState<string[]>([]);
@@ -119,23 +120,25 @@ export default function ProfileSetup() {
       test_score: testType === "none" ? null : Number(testScore),
       target_countries: targets,
       planned_start: `${plannedStart}-01`,
-      setup_step: 1,
+      // An edit must not lower a step 2 that is already saved.
+      ...(editing ? {} : { setup_step: 1 }),
     });
     setSaving(false);
     if (!result.ok) {
       setError(result.error);
       return;
     }
-    router.push("/profile-funding");
+    if (editing) router.back();
+    else router.push("/profile-funding");
   }
 
   return (
     <ProfileSetupLayout
-      step={1}
+      step={editing ? undefined : 1}
       footer={
         <>
           {error && <FormError text={error === "invalid" ? t("profile.setup.required") : t(`errors.${error}`)} />}
-          <Button label={t("profile.setup.continue")} onPress={onContinue} disabled={!canContinue} loading={saving} />
+          <Button label={editing ? t("common.save") : t("profile.setup.continue")} onPress={onContinue} disabled={!canContinue} loading={saving} />
         </>
       }
     >
