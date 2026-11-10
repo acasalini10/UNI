@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): root layout with custom fonts, themed screen background, and guards (signed out → (auth); signed in without profile step 1 → (setup); otherwise tabs and Settings)
+// AI-assisted (Claude Code): root layout with custom fonts, themed screen background, and guards (signed out → (auth); signed in without profile step 1 → (setup); otherwise tabs, Settings, Program detail, Add a university and University's master's)
 // AI-assisted (Copilot): wired the authenticated route to the four-tab navigation.
 import {
   PlusJakartaSans_400Regular,
@@ -65,6 +65,8 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="settings" />
           <Stack.Screen name="program/[id]" />
+          <Stack.Screen name="add-university" />
+          <Stack.Screen name="university/[id]" />
         </Stack.Protected>
         {/* Open to every signed-in user: first setup now, "Edit" from My Profile later. */}
         <Stack.Protected guard={signedIn} redirectTo="/sign-in">

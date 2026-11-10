@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): Program detail 4/4b: pinned header on scroll, key facts, requirements vs you, application deadline and requirements, published cost with "≈", official page. Sections without data (rankings, careers, scholarships, campus image) are left out.
+// AI-assisted (Claude Code): Program detail 4/4b: pinned header on scroll with bookmark to Applications, key facts, requirements vs you, application deadline and requirements, published cost with "≈", official page. Sections without data (rankings, careers, scholarships, campus image) are left out.
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { router, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
@@ -16,11 +16,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { BookmarkButton } from "@/components/BookmarkButton";
 import { Button } from "@/components/Button";
 import { FitChip } from "@/components/FitChip";
 import { InitialsBadge } from "@/components/InitialsBadge";
 import { fitReason, lengthText } from "@/components/ProgramCard";
 import { countryName } from "@/countries";
+import { savedPrograms, type ApplicationStatus } from "@/data/applications";
 import { getProfile, type Profile } from "@/data/profile";
 import { detailCosts, getProgram, studentScores, toRows, type ProgramWithUniversity } from "@/data/programs";
 import { formatMoney, type CostValues } from "@/lib/cost";
@@ -63,13 +65,16 @@ export default function ProgramDetail() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [error, setError] = useState<"offline" | "unknown" | "not_found" | null>(null);
   const [pinned, setPinned] = useState(false);
+  const [saved, setSaved] = useState<{ status: ApplicationStatus | undefined } | null>(null);
   // Bumped by "Try again" to run the load effect again.
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let active = true;
-    void Promise.all([getProgram(id), getProfile()]).then(([programResult, profileResult]) => {
+    void Promise.all([getProgram(id), getProfile(), savedPrograms()]).then(([programResult, profileResult, savedResult]) => {
       if (!active) return;
+      // Without the saved list the bookmark is hidden, not shown empty.
+      setSaved(savedResult.ok ? { status: savedResult.data.get(id) } : null);
       if (!programResult.ok) return setError(programResult.error);
       if (!profileResult.ok) return setError(profileResult.error);
       setProgram(programResult.data);
@@ -148,6 +153,7 @@ export default function ProgramDetail() {
         ) : (
           <View style={styles.flex} />
         )}
+        {saved && <BookmarkButton programId={program.id} status={saved.status} onChange={(status) => setSaved({ status })} />}
         <Pressable accessibilityRole="button" accessibilityLabel={t("programDetail.share")} onPress={share} style={styles.circle}>
           <SymbolView name="square.and.arrow.up" tintColor={colors.text} size={sizes.icon} />
         </Pressable>

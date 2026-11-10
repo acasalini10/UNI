@@ -1,17 +1,19 @@
 // AI-assisted (Copilot): added the title-only Programs tab screen.
-// AI-assisted (Claude Code): Programs 3: profile summary, filters and sort in bottom sheets, count per label, program cards; loading, empty, "Other" scale and offline states.
+// AI-assisted (Claude Code): Programs 3: profile summary, filters and sort in bottom sheets, count per label, program cards with bookmark to Applications; loading, empty, "Other" scale and offline states.
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, FlatList, Pressable, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SymbolView } from "expo-symbols";
 
+import { BookmarkButton } from "@/components/BookmarkButton";
 import { Button } from "@/components/Button";
 import { FilterSheet } from "@/components/FilterSheet";
 import { FitChip } from "@/components/FitChip";
 import { Logo } from "@/components/Logo";
 import { ProgramCard } from "@/components/ProgramCard";
 import { countryName } from "@/countries";
+import { savedPrograms, type ApplicationStatus, type SavedPrograms } from "@/data/applications";
 import { getProfile, type Profile } from "@/data/profile";
 import {
   applyFilters,
@@ -45,10 +47,22 @@ export default function Programs() {
   const [filters, setFilters] = useState<Filters | null>(null);
   const [error, setError] = useState<"offline" | "unknown" | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [saved, setSaved] = useState<SavedPrograms | null>(null);
   const loaded = useRef(false);
 
+  function setStatus(programId: string, status: ApplicationStatus | undefined) {
+    setSaved((current) => {
+      const next = new Map(current);
+      if (status) next.set(programId, status);
+      else next.delete(programId);
+      return next;
+    });
+  }
+
   const load = useCallback(async () => {
-    const [profileResult, programsResult] = await Promise.all([getProfile(), getPrograms()]);
+    const [profileResult, programsResult, savedResult] = await Promise.all([getProfile(), getPrograms(), savedPrograms()]);
+    // Without the saved list the bookmarks are hidden, not shown empty (they would say "not saved").
+    setSaved(savedResult.ok ? savedResult.data : null);
     if (!profileResult.ok || !programsResult.ok) {
       // Keep what is on screen if a later reload fails; show the error only when there is nothing yet.
       if (!loaded.current) setError(!profileResult.ok ? profileResult.error : programsResult.ok ? "unknown" : programsResult.error);
@@ -213,7 +227,12 @@ export default function Programs() {
         keyExtractor={(row) => row.id}
         ListHeaderComponent={header}
         renderItem={({ item }) => (
-          <ProgramCard row={item} showLabel={canRate} onPress={() => router.push({ pathname: "/program/[id]", params: { id: item.id } })} />
+          <ProgramCard
+            row={item}
+            showLabel={canRate}
+            onPress={() => router.push({ pathname: "/program/[id]", params: { id: item.id } })}
+            bookmark={saved && <BookmarkButton programId={item.id} status={saved.get(item.id)} onChange={(status) => setStatus(item.id, status)} />}
+          />
         )}
         ItemSeparatorComponent={() => <View style={styles.gap} />}
         contentContainerStyle={styles.list}
