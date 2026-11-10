@@ -1,5 +1,5 @@
 // AI-assisted (Copilot): added the title-only Applications tab screen.
-// AI-assisted (Claude Code): Applications 5a/5b/11: counters, one card per saved program with status (opens Program detail 4 until Checklist 12 exists), empty state, "Added" banner with Undo and the new card highlighted; loading and offline states.
+// AI-assisted (Claude Code): Applications 5a/5b/11: counters, one card per saved program with status (opens its Checklist 12), empty state, "Added" banner with Undo and the new card highlighted; loading and offline states.
 import { SymbolView } from "expo-symbols";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useRef, useState } from "react";
@@ -203,7 +203,7 @@ function ApplicationCard({ application, highlighted, first }: { application: App
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={`${application.university}, ${application.program}, ${t(`applications.status.${application.status}`)}`}
-      onPress={() => router.push({ pathname: "/program/[id]", params: { id: application.programId } })}
+      onPress={() => router.push({ pathname: "/checklist/[id]", params: { id: application.id } })}
       style={({ pressed }) => [styles.card, !first && styles.cardDivider, highlighted && styles.cardHighlighted, pressed && styles.pressed]}
     >
       <InitialsBadge initials={application.initials} color={application.brandColor} />

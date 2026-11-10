@@ -650,7 +650,7 @@
     "checkedOn": "Checked on {{date}} · official page"
   },
   "applications": {
-    "subtitle": "The master's you are applying to. Tap one to see its details.",
+    "subtitle": "The master's you are applying to. Tap one to see what is missing.",
     "loading": "Loading your applications…",
     "counters": {
       "universities": "Universities",
@@ -710,6 +710,63 @@
       "confirmBody": "You marked this application as {{status}}. Removing it deletes its progress.",
       "confirmRemove": "Remove",
       "failed": "Could not update Applications. Check your connection and try again."
+    }
+  },
+  "checklist": {
+    "notFound": "This application is no longer in your list.",
+    "chip": {
+      "ready": "Ready to apply",
+      "applied": "Applied"
+    },
+    "itemsMissing": {
+      "one": "1 item missing",
+      "other": "{{count}} items missing"
+    },
+    "deadline": "Deadline {{date}}",
+    "noDeadline": "Deadline not published",
+    "note": "Only the requirements {{university}} asks for. This is not an admission probability.",
+    "notAdded": "Not added",
+    "belowMinimum": "Below the published minimum. You can still apply.",
+    "notRated": "Your grade scale cannot be compared. Check with the university.",
+    "test": {
+      "title": "GMAT or GRE",
+      "required": "Required, no published minimum",
+      "optional": "Optional, no published minimum"
+    },
+    "documents": "Documents",
+    "kinds": {
+      "cv": "CV",
+      "motivation_letter": "Motivational letter",
+      "reference_letter": "Reference letters"
+    },
+    "required": "Required",
+    "lettersAttached": "{{attached}} of {{required}} attached",
+    "apply": "Apply",
+    "applyOnSite": "Apply on the university's website",
+    "applyHint": "Everything is ready. Opens the program's official page in your browser.",
+    "submit": {
+      "button": "I've submitted my application",
+      "confirmTitle": "Mark as submitted?",
+      "confirmBody": "Do this after you have sent your application on the university's website. UNI cannot see the university's portal.",
+      "confirm": "Mark as submitted",
+      "failed": "Could not save it. Check your connection and try again."
+    },
+    "submittedOn": "Submitted {{date}}",
+    "picker": {
+      "title": {
+        "cv": "Add your CV",
+        "motivation_letter": "Add your motivational letter",
+        "reference_letter": "Add a reference letter"
+      },
+      "for": "For {{university}} · {{program}}",
+      "close": "Close",
+      "fromProfile": "From My Profile",
+      "uploaded": "Uploaded {{date}}",
+      "or": "or",
+      "upload": "Upload a new PDF from your phone",
+      "hint": "PDF only, up to 10 MB. It is also saved to My Profile.",
+      "use": "Use selected file",
+      "attachFailed": "Could not attach the file. Check your connection and try again."
     }
   }
 }

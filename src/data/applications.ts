@@ -1,6 +1,7 @@
-// AI-assisted (Claude Code): typed queries for Applications 5a/11, Add a university 9 and University's master's 10: list, add, remove, universities search, programs of one university; "just added" hand-off from 10 to 11.
+// AI-assisted (Claude Code): typed queries for Applications 5a/11, Add a university 9, University's master's 10 and Checklist 12/12d: list, add, remove, universities search, programs of one university; "just added" hand-off from 10 to 11; one application with its program and attached documents, attach a document (Saved becomes In progress), mark as submitted.
 import { daysUntil } from "@/format";
 
+import type { UserDocument } from "./documents";
 import { supabase } from "./supabase";
 import type { ProgramWithUniversity } from "./programs";
 
@@ -135,6 +136,63 @@ export async function getUniversityPrograms(universityId: string): Promise<Resul
     .order("program");
   if (error || !data) return { ok: false, error: errorOf(error) };
   return { ok: true, data };
+}
+
+// Checklist 12: one application with its full program row and the documents attached to it.
+export interface ApplicationDetail {
+  id: string;
+  status: ApplicationStatus;
+  submittedAt: string | null;
+  program: ProgramWithUniversity;
+  attached: UserDocument[];
+}
+
+type DetailRow = ApplicationRecord & {
+  programs: ProgramWithUniversity;
+  application_documents: { documents: UserDocument }[];
+};
+
+export async function getApplication(id: string): Promise<Result<ApplicationDetail> | { ok: false; error: "not_found" }> {
+  const { data, error } = await supabase
+    .from("applications")
+    .select("*, programs!inner(*, universities!inner(name, city, country, initials, brand_color)), application_documents(documents!inner(*))")
+    .eq("id", id)
+    .maybeSingle<DetailRow>();
+  if (error) return { ok: false, error: errorOf(error) };
+  if (!data) return { ok: false, error: "not_found" };
+  return {
+    ok: true,
+    data: {
+      id: data.id,
+      status: data.status as ApplicationStatus,
+      submittedAt: data.submitted_at,
+      program: data.programs,
+      attached: data.application_documents.map((row) => row.documents),
+    },
+  };
+}
+
+// Attaching a document is the first step of the work, so a Saved application becomes In progress (decision 2026-11-10).
+export async function attachDocument(application: Pick<ApplicationDetail, "id" | "status">, documentId: string): Promise<Result<ApplicationStatus>> {
+  const { error } = await supabase.from("application_documents").insert({ application_id: application.id, document_id: documentId });
+  // Already attached (primary key): nothing to add.
+  if (error && error.code !== "23505") return { ok: false, error: errorOf(error) };
+  if (application.status !== "saved") return { ok: true, data: application.status };
+  const update = await supabase.from("applications").update({ status: "in_progress" }).eq("id", application.id);
+  // The file is attached even if the status update fails; the checklist still counts it.
+  return { ok: true, data: update.error ? "saved" : "in_progress" };
+}
+
+// "I've submitted my application" (12b → 12c). Set by the student: the app cannot see the university's portal.
+export async function markSubmitted(applicationId: string): Promise<Result<string>> {
+  const { data, error } = await supabase
+    .from("applications")
+    .update({ status: "submitted", submitted_at: new Date().toISOString() })
+    .eq("id", applicationId)
+    .select("submitted_at")
+    .single();
+  if (error || !data?.submitted_at) return { ok: false, error: errorOf(error) };
+  return { ok: true, data: data.submitted_at };
 }
 
 // 10 → 11: the program just added, read once by Applications to show the banner and highlight the card.
