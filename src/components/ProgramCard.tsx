@@ -1,4 +1,5 @@
-// AI-assisted (Claude Code): program card for Programs 3 (opens Program detail 4): badge, names, fit label with a one-line reason, published cost with "≈", deadline.
+// AI-assisted (Claude Code): program card for Programs 3 (opens Program detail 4): badge, names, fit label with a one-line reason, published cost with "≈", deadline, optional bookmark slot.
+import type { ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { countryName } from "@/countries";
@@ -44,7 +45,9 @@ export function lengthText(months: number): string {
     : t("programs.card.months", { count: months });
 }
 
-export function ProgramCard({ row, showLabel, onPress }: { row: ProgramRow; showLabel: boolean; onPress: () => void }) {
+type CardProps = { row: ProgramRow; showLabel: boolean; onPress: () => void; bookmark?: ReactNode };
+
+export function ProgramCard({ row, showLabel, onPress, bookmark }: CardProps) {
   const { original, converted } = row.cost;
   const costLabel = t(`programs.card.cost.${row.includesFees ? "withFees" : "tuitionOnly"}.${original.unit}`);
 
@@ -62,7 +65,10 @@ export function ProgramCard({ row, showLabel, onPress }: { row: ProgramRow; show
           <Text style={styles.program}>{row.program}</Text>
           <Text style={styles.meta}>{countryName(row.country)} · {lengthText(row.lengthMonths)}</Text>
         </View>
-        {showLabel && <FitChip label={row.fit.label} />}
+        <View style={styles.side}>
+          {showLabel && <FitChip label={row.fit.label} />}
+          {bookmark}
+        </View>
       </View>
       {showLabel && <Text style={styles.reason}>{fitReason(row)}</Text>}
       <View style={styles.divider} />
@@ -96,6 +102,7 @@ const styles = StyleSheet.create({
   pressed: { opacity: 0.8 },
   top: { flexDirection: "row", gap: spacing.md, alignItems: "flex-start" },
   names: { flex: 1, gap: spacing.xxs },
+  side: { alignItems: "flex-end", gap: spacing.sm },
   university: { ...typography.caption, color: colors.textMuted },
   program: { ...typography.cardTitle, color: colors.text },
   meta: { ...typography.bodySmall, color: colors.textMuted },

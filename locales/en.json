@@ -648,5 +648,68 @@
     "official": "Check official web page",
     "opensInBrowser": "{{domain}} · opens in your browser",
     "checkedOn": "Checked on {{date}} · official page"
+  },
+  "applications": {
+    "subtitle": "The master's you are applying to. Tap one to see its details.",
+    "loading": "Loading your applications…",
+    "counters": {
+      "universities": "Universities",
+      "applied": "Applied",
+      "nextDeadline": "Days to next deadline"
+    },
+    "myUniversities": "My universities",
+    "add": "Add",
+    "addUniversity": "Add a university",
+    "status": {
+      "saved": "Saved",
+      "in_progress": "In progress",
+      "submitted": "Submitted",
+      "new": "New"
+    },
+    "empty": {
+      "title": "No universities yet",
+      "body": "Add the master's you want to apply to. For each one, UNI shows what you still need and how many days you have left.",
+      "browse": "Not sure yet? Browse programs that fit you"
+    },
+    "added": {
+      "title": "Added to your applications.",
+      "undo": "Undo",
+      "undoFailed": "Could not remove it. Try again."
+    },
+    "search": {
+      "title": "Add a university",
+      "cancel": "Cancel",
+      "label": "Search by name or city",
+      "placeholder": "University or city",
+      "clear": "Clear search",
+      "noMatch": "No universities match. Check the spelling, or search by city.",
+      "results": {
+        "one": "1 result",
+        "other": "{{count}} results"
+      }
+    },
+    "university": {
+      "intro": "Pick the master's you want to track. It goes to Applications with its own checklist.",
+      "all": "All · {{count}}",
+      "fits": "Fits you · {{count}}",
+      "deadline": "deadline {{date}}",
+      "noDeadline": "deadline not published",
+      "add": "Add {{program}} to Applications",
+      "added": "Already in Applications",
+      "addFailed": "Could not add it. Check your connection and try again.",
+      "empty": "No master's for this university yet.",
+      "masters": {
+        "one": "1 master's",
+        "other": "{{count}} master's"
+      }
+    },
+    "bookmark": {
+      "add": "Save to Applications",
+      "remove": "Remove from Applications",
+      "confirmTitle": "Remove from Applications?",
+      "confirmBody": "You marked this application as {{status}}. Removing it deletes its progress.",
+      "confirmRemove": "Remove",
+      "failed": "Could not update Applications. Check your connection and try again."
+    }
   }
 }
