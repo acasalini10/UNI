@@ -10,10 +10,8 @@ Rule for anything not on this list:
 ## Next up: to the Nov 18 demo (in order)
 | ✓ | When | Task | Who |
 | --- | --- | --- | --- |
-| [ ] | Nov 10–11 | PDF upload to Storage and file picker sheet 12d (PDF only, 10 MB) | Claude Code |
-| [ ] | Nov 10–11 | My Profile 5 with per-document upload | Claude Code |
 | [ ] | Nov 12–13 | Applications screens 5a, 5b, 9, 10, 11 | Claude Code |
-| [ ] | Nov 12–13 | Checklist 12 (requirements, documents, Apply, "I've submitted") | Claude Code |
+| [ ] | Nov 12–13 | Checklist 12 (requirements, documents, Apply, "I've submitted") and file picker sheet 12d (reuses `pickAndUploadDocument`) | Claude Code |
 | [ ] | Nov 13–14 | Feedback Edge Function: consent check, 3 rounds a day, program requirements in the prompt, Claude API call | Claude Code |
 | [ ] | Nov 13–14 | Feedback screens 6a (with AI consent) and 6 | Claude Code |
 | [ ] | Nov 15 | Deadline reminders (local notifications) | Claude Code |
@@ -69,3 +67,5 @@ Rule for anything not on this list:
 | Nov 9 | Cost unit per program (`programs.cost_unit`, nullable `fees_total`); `getCardCost` by Alessandro (#33) | Claude Code, Alessandro |
 | Nov 9 | Programs 3: list, filters, sort, fit labels, published cost with "≈" (#34); tested in Expo Go | Claude Code |
 | Nov 9 | Program detail 4: key facts, requirements vs you, costs, official page (#35); tested in Expo Go | Claude Code |
+| Nov 10 | Missing #33–#35 commits brought to `main` (#36) | Claude Code |
+| Nov 10 | PDF upload to Storage and My Profile 5 with Edit on 2 and 2b (#37); tested in Expo Go | Claude Code |
