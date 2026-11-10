@@ -413,5 +413,137 @@
       "total": "total",
       "per_credit": "/ crédito"
     }
+  },
+  "programs": {
+    "loading": "Cargando programas...",
+    "retry": "Intentar de nuevo",
+    "summary": {
+      "gpa": "Promedio {{gpa}}",
+      "ielts": "IELTS {{ielts}}",
+      "noIelts": "Sin IELTS todavía",
+      "edit": "Editar"
+    },
+    "filters": {
+      "title": "Filtros",
+      "reset": "Restablecer",
+      "clear": "Borrar",
+      "all": "todos",
+      "country": "País",
+      "field": "Área",
+      "fit": "Ajuste",
+      "deadline": "Fecha límite",
+      "sort": "Orden",
+      "deadlines": {
+        "any": "Cualquier fecha",
+        "open": "Aún abiertos",
+        "3m": "Cierran en 3 meses",
+        "6m": "Cierran en 6 meses"
+      },
+      "sorts": {
+        "fit": "mejor ajuste",
+        "cost": "menor costo",
+        "deadline": "fecha más próxima"
+      }
+    },
+    "otherScale": "No podemos convertir tu escala de calificaciones, así que los programas no tienen etiqueta. Sigues viendo los requisitos de cada programa.",
+    "disclaimer": "Las etiquetas comparan tu perfil con los mínimos publicados. No son una probabilidad de admisión.",
+    "empty": {
+      "title": "Ningún programa coincide con tus filtros.",
+      "clear": "Borrar filtros"
+    },
+    "reason": {
+      "highlySelective": "Muy selectivo",
+      "englishBelow": "Pide IELTS {{min}}, tienes {{you}}",
+      "noGpaMinimum": "Sin promedio mínimo publicado",
+      "noStudentGpa": "Tu escala de calificaciones no se puede comparar",
+      "gpaBelow": "Tu promedio está por debajo del mínimo publicado ({{min}})",
+      "gpaAt": "Promedio en el mínimo ({{min}})",
+      "gpaAbove": "Promedio {{diff}} por encima del mínimo ({{min}})",
+      "englishMet": "IELTS cumple {{min}}"
+    },
+    "card": {
+      "months": {
+        "one": "1 mes",
+        "other": "{{count}} meses"
+      },
+      "years": {
+        "one": "1 año",
+        "other": "{{count}} años"
+      },
+      "cost": {
+        "withFees": {
+          "total": "Colegiatura y cuotas, programa completo",
+          "per_year": "Colegiatura y cuotas, por año",
+          "per_credit": "Colegiatura y cuotas, por crédito"
+        },
+        "tuitionOnly": {
+          "total": "Colegiatura, programa completo",
+          "per_year": "Colegiatura, por año",
+          "per_credit": "Colegiatura, por crédito"
+        }
+      },
+      "approx": "≈ {{amount}} · tipo de cambio del {{date}}",
+      "deadline": "Cierra {{date}}",
+      "noDeadline": "Sin fecha límite publicada"
+    }
+  },
+  "programDetail": {
+    "share": "Compartir",
+    "notFound": "Este programa ya no está disponible.",
+    "notPublished": "No publicado",
+    "taughtIn": "impartido en {{language}}",
+    "facts": {
+      "deadline": "Fecha límite",
+      "tuition": "Colegiatura",
+      "applicationFee": "Cuota de solicitud"
+    },
+    "vsYou": {
+      "title": "Requisitos frente a ti",
+      "gpa": "Promedio",
+      "english": "Inglés",
+      "gpaMinimum": "Mínimo {{min}} (convertido)",
+      "ieltsMinimum": "Mínimo IELTS {{min}}",
+      "notConverted": "Sin convertir",
+      "why": "Por qué {{label}}: {{reason}}.",
+      "disclaimer": "Las calificaciones se convierten a una escala de 0 a 10 con una fórmula lineal, una simplificación. No es una probabilidad de admisión."
+    },
+    "application": {
+      "title": "Solicitud",
+      "deadline": "FECHA LÍMITE",
+      "applicationDeadline": "Fecha límite de solicitud",
+      "daysLeft": {
+        "one": "Falta 1 día",
+        "other": "Faltan {{count}} días"
+      },
+      "closed": "cerrada",
+      "requirements": "REQUISITOS",
+      "minGrade": "Promedio mínimo {{min}}",
+      "noMinGrade": "Sin promedio mínimo publicado",
+      "converted": "{{min}} / 10 en nuestra escala convertida",
+      "ielts": "Inglés: IELTS {{min}}",
+      "noIelts": "Inglés: sin mínimo publicado",
+      "test": {
+        "none": "Sin GMAT ni GRE",
+        "optional": "GMAT o GRE opcional",
+        "required": "GMAT o GRE obligatorio"
+      },
+      "letters": {
+        "one": "1 carta de recomendación",
+        "other": "{{count}} cartas de recomendación"
+      }
+    },
+    "costs": {
+      "title": "Cuánto cuesta",
+      "fees": {
+        "total": "Cuotas universitarias, programa completo",
+        "per_year": "Cuotas universitarias, por año",
+        "per_credit": "Cuotas universitarias, por crédito"
+      },
+      "feesLabel": "Cuotas universitarias",
+      "note": "Cuota internacional publicada por la universidad. No incluye gastos de vida. Las becas nunca se restan."
+    },
+    "official": "Ver la página oficial",
+    "opensInBrowser": "{{domain}} · se abre en tu navegador",
+    "checkedOn": "Revisado el {{date}} · página oficial"
   }
 }
