@@ -91,6 +91,7 @@ Currency:
 - A requirement is met when the student's value reaches the program minimum, with the same conversion as the fit label.
 - Missing minimum (decision 2026-11-09, same rule as section 1): the row is still listed and shows "No published minimum" with "Check with the university". GPA or English with no published minimum never counts as missing. GMAT/GRE with no published minimum is met when the student has entered a score.
 - GPA up to 0.5 below the minimum (a Reach) shows an amber warning "Below the published minimum" but does not count as missing, so the student can still apply. More than 0.5 below counts as missing.
+- Student grade that cannot be converted (scale "Other", decision 2026-11-10): the GPA row shows "Not converted" with "Check with the university" and never counts as missing, as the fit label shows Not rated. The student cannot change it, so it must not block Apply.
 - Documents: CV, motivational letter, reference letters (`letters_required`).
 - Items missing = unmet requirements + missing documents. Apply is enabled only at 0.
 - "Applied" is set by the student with "I've submitted my application".

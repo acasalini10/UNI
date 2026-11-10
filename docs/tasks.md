@@ -11,7 +11,7 @@ Rule for anything not on this list:
 | ✓ | When | Task | Who |
 | --- | --- | --- | --- |
 | [x] | Nov 12–13 | Applications screens 5a, 5b, 9, 10, 11 (#39; cards open 4 until 12 exists) | Claude Code |
-| [ ] | Nov 12–13 | Checklist 12 (requirements, documents, Apply, "I've submitted") and file picker sheet 12d (reuses `pickAndUploadDocument`) | Claude Code |
+| [x] | Nov 12–13 | Checklist 12 (requirements, documents, Apply, "I've submitted") and file picker sheet 12d (reuses `pickAndUploadDocument`); cards on 5a open 12; `checklist.ts` by Claude, cited, with tests | Claude Code |
 | [ ] | Nov 13–14 | Feedback Edge Function: consent check, 3 rounds a day, program requirements in the prompt, Claude API call | Claude Code |
 | [ ] | Nov 13–14 | Feedback screens 6a (with AI consent) and 6 | Claude Code |
 | [ ] | Nov 15 | Deadline reminders (local notifications) | Claude Code |
