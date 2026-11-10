@@ -1,5 +1,5 @@
-// AI-assisted (Claude Code): screen 2b, optional budget and funding profile setup; citizenship and origin with the searchable country picker; display currency (also used for the budget), default from the country of residence.
-import { router } from "expo-router";
+// AI-assisted (Claude Code): screen 2b, optional budget and funding profile setup; citizenship and origin with the searchable country picker; display currency (also used for the budget), default from the country of residence. Edit mode (?edit=1, from My Profile): Save goes back, no Skip.
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -16,6 +16,7 @@ const budgets = ["under_10k", "10k_25k", "25k_50k", "over_50k", "not_sure"] as c
 const payers = ["me", "family", "scholarship", "loan", "not_sure"] as const;
 
 export default function ProfileFunding() {
+  const editing = useLocalSearchParams<{ edit?: string }>().edit === "1";
   const [citizenship, setCitizenship] = useState<string[]>([]);
   const [secondCitizenship, setSecondCitizenship] = useState<string[]>([]);
   const [showSecond, setShowSecond] = useState(false);
@@ -77,19 +78,22 @@ export default function ProfileFunding() {
       setError(result.error);
       return;
     }
-    router.replace("/(tabs)/programs");
+    if (editing) router.back();
+    else router.replace("/(tabs)/programs");
   }
 
   return (
     <ProfileSetupLayout
-      step={2}
+      step={editing ? undefined : 2}
       footer={
         <>
           {error && <FormError text={t(`errors.${error}`)} />}
-          <Button label={t("profile.funding.showPrograms")} onPress={() => void finish()} loading={saving} />
-          <Pressable accessibilityRole="button" accessibilityLabel={t("profile.funding.skip")} onPress={() => void finish(true)} style={styles.skip}>
-            <Text style={styles.skipText}>{t("profile.funding.skip")}</Text>
-          </Pressable>
+          <Button label={editing ? t("common.save") : t("profile.funding.showPrograms")} onPress={() => void finish()} loading={saving} />
+          {!editing && (
+            <Pressable accessibilityRole="button" accessibilityLabel={t("profile.funding.skip")} onPress={() => void finish(true)} style={styles.skip}>
+              <Text style={styles.skipText}>{t("profile.funding.skip")}</Text>
+            </Pressable>
+          )}
         </>
       }
     >

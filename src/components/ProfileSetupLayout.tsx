@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): shared shell for the two profile setup screens; Back hidden when there is no previous screen.
+// AI-assisted (Claude Code): shared shell for the two profile setup screens; Back hidden when there is no previous screen; no step counter when editing from My Profile.
 import { SymbolView } from "expo-symbols";
 import { router } from "expo-router";
 import type { ReactNode } from "react";
@@ -10,7 +10,8 @@ import { t } from "@/i18n";
 import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
 
 type Props = {
-  step: 1 | 2;
+  // Omitted when editing from My Profile: there is no setup to count.
+  step?: 1 | 2;
   children: ReactNode;
   footer: ReactNode;
 };
@@ -39,11 +40,13 @@ export function ProfileSetupLayout({ step, children, footer }: Props) {
               <View style={styles.back} />
             )}
             <Logo />
-            <Text style={styles.step}>{step}/2</Text>
+            {step ? <Text style={styles.step}>{step}/2</Text> : <View style={styles.back} />}
           </View>
-          <View style={styles.progressTrack}>
-            <View style={[styles.progress, { width: step === 1 ? "50%" : "100%" }]} />
-          </View>
+          {step && (
+            <View style={styles.progressTrack}>
+              <View style={[styles.progress, { width: step === 1 ? "50%" : "100%" }]} />
+            </View>
+          )}
           <View style={styles.body}>{children}</View>
           <View style={styles.footer}>{footer}</View>
         </ScrollView>

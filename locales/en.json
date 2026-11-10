@@ -7,7 +7,8 @@
     "change": "Change",
     "showPassword": "Show password",
     "hidePassword": "Hide password",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "tabs": {
     "programs": "Programs",
@@ -24,6 +25,52 @@
     "currency": {
       "label": "Your currency",
       "hint": "Used for your budget and to show program costs as an estimate in your currency."
+    },
+    "my": {
+      "academic": "Academic profile",
+      "funding": "Budget and funding",
+      "edit": "Edit",
+      "editSection": "Edit %{section}",
+      "notAdded": "Not added",
+      "ielts": "IELTS %{score}",
+      "testScore": "%{test} %{score}",
+      "rows": {
+        "grade": "Grade",
+        "english": "English",
+        "test": "GMAT or GRE",
+        "fields": "Field",
+        "targets": "Target countries",
+        "start": "Start",
+        "citizenship": "Citizenship",
+        "origin": "Country of origin",
+        "budget": "Budget",
+        "payers": "Who pays"
+      },
+      "documents": {
+        "title": "Documents",
+        "hint": "PDF only, up to 10 MB, from your phone",
+        "upload": "Upload",
+        "uploadKind": "Upload %{kind}",
+        "kinds": {
+          "cv": "CV",
+          "motivation_letter": "Motivation letters",
+          "reference_letter": "Reference letters"
+        },
+        "ready": "Ready",
+        "count": {
+          "one": "1 file",
+          "other": "%{count} files"
+        },
+        "none": "No file yet",
+        "latest": "%{name} · %{date}",
+        "loadFailed": "Your documents could not be loaded.",
+        "errors": {
+          "wrong_type": "Only PDF files can be uploaded.",
+          "too_large": "This file is larger than 10 MB. Choose a smaller PDF.",
+          "offline": "Upload failed: no connection. Check your internet and try again.",
+          "unknown": "Upload failed. Try again."
+        }
+      }
     },
     "setup": {
       "title": "Your profile",
