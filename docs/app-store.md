@@ -20,7 +20,7 @@
 - [ ] Sign in with Apple and Google both working (Apple is required when Google sign-in is offered)
 - [ ] Every button and row works; nothing "coming soon" or locked (guideline 2.1)
 - [ ] Language switch offers English and Spanish
-- [ ] Deadline reminders ask for notification permission only when the student turns them on
+- [x] Deadline reminders ask for notification permission only when the student turns them on
 - [ ] Optional profile questions (budget, who pays) say why we ask (guideline 5.1.1)
 - [ ] iPhone only (`supportsTablet: false`); open once on an iPad to check the app does not crash in compatibility mode
 - [ ] Age rating questionnaire

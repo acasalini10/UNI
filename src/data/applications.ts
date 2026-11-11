@@ -1,7 +1,8 @@
-// AI-assisted (Claude Code): typed queries for Applications 5a/11, Add a university 9, University's master's 10 and Checklist 12/12d: list, add, remove, universities search, programs of one university; "just added" hand-off from 10 to 11; one application with its program and attached documents, attach a document (Saved becomes In progress), mark as submitted.
+// AI-assisted (Claude Code): typed queries for Applications 5a/11, Add a university 9, University's master's 10 and Checklist 12/12d: list, add, remove, universities search, programs of one university; "just added" hand-off from 10 to 11; one application with its program and attached documents, attach a document (Saved becomes In progress), mark as submitted; deadline reminders rescheduled after add, remove and submit.
 import { daysUntil } from "@/format";
 
 import type { UserDocument } from "./documents";
+import { syncReminders } from "./reminders";
 import { supabase } from "./supabase";
 import type { ProgramWithUniversity } from "./programs";
 
@@ -76,7 +77,10 @@ export async function savedPrograms(): Promise<Result<SavedPrograms>> {
 // Adds the program with status Saved and returns the application id. Adding twice returns the existing row.
 export async function addApplication(programId: string): Promise<Result<string>> {
   const { data, error } = await supabase.from("applications").insert({ program_id: programId }).select("id").single();
-  if (data) return { ok: true, data: data.id };
+  if (data) {
+    void syncReminders();
+    return { ok: true, data: data.id };
+  }
   if (error?.code === "23505") {
     const existing = await supabase.from("applications").select("id").eq("program_id", programId).maybeSingle();
     if (existing.data) return { ok: true, data: existing.data.id };
@@ -87,6 +91,7 @@ export async function addApplication(programId: string): Promise<Result<string>>
 export async function removeApplication(programId: string): Promise<Result<null>> {
   const { error } = await supabase.from("applications").delete().eq("program_id", programId);
   if (error) return { ok: false, error: errorOf(error) };
+  void syncReminders();
   return { ok: true, data: null };
 }
 
@@ -192,6 +197,8 @@ export async function markSubmitted(applicationId: string): Promise<Result<strin
     .select("submitted_at")
     .single();
   if (error || !data?.submitted_at) return { ok: false, error: errorOf(error) };
+  // A submitted application gets no more reminders.
+  void syncReminders();
   return { ok: true, data: data.submitted_at };
 }
 

@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): root layout with custom fonts, themed screen background, and guards (signed out → (auth); signed in without profile step 1 → (setup); otherwise tabs, Settings, Program detail, Add a university, University's master's and Checklist)
+// AI-assisted (Claude Code): root layout with custom fonts, themed screen background, guards (signed out → (auth); signed in without profile step 1 → (setup); otherwise tabs, Settings, Program detail, Add a university, University's master's and Checklist), and deadline reminders synced on launch and sign-in, cleared on sign out
 // AI-assisted (Copilot): wired the authenticated route to the four-tab navigation.
 import {
   PlusJakartaSans_400Regular,
@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 import { useSetupStep } from "@/data/profile";
+import { clearReminders, syncReminders } from "@/data/reminders";
 import { useSession } from "@/data/session";
 import { colors } from "@/theme";
 
@@ -43,6 +44,13 @@ export default function RootLayout() {
       void SplashScreen.hideAsync();
     }
   }, [started]);
+
+  // Deadline reminders: rescheduled at launch and on sign-in (deadlines may have changed); cleared on sign out.
+  const userId = session?.user.id ?? null;
+  useEffect(() => {
+    if (loading) return;
+    void (userId ? syncReminders() : clearReminders());
+  }, [loading, userId]);
 
   if (!ready && !started) {
     return null;

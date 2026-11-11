@@ -1,8 +1,8 @@
-// AI-assisted (Claude Code): minimal Settings 13 with the account email, the AI feedback consent switch, Terms and Privacy links, a real Log out and Delete account with a confirm alert; other rows wait for their features.
+// AI-assisted (Claude Code): minimal Settings 13 with the account email, the deadline reminders switch (permission asked when turned on, link to iOS Settings if denied), the AI feedback consent switch, Terms and Privacy links, a real Log out and Delete account with a confirm alert; other rows wait for their features.
 import { SymbolView } from "expo-symbols";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Switch, Text, View } from "react-native";
+import { ActivityIndicator, Alert, Linking, Pressable, ScrollView, StyleSheet, Switch, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { authErrorMessage } from "@/components/authErrorMessage";
@@ -11,6 +11,7 @@ import { deleteAccount } from "@/data/account";
 import { signOut } from "@/data/auth";
 import { setAiConsent } from "@/data/feedback";
 import { getProfile } from "@/data/profile";
+import { disableReminders, enableReminders, remindersState } from "@/data/reminders";
 import { useSession } from "@/data/session";
 import { t } from "@/i18n";
 import { openLegalPage } from "@/legal";
@@ -25,6 +26,9 @@ export default function Settings() {
   const [aiConsent, setAiConsentValue] = useState<boolean | null>(null); // null until the profile is read
   const [savingConsent, setSavingConsent] = useState(false);
   const [consentError, setConsentError] = useState(false);
+  const [reminders, setRemindersValue] = useState<boolean | null>(null); // null until read from the phone
+  const [savingReminders, setSavingReminders] = useState(false);
+  const [remindersDenied, setRemindersDenied] = useState(false);
 
   // Read on focus: the student may have changed it on Feedback 6a meanwhile.
   useFocusEffect(
@@ -32,6 +36,12 @@ export default function Settings() {
       let active = true;
       void getProfile().then((result) => {
         if (active && result.ok) setAiConsentValue(result.data.ai_consent);
+      });
+      // Also on focus: the student may come back from iOS Settings with notifications allowed or blocked.
+      void remindersState().then((state) => {
+        if (!active) return;
+        setRemindersValue(state.enabled);
+        setRemindersDenied(state.permission === "denied");
       });
       return () => {
         active = false;
@@ -50,6 +60,20 @@ export default function Settings() {
       setAiConsentValue(!value);
       setConsentError(true);
     }
+  }
+
+  async function onRemindersChange(value: boolean) {
+    setRemindersValue(value);
+    setSavingReminders(true);
+    if (value) {
+      const permission = await enableReminders();
+      // iOS said no (now or earlier): the switch goes back off and the hint points to iOS Settings.
+      if (permission === "denied") setRemindersValue(false);
+      setRemindersDenied(permission === "denied");
+    } else {
+      await disableReminders();
+    }
+    setSavingReminders(false);
   }
 
   async function onLogOut() {
@@ -107,6 +131,34 @@ export default function Settings() {
             </Text>
           </View>
         </View>
+
+        <Text style={[styles.groupLabel, styles.groupSpacing]}>{t("settings.notificationsGroup")}</Text>
+        <View style={styles.group}>
+          <View style={styles.row}>
+            <Text style={[styles.rowLabel, styles.flex]}>{t("settings.reminders")}</Text>
+            <Switch
+              accessibilityLabel={t("settings.reminders")}
+              value={reminders ?? false}
+              disabled={reminders === null || savingReminders}
+              onValueChange={(value) => void onRemindersChange(value)}
+              trackColor={{ true: colors.accent, false: colors.surfaceRaised }}
+            />
+          </View>
+        </View>
+        <Text style={styles.groupHint}>{t("settings.remindersHint")}</Text>
+        {remindersDenied && (
+          <View style={styles.denied}>
+            <Text style={styles.groupHint}>{t("settings.remindersDenied")}</Text>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={t("settings.openIosSettings")}
+              onPress={() => void Linking.openSettings()}
+              style={({ pressed }) => [styles.inlineLink, pressed && styles.pressed]}
+            >
+              <Text style={styles.inlineLinkText}>{t("settings.openIosSettings")}</Text>
+            </Pressable>
+          </View>
+        )}
 
         <Text style={[styles.groupLabel, styles.groupSpacing]}>{t("settings.privacyGroup")}</Text>
         <View style={styles.group}>
@@ -241,6 +293,17 @@ const styles = StyleSheet.create({
     ...typography.bodySmall,
     color: colors.textMuted,
     marginTop: spacing.sm,
+  },
+  denied: {
+    alignItems: "flex-start",
+  },
+  inlineLink: {
+    minHeight: sizes.touchTarget,
+    justifyContent: "center",
+  },
+  inlineLinkText: {
+    ...typography.bodyStrong,
+    color: colors.accent,
   },
   rowValue: {
     ...typography.body,
