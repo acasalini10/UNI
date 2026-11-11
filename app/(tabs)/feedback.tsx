@@ -1,7 +1,7 @@
-// AI-assisted (Claude Code): Feedback tab: start 6a (program from Applications, CV and motivational letter through sheet 12d, AI consent once) and results 6 (latest round); replaces the title-only tab.
+// AI-assisted (Claude Code): Feedback tab: start 6a (program from Applications or preselected from Program detail 4, CV and motivational letter through sheet 12d, AI consent) and results 6 (latest round); replaces the title-only tab.
 import { SymbolView } from "expo-symbols";
-import { router, useFocusEffect } from "expo-router";
-import { useCallback, useState } from "react";
+import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -14,6 +14,7 @@ import { listApplications, type Application } from "@/data/applications";
 import { listDocuments, type UserDocument } from "@/data/documents";
 import { getLatestRound, requestFeedback, setAiConsent, type FeedbackError, type FeedbackRound } from "@/data/feedback";
 import { getProfile } from "@/data/profile";
+import { getProgram } from "@/data/programs";
 import { t } from "@/i18n";
 import { openLegalPage } from "@/legal";
 import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
@@ -21,7 +22,13 @@ import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
 type Slot = "cv" | "statement";
 const slotKind = { cv: "cv", statement: "motivation_letter" } as const;
 
+type ProgramChoice = { programId: string; program: string; university: string };
+
 export default function Feedback() {
+  // "Get feedback on my application" on Program detail 4 opens this tab with ?programId= (flows.md §4).
+  const params = useLocalSearchParams<{ programId?: string }>();
+  const fromDetailId = useRef<string | null>(null);
+  const [fromDetail, setFromDetail] = useState<ProgramChoice | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [loadError, setLoadError] = useState<"offline" | "unknown" | null>(null);
   const [applications, setApplications] = useState<Application[]>([]);
@@ -56,7 +63,7 @@ export default function Feedback() {
       setRound(latest.data);
       // Keep the student's choices; fill only what is still empty or no longer exists.
       setProgramId((current) =>
-        current && apps.data.some((a) => a.programId === current)
+        current && (apps.data.some((a) => a.programId === current) || current === fromDetailId.current)
           ? current
           : latest.data?.programId && apps.data.some((a) => a.programId === latest.data!.programId)
             ? latest.data.programId
@@ -79,7 +86,36 @@ export default function Feedback() {
   }, []);
   useFocusEffect(load);
 
-  const program = applications.find((a) => a.programId === programId) ?? null;
+  // A program opened from detail is preselected even when it is not in Applications (decision 2026-11-11):
+  // it is listed first in the picker, and nothing is added to Applications behind the student's back.
+  // The choice is applied during render when the param changes (React's pattern for state derived from a prop);
+  // the effect below only loads the program's name and clears the param.
+  const paramId = params.programId ?? null;
+  const [handledParam, setHandledParam] = useState<string | null>(null);
+  if (paramId !== handledParam) {
+    setHandledParam(paramId);
+    if (paramId) {
+      setProgramId(paramId);
+      setShowStart(true);
+      setError(null);
+    }
+  }
+  useEffect(() => {
+    if (!paramId) return;
+    fromDetailId.current = paramId;
+    // Cleared so the next tap on the same button sets it again. No cancel flag: clearing re-runs this effect.
+    router.setParams({ programId: undefined });
+    void getProgram(paramId).then((result) => {
+      if (result.ok) setFromDetail({ programId: result.data.id, program: result.data.program, university: result.data.universities.name });
+    });
+  }, [paramId]);
+
+  const choices: ProgramChoice[] = [
+    ...(fromDetail && !applications.some((a) => a.programId === fromDetail.programId) ? [fromDetail] : []),
+    ...applications.map(({ programId: id, program: name, university }) => ({ programId: id, program: name, university })),
+  ];
+  const program = choices.find((c) => c.programId === programId) ?? null;
+  const notSaved = program !== null && !applications.some((a) => a.programId === program.programId);
   const fileOf = (slot: Slot) => documents.find((d) => d.id === selected[slot]) ?? null;
 
   async function toggleConsent() {
@@ -192,7 +228,7 @@ export default function Feedback() {
                   <Text style={styles.selectText} numberOfLines={1}>{`${program.university} · ${program.program}`}</Text>
                   <SymbolView name="chevron.down" tintColor={colors.textSecondary} size={16} />
                 </Pressable>
-                <Text style={styles.meta}>{t("feedback.step1.hint")}</Text>
+                <Text style={styles.meta}>{t(notSaved ? "feedback.step1.fromDetail" : "feedback.step1.hint")}</Text>
               </>
             ) : (
               <View style={styles.emptyCard}>
@@ -297,11 +333,11 @@ export default function Feedback() {
             </Pressable>
           </View>
           <ScrollView>
-            {applications.map((a) => {
+            {choices.map((a) => {
               const isSelected = a.programId === programId;
               return (
                 <Pressable
-                  key={a.id}
+                  key={a.programId}
                   accessibilityRole="button"
                   accessibilityState={{ selected: isSelected }}
                   onPress={() => {

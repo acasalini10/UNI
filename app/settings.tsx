@@ -1,14 +1,16 @@
-// AI-assisted (Claude Code): minimal Settings 13 with the account email, Terms and Privacy links, a real Log out and Delete account with a confirm alert; other rows wait for their features.
+// AI-assisted (Claude Code): minimal Settings 13 with the account email, the AI feedback consent switch, Terms and Privacy links, a real Log out and Delete account with a confirm alert; other rows wait for their features.
 import { SymbolView } from "expo-symbols";
-import { router } from "expo-router";
-import { useState } from "react";
-import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { router, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
+import { ActivityIndicator, Alert, Pressable, ScrollView, StyleSheet, Switch, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { authErrorMessage } from "@/components/authErrorMessage";
 import { FormError } from "@/components/Message";
 import { deleteAccount } from "@/data/account";
 import { signOut } from "@/data/auth";
+import { setAiConsent } from "@/data/feedback";
+import { getProfile } from "@/data/profile";
 import { useSession } from "@/data/session";
 import { t } from "@/i18n";
 import { openLegalPage } from "@/legal";
@@ -20,6 +22,35 @@ export default function Settings() {
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const busy = signingOut || deleting;
+  const [aiConsent, setAiConsentValue] = useState<boolean | null>(null); // null until the profile is read
+  const [savingConsent, setSavingConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
+
+  // Read on focus: the student may have changed it on Feedback 6a meanwhile.
+  useFocusEffect(
+    useCallback(() => {
+      let active = true;
+      void getProfile().then((result) => {
+        if (active && result.ok) setAiConsentValue(result.data.ai_consent);
+      });
+      return () => {
+        active = false;
+      };
+    }, []),
+  );
+
+  async function onConsentChange(value: boolean) {
+    setConsentError(false);
+    setAiConsentValue(value);
+    setSavingConsent(true);
+    const result = await setAiConsent(value);
+    setSavingConsent(false);
+    // Saving failed: the switch goes back to what the server still has.
+    if (!result.ok) {
+      setAiConsentValue(!value);
+      setConsentError(true);
+    }
+  }
 
   async function onLogOut() {
     setSigningOut(true);
@@ -76,6 +107,22 @@ export default function Settings() {
             </Text>
           </View>
         </View>
+
+        <Text style={[styles.groupLabel, styles.groupSpacing]}>{t("settings.privacyGroup")}</Text>
+        <View style={styles.group}>
+          <View style={styles.row}>
+            <Text style={[styles.rowLabel, styles.flex]}>{t("settings.aiConsent")}</Text>
+            <Switch
+              accessibilityLabel={t("settings.aiConsent")}
+              value={aiConsent ?? false}
+              disabled={aiConsent === null || savingConsent}
+              onValueChange={(value) => void onConsentChange(value)}
+              trackColor={{ true: colors.accent, false: colors.surfaceRaised }}
+            />
+          </View>
+        </View>
+        <Text style={styles.groupHint}>{t("settings.aiConsentHint")}</Text>
+        {consentError && <FormError text={t("feedback.errors.consent")} />}
 
         <Text style={[styles.groupLabel, styles.groupSpacing]}>{t("settings.support")}</Text>
         <View style={styles.group}>
@@ -186,6 +233,14 @@ const styles = StyleSheet.create({
   rowLabel: {
     ...typography.body,
     color: colors.text,
+  },
+  flex: {
+    flex: 1,
+  },
+  groupHint: {
+    ...typography.bodySmall,
+    color: colors.textMuted,
+    marginTop: spacing.sm,
   },
   rowValue: {
     ...typography.body,
