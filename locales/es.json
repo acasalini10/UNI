@@ -3,11 +3,23 @@
     "name": "UNI"
   },
   "common": {
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "back": "Atrás",
+    "change": "Cambiar",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "save": "Guardar"
+  },
+  "tabs": {
+    "programs": "Programas",
+    "applications": "Solicitudes",
+    "feedback": "Revisión",
+    "profile": "Perfil"
   },
   "errors": {
     "offline": "Sin conexión. Comprueba internet e inténtalo de nuevo.",
-    "unknown": "Algo salió mal. Inténtalo de nuevo."
+    "unknown": "Algo salió mal. Inténtalo de nuevo.",
+    "rateLimited": "Demasiados intentos. Espera unos minutos y vuelve a intentarlo."
   },
   "profile": {
     "currency": {
@@ -110,6 +122,52 @@
       "none": "No lo he hecho",
       "gmat": "GMAT",
       "gre": "GRE"
+    },
+    "my": {
+      "academic": "Perfil académico",
+      "funding": "Presupuesto y financiación",
+      "edit": "Editar",
+      "editSection": "Editar %{section}",
+      "notAdded": "Sin añadir",
+      "ielts": "IELTS %{score}",
+      "testScore": "%{test} %{score}",
+      "rows": {
+        "grade": "Promedio",
+        "english": "Inglés",
+        "test": "GMAT o GRE",
+        "fields": "Área",
+        "targets": "Países de destino",
+        "start": "Inicio",
+        "citizenship": "Ciudadanía",
+        "origin": "País de origen",
+        "budget": "Presupuesto",
+        "payers": "Quién paga"
+      },
+      "documents": {
+        "title": "Documentos",
+        "hint": "Solo PDF, hasta 10 MB, desde tu teléfono",
+        "upload": "Subir",
+        "uploadKind": "Subir %{kind}",
+        "kinds": {
+          "cv": "CV",
+          "motivation_letter": "Cartas de motivación",
+          "reference_letter": "Cartas de recomendación"
+        },
+        "ready": "Listo",
+        "count": {
+          "one": "1 archivo",
+          "other": "%{count} archivos"
+        },
+        "none": "Aún no hay archivo",
+        "latest": "%{name} · %{date}",
+        "loadFailed": "No se pudieron cargar tus documentos.",
+        "errors": {
+          "wrong_type": "Solo se pueden subir archivos PDF.",
+          "too_large": "Este archivo pesa más de 10 MB. Elige un PDF más pequeño.",
+          "offline": "No se pudo subir: sin conexión. Revisa tu internet y vuelve a intentarlo.",
+          "unknown": "No se pudo subir. Vuelve a intentarlo."
+        }
+      }
     }
   },
   "currencies": {
@@ -118,6 +176,51 @@
     "EUR": "Euro",
     "GBP": "Libra esterlina",
     "CHF": "Franco suizo"
+  },
+  "auth": {
+    "signIn": {
+      "headlineStart": "Tu máster en el extranjero, ",
+      "headlineHighlight": "sin adivinar.",
+      "subtitle": "Programas a los que puedes entrar, cuánto cuestan y una revisión de tu solicitud.",
+      "emailLabel": "Correo",
+      "emailPlaceholder": "tu@ejemplo.com",
+      "continueWithEmail": "Continuar con correo",
+      "or": "o",
+      "invalidEmail": "Escribe un correo válido."
+    },
+    "password": {
+      "label": "Contraseña",
+      "confirmLabel": "Confirmar contraseña",
+      "ruleLength": "Al menos 8 caracteres",
+      "ruleDigit": "Al menos un número",
+      "ruleUppercase": "Al menos una letra mayúscula",
+      "mismatch": "Las contraseñas no coinciden"
+    },
+    "setPassword": {
+      "title": "Crea tu contraseña",
+      "subtitle": "Para tu nueva cuenta",
+      "continue": "Continuar",
+      "next": "Después: tu perfil académico. Tarda unos 2 minutos.",
+      "emailTaken": "Este correo ya tiene una cuenta. Vuelve atrás e inicia sesión."
+    },
+    "existing": {
+      "title": "Hola de nuevo",
+      "signInAs": "Iniciar sesión como ",
+      "forgot": "¿Olvidaste tu contraseña?",
+      "signIn": "Iniciar sesión",
+      "wrongPassword": "Contraseña incorrecta. Vuelve a intentarlo o restablécela.",
+      "newHint": "¿Eres nuevo en UNI? Vuelve atrás y continúa con tu correo para crear una cuenta."
+    },
+    "reset": {
+      "title": "Restablece tu contraseña",
+      "sent": "Enviamos un código a %{email}. Escríbelo abajo junto con tu nueva contraseña.",
+      "resent": "Enviamos un nuevo código a %{email}.",
+      "codeLabel": "Código del correo",
+      "newPasswordLabel": "Nueva contraseña",
+      "save": "Guardar contraseña",
+      "resend": "Enviar un nuevo código",
+      "invalidCode": "Este código es incorrecto o ha caducado. Revisa el correo o pide un nuevo código."
+    }
   },
   "settings": {
     "title": "Ajustes",
@@ -130,7 +233,10 @@
     "deleteAccount": "Eliminar cuenta",
     "deleteConfirmTitle": "¿Eliminar tu cuenta?",
     "deleteConfirmMessage": "Se borrarán tu perfil, tus postulaciones y tus documentos. Esta acción no se puede deshacer.",
-    "deleteConfirmButton": "Eliminar"
+    "deleteConfirmButton": "Eliminar",
+    "privacyGroup": "Privacidad y seguridad",
+    "aiConsent": "Revisión con IA de mis documentos",
+    "aiConsentHint": "Si está activado, tu CV y tu carta de motivación se comparten con Anthropic, nuestro proveedor de IA, solo cuando pides una revisión."
   },
   "countries": {
     "AD": "Andorra",
@@ -544,6 +650,191 @@
     },
     "official": "Ver la página oficial",
     "opensInBrowser": "{{domain}} · se abre en tu navegador",
-    "checkedOn": "Revisado el {{date}} · página oficial"
+    "checkedOn": "Revisado el {{date}} · página oficial",
+    "getFeedback": "Revisar mi solicitud"
+  },
+  "applications": {
+    "subtitle": "Los másteres a los que vas a aplicar. Toca uno para ver qué te falta.",
+    "loading": "Cargando tus solicitudes…",
+    "counters": {
+      "universities": "Universidades",
+      "applied": "Enviadas",
+      "nextDeadline": "Días para la próxima fecha límite"
+    },
+    "myUniversities": "Mis universidades",
+    "add": "Añadir",
+    "addUniversity": "Añadir una universidad",
+    "status": {
+      "saved": "Guardada",
+      "in_progress": "En curso",
+      "submitted": "Enviada",
+      "new": "Nueva"
+    },
+    "empty": {
+      "title": "Aún no hay universidades",
+      "body": "Añade los másteres a los que quieres aplicar. Para cada uno, UNI te muestra qué te falta y cuántos días te quedan.",
+      "browse": "¿Aún no lo sabes? Explora programas que encajan contigo"
+    },
+    "added": {
+      "title": "Añadida a tus solicitudes.",
+      "undo": "Deshacer",
+      "undoFailed": "No se pudo quitar. Vuelve a intentarlo."
+    },
+    "search": {
+      "title": "Añadir una universidad",
+      "cancel": "Cancelar",
+      "label": "Busca por nombre o ciudad",
+      "placeholder": "Universidad o ciudad",
+      "clear": "Borrar búsqueda",
+      "noMatch": "Ninguna universidad coincide. Revisa cómo está escrito o busca por ciudad.",
+      "results": {
+        "one": "1 resultado",
+        "other": "{{count}} resultados"
+      }
+    },
+    "university": {
+      "intro": "Elige el máster que quieres seguir. Se añade a Solicitudes con su propia lista de requisitos.",
+      "all": "Todos · {{count}}",
+      "fits": "Encajan contigo · {{count}}",
+      "deadline": "fecha límite {{date}}",
+      "noDeadline": "fecha límite no publicada",
+      "add": "Añadir {{program}} a Solicitudes",
+      "added": "Ya está en Solicitudes",
+      "addFailed": "No se pudo añadir. Revisa tu conexión y vuelve a intentarlo.",
+      "empty": "Aún no hay másteres de esta universidad.",
+      "masters": {
+        "one": "1 máster",
+        "other": "{{count}} másteres"
+      }
+    },
+    "bookmark": {
+      "add": "Guardar en Solicitudes",
+      "remove": "Quitar de Solicitudes",
+      "confirmTitle": "¿Quitar de Solicitudes?",
+      "confirmBody": "Marcaste esta solicitud como {{status}}. Si la quitas, se borra su progreso.",
+      "confirmRemove": "Quitar",
+      "failed": "No se pudieron actualizar tus solicitudes. Revisa tu conexión y vuelve a intentarlo."
+    }
+  },
+  "checklist": {
+    "notFound": "Esta solicitud ya no está en tu lista.",
+    "chip": {
+      "ready": "Lista para aplicar",
+      "applied": "Enviada"
+    },
+    "itemsMissing": {
+      "one": "Falta 1 elemento",
+      "other": "Faltan {{count}} elementos"
+    },
+    "deadline": "Fecha límite {{date}}",
+    "noDeadline": "Fecha límite no publicada",
+    "note": "Solo los requisitos que pide {{university}}. No es una probabilidad de admisión.",
+    "notAdded": "Sin añadir",
+    "belowMinimum": "Por debajo del mínimo publicado. Aún puedes aplicar.",
+    "notRated": "Tu escala de notas no se puede comparar. Consulta con la universidad.",
+    "test": {
+      "title": "GMAT o GRE",
+      "required": "Obligatorio, sin mínimo publicado",
+      "optional": "Opcional, sin mínimo publicado"
+    },
+    "documents": "Documentos",
+    "kinds": {
+      "cv": "CV",
+      "motivation_letter": "Carta de motivación",
+      "reference_letter": "Cartas de recomendación"
+    },
+    "required": "Obligatorio",
+    "lettersAttached": "{{attached}} de {{required}} adjuntas",
+    "apply": "Aplicar",
+    "applyOnSite": "Aplicar en la web de la universidad",
+    "applyHint": "Todo está listo. Se abre la página oficial del programa en tu navegador.",
+    "submit": {
+      "button": "Ya envié mi solicitud",
+      "confirmTitle": "¿Marcar como enviada?",
+      "confirmBody": "Hazlo después de enviar tu solicitud en la web de la universidad. UNI no puede ver el portal de la universidad.",
+      "confirm": "Marcar como enviada",
+      "failed": "No se pudo guardar. Revisa tu conexión y vuelve a intentarlo."
+    },
+    "submittedOn": "Enviada el {{date}}",
+    "picker": {
+      "title": {
+        "cv": "Añade tu CV",
+        "motivation_letter": "Añade tu carta de motivación",
+        "reference_letter": "Añade una carta de recomendación"
+      },
+      "for": "Para {{university}} · {{program}}",
+      "close": "Cerrar",
+      "fromProfile": "De Mi perfil",
+      "uploaded": "Subido el {{date}}",
+      "or": "o",
+      "upload": "Subir un nuevo PDF desde tu teléfono",
+      "hint": "Solo PDF, hasta 10 MB. También se guarda en Mi perfil.",
+      "use": "Usar el archivo elegido",
+      "attachFailed": "No se pudo adjuntar el archivo. Revisa tu conexión y vuelve a intentarlo."
+    }
+  },
+  "feedback": {
+    "title": "Revisión de tu solicitud",
+    "subtitle": "Revisamos tu CV y tu carta de motivación frente a lo que pide un programa, y te decimos qué corregir primero.",
+    "step1": {
+      "title": "Programa con el que comparar",
+      "hint": "Programas de tus Solicitudes.",
+      "choose": "Elegir otro programa",
+      "empty": "La revisión se hace para un programa. Primero añade una universidad a tus Solicitudes.",
+      "add": "Primero añade una universidad",
+      "fromDetail": "Desde el detalle del programa. No está en tus Solicitudes."
+    },
+    "step2": {
+      "title": "Tus documentos",
+      "fromProfile": "{{name}} · de Mi perfil",
+      "missing": "Falta",
+      "hint": "Solo PDF. Elige un archivo de Mi perfil o sube uno desde tu teléfono."
+    },
+    "step3": {
+      "title": "Tus documentos y la IA",
+      "body": "Para hacer tu revisión, UNI comparte tu CV y tu carta de motivación con Anthropic, nuestro proveedor de IA. Tus documentos se usan solo para generar esta revisión.",
+      "link": "Cómo tratamos tus documentos",
+      "agree": "Acepto compartir mis documentos para recibir la revisión.",
+      "once": "Tu elección se guarda en tu cuenta. Puedes desactivarla en Ajustes."
+    },
+    "documents": {
+      "cv": "CV",
+      "statement": "Carta de motivación"
+    },
+    "get": "Revisar mis documentos",
+    "missing": {
+      "prefix": "Falta: {{items}}.",
+      "program": "un programa",
+      "cv": "tu CV",
+      "statement": "tu carta de motivación",
+      "consent": "tu aceptación en el paso 3"
+    },
+    "loading": {
+      "title": "Leyendo tus documentos…",
+      "body": "Tarda de 15 a 30 segundos. Mantén la app abierta."
+    },
+    "priority": {
+      "fix_first": "Corregir primero",
+      "improve": "Mejorar"
+    },
+    "results": {
+      "subtitle": "Tu CV y tu carta de motivación, revisados frente a lo que pide {{program}} de {{university}}.",
+      "subtitleNoProgram": "Tu CV y tu carta de motivación, revisados frente al programa que elegiste.",
+      "fileRemoved": "Archivo eliminado",
+      "issues": {
+        "one": "1 punto a revisar",
+        "other": "{{count}} puntos a revisar"
+      },
+      "noIssues": "No hay puntos a revisar.",
+      "newVersion": "Subir una nueva versión (PDF)"
+    },
+    "errors": {
+      "daily_limit": "Ya usaste las 3 revisiones de hoy. Vuelve a intentarlo mañana.",
+      "analysis_failed": "No pudimos analizar tus documentos. Vuelve a intentarlo.",
+      "too_large": "Uno de los archivos pesa más de 10 MB. Elige un PDF más pequeño.",
+      "not_found": "Uno de los archivos o el programa ya no está disponible. Vuelve a elegirlos.",
+      "consent_required": "Acepta el paso 3 para enviar tus documentos.",
+      "consent": "No se pudo guardar tu elección. Revisa tu conexión y vuelve a intentarlo."
+    }
   }
 }
