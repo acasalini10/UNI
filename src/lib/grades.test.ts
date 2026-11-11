@@ -38,6 +38,18 @@ describe('toTenScale', () => {
         expect(toTenScale('third', 'uk_class')).toBe(6.5);
     });
 
+    it('uses the bottom of each UK class band for a program minimum', () => {
+        expect(toTenScale('first', 'uk_class', 'minimum')).toBe(9);
+        expect(toTenScale('2:1', 'uk_class', 'minimum')).toBe(8);
+        expect(toTenScale('2:2', 'uk_class', 'minimum')).toBe(7);
+        expect(toTenScale('third', 'uk_class', 'minimum')).toBe(6);
+    });
+
+    it('converts linear scales the same way for a student and a minimum', () => {
+        expect(toTenScale(3.0, '4.0', 'minimum')).toBe(toTenScale(3.0, '4.0'));
+        expect(toTenScale(80, '100', 'minimum')).toBe(8);
+    });
+
     it('returns null for the "other" scale', () => {
         expect(toTenScale(85, 'other')).toBeNull();
     });

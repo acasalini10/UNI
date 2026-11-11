@@ -1,3 +1,4 @@
+// AI-assisted (Claude Code): on Nov 11 added the `side` parameter and the bottom-of-band table for a program's minimum UK class, at my request for lack of time; I will rewrite this change myself before the CS50 submission.
 // Converts a grade to UNI's 0–10 scale.
 // Rule: the scale's passing grade maps to 6 (Mexican passing grade),
 // the best grade maps to 10, linear in between.
@@ -16,7 +17,8 @@ const LINEAR_SCALES: Record<LinearScaleId, { best: number; pass: number }> = {
     '30': { best: 30, pass: 18 },
 };
 
-// Each UK class is a band; we use the middle of the band.
+// Each UK class is a band (First 9–10, 2:1 8–9, 2:2 7–8, Third 6–7).
+// A student's class can be anywhere in the band: we use the middle.
 const UK_CLASS_ON_TEN: Record<UkClass, number> = {
     first: 9.5,
     '2:1': 8.5,
@@ -24,15 +26,27 @@ const UK_CLASS_ON_TEN: Record<UkClass, number> = {
     third: 6.5,
 };
 
+// A program asking for "at least a 2:1" accepts the whole band: we use its bottom.
+const UK_CLASS_MINIMUM_ON_TEN: Record<UkClass, number> = {
+    first: 9,
+    '2:1': 8,
+    '2:2': 7,
+    third: 6,
+};
+
+// Whose grade is converted. Only UK classes differ; linear scales are the same for both.
+export type GradeSide = 'student' | 'minimum';
+
 const PASS_ON_TEN = 6;
 const BEST_ON_TEN = 10;
 
-export function toTenScale(grade: number | UkClass, scale: GradeScaleId): number | null {
+export function toTenScale(grade: number | UkClass, scale: GradeScaleId, side: GradeSide = 'student'): number | null {
     if (scale === 'other') return null;
 
     if (scale === 'uk_class') {
         if (typeof grade !== 'string') return null;
-        return UK_CLASS_ON_TEN[grade] ?? null;
+        const table = side === 'minimum' ? UK_CLASS_MINIMUM_ON_TEN : UK_CLASS_ON_TEN;
+        return table[grade] ?? null;
     }
 
     if (typeof grade !== 'number' || !Number.isFinite(grade)) return null;
