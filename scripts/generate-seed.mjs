@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): turns supabase/seed/universities.csv and programs.csv into a repeatable SQL migration (upsert, no duplicates on re-run); cost_unit column added Nov 9.
+// AI-assisted (Claude Code): turns supabase/seed/universities.csv and programs.csv into a repeatable SQL migration (upsert, no duplicates on re-run); cost_unit column added Nov 9, limited to per_year and total Nov 11.
 // Usage: node scripts/generate-seed.mjs   → writes supabase/migrations/<timestamp>_seed_programs.sql
 // The CSVs are checked by hand before running; the database constraints are the final check when the migration is pushed.
 import { readFileSync, writeFileSync } from "node:fs";
@@ -56,7 +56,7 @@ const programColumns = [
   ["highly_selective", "boolean"],
   ["tuition_total", "numeric"],
   ["fees_total", "numeric"], // blank = not published
-  ["cost_unit", "text"], // per_year, total or per_credit, for tuition and fees
+  ["cost_unit", "text"], // per_year or total, for tuition and fees
   ["application_fee", "numeric"],
   ["test_required", "text"],
   ["letters_required", "int"],

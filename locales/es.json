@@ -516,8 +516,7 @@
   "cost": {
     "units": {
       "per_year": "/ año",
-      "total": "total",
-      "per_credit": "/ crédito"
+      "total": "total"
     }
   },
   "programs": {
@@ -579,13 +578,11 @@
       "cost": {
         "withFees": {
           "total": "Colegiatura y cuotas, programa completo",
-          "per_year": "Colegiatura y cuotas, por año",
-          "per_credit": "Colegiatura y cuotas, por crédito"
+          "per_year": "Colegiatura y cuotas, por año"
         },
         "tuitionOnly": {
           "total": "Colegiatura, programa completo",
-          "per_year": "Colegiatura, por año",
-          "per_credit": "Colegiatura, por crédito"
+          "per_year": "Colegiatura, por año"
         }
       },
       "approx": "≈ {{amount}} · tipo de cambio del {{date}}",
@@ -642,8 +639,7 @@
       "title": "Cuánto cuesta",
       "fees": {
         "total": "Cuotas universitarias, programa completo",
-        "per_year": "Cuotas universitarias, por año",
-        "per_credit": "Cuotas universitarias, por crédito"
+        "per_year": "Cuotas universitarias, por año"
       },
       "feesLabel": "Cuotas universitarias",
       "note": "Cuota internacional publicada por la universidad. No incluye gastos de vida. Las becas nunca se restan."

@@ -3,7 +3,8 @@
 // Tuition and fees stay separate; getCardCost sums them for the program card.
 // Returns values, not display text: screens translate the unit with t().
 
-export type CostUnit = 'per_year' | 'total' | 'per_credit';
+// AI-assisted (Claude Code): removed 'per_credit' at my request; only total or per year is shown (decision 2026-11-11).
+export type CostUnit = 'per_year' | 'total';
 
 export interface ProgramCost {
     amount: number;   // international fee, as published on the university site

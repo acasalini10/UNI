@@ -65,7 +65,8 @@ describe('getCostValues', () => {
     });
 
     it('gives no conversion when a rate is missing', () => {
-        const result = getCostValues({ amount: 900, currency: 'GBP', unit: 'per_credit' }, 'CHF', rates);
+        // AI-assisted (Claude Code): unit changed from 'per_credit' to 'per_year' (decision 2026-11-11).
+        const result = getCostValues({ amount: 900, currency: 'GBP', unit: 'per_year' }, 'CHF', rates);
         expect(result.original.amount).toBe(900);
         expect(result.converted).toBeNull();
     });
