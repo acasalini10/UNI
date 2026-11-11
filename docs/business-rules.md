@@ -49,10 +49,10 @@ v1 scales (ids as stored in `profiles.grade_scale`):
 - `4.0`: US GPA, pass 2.0: 2.0 → 6.0, 3.0 → 8.0, 3.6 → 9.2, 4.0 → 10.
 - `100`: percentage, pass 60: 60 → 6.0, 80 → 8.0, 90 → 9.0.
 - `30`: Italian university average (18 to 30), pass 18: 18 → 6.0, 27 → 9.0, 30 → 10. "30 e lode" counts as 30.
-- `uk_class`: UK degree classification (`profiles.grade_class`: `first`, `2:1`, `2:2`, `third`), fixed table with the middle of each band: First → 9.5, 2:1 → 8.5, 2:2 → 7.5, Third → 6.5. Assumption to validate.
+- `uk_class`: UK degree classification (`profiles.grade_class`: `first`, `2:1`, `2:2`, `third`), bands First 9–10, 2:1 8–9, 2:2 7–8, Third 6–7. The student's class uses the middle of the band: First → 9.5, 2:1 → 8.5, 2:2 → 7.5, Third → 6.5. A program's minimum class uses the bottom of the band: First → 9, 2:1 → 8, 2:2 → 7, Third → 6 ("at least a 2:1" accepts the whole band). Decision 2026-11-11.
 - `other`: no conversion (null).
 
-The program's minimum goes through the same function as the student's grade, so both sides of the comparison use the same scale.
+The program's minimum goes through the same function as the student's grade, so both sides of the comparison use the same scale. Only UK classes differ by side (middle of the band for the student, bottom for the minimum).
 
 Other scales: the student picks "Other" and gets no fit labels (Not rated, section 1), only the program's requirements. Linear conversion is a simplification: say so in the app next to the label.
 

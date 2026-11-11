@@ -69,8 +69,9 @@ export function studentScores(profile: Profile): StudentScores {
 function programMinGpa(program: ProgramRecord): number | null {
   const scale = program.min_gpa_scale as GradeScaleId | null;
   if (!scale) return null;
-  if (scale === "uk_class") return program.min_gpa_class ? toTenScale(program.min_gpa_class as UkClass, scale) : null;
-  return program.min_gpa === null ? null : toTenScale(program.min_gpa, scale);
+  // "minimum": a required UK class counts from the bottom of its band (decision 2026-11-11).
+  if (scale === "uk_class") return program.min_gpa_class ? toTenScale(program.min_gpa_class as UkClass, scale, "minimum") : null;
+  return program.min_gpa === null ? null : toTenScale(program.min_gpa, scale, "minimum");
 }
 
 export interface ProgramRow {

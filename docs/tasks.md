@@ -16,18 +16,19 @@ Rule for anything not on this list:
 | [x] | Nov 13–14 | Feedback screens 6a (with AI consent) and 6 | Claude Code |
 | [x] | Nov 14 | "Get feedback on my application" on Program detail 4 (opens 6a with the program) and AI consent switch in Settings 13 | Claude Code |
 | [x] | Nov 15 | Deadline reminders (local notifications): 30, 7, 1 day before at 9:00; switch in Settings 13 | Claude Code |
-| [ ] | Nov 15 | Careers screen 8, only if time: hide every block without an official source | Claude Code |
+| [ ] | Optional | Careers data: figures from official career outcome reports for 5–8 demo programs (companies and roles, share by continent, average salary with currency, % employed within 3 months, report URL and year); no estimates (`data.md`) | Alessandro |
+| [ ] | Optional, after the data | Careers 8: migration (`program_careers`, `program_recruiters`, `program_regions`, RLS read-only), CSV sheets + `generate-seed.mjs`, `src/data/careers.ts`, screen with every block hidden without a source, preview and "See all" on 4. To decide first: donut (`react-native-svg`) or segmented bar; salary in the report's currency only or also "≈" (`business-rules.md` §7) | Claude Code |
 | [ ] | Nov 16–17 | Production build, TestFlight install, fixes | Alessandro, with Claude Code |
 | [ ] | Nov 17 | Rehearse the live demo | Alessandro + Valeria |
 
 ## In parallel (not code)
 | ✓ | Task | Who |
 | --- | --- | --- |
-| [ ] | TestFlight build with #11, #16, #21 sent to external beta review (build log must show both `EXPO_PUBLIC_SUPABASE_*` variables; demo account with 2 and 2b filled; Test Information checked against `app-store.md`) | Alessandro |
-| [ ] | TestFlight public link for classmates; track sign-ups and feedback rounds for the defense | Alessandro |
-| [ ] | Validate the UK class mid-band values (First 9.5, 2:1 8.5, 2:2 7.5, Third 6.5) | Alessandro |
-| [ ] | Program data: fill `cost_unit` (default `total`) and leave `fees_total` blank when fees are not published (0 only if the site says none); set `checked_by` to the real checker, fix Duke and Oxford deadlines (already passed), decide whether IE Business School and IE University become one university | Valeria |
-| [ ] | Spanish strings: switch `locales/es.json` from Spain forms ("máster", "nota") to Mexican Spanish | Valeria |
+| [x] | TestFlight build with #11, #16, #21 sent to external beta review (build log must show both `EXPO_PUBLIC_SUPABASE_*` variables; demo account with 2 and 2b filled; Test Information checked against `app-store.md`) | Alessandro |
+| [x] | TestFlight public link for classmates (open; shared at the demo); track sign-ups and feedback rounds for the defense | Alessandro |
+| [x] | UK class values: the student's class keeps the middle of the band (First 9.5, 2:1 8.5, 2:2 7.5, Third 6.5); a program's minimum class uses the bottom of the band (9, 8, 7, 6). Changed in `grades.ts` by Claude Code (decision 2026-11-11) | Alessandro, with Claude Code |
+| [ ] | Program data: fill `cost_unit` (all 31 rows still on the default `total`) and leave `fees_total` blank when fees are not published (0 only if the site says none). Duke and Oxford deadlines, `checked_by` and the two IE universities stay as they are (decision 2026-11-06) | Valeria |
+| [x] | Spanish strings: switch `locales/es.json` from Spain forms ("máster", "nota") to Mexican Spanish | Valeria |
 | [ ] | Screenshots and store description (ES and EN) | Valeria + Alessandro |
 | [ ] | Email content@qs.com for permission to show QS rankings | Alessandro |
 
@@ -38,6 +39,7 @@ Rule for anything not on this list:
 | [ ] | Google sign-in (postponed, decision 2026-11-03) | Claude Code |
 | [ ] | Settings 13: remaining rows (Language) as their features exist; AI consent switch done | Claude Code |
 | [ ] | CS50 README sections, written by me | Alessandro |
+| [ ] | Rewrite the Nov 11 UK class change in `src/lib/grades.ts` myself before the CS50 submission (written by Claude Code for lack of time) | Alessandro |
 | [ ] | CS50 video (max 3 min) and submit50, by Dec 31 | Alessandro |
 
 ## Done
