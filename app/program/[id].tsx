@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): Program detail 4/4b: pinned header on scroll with bookmark to Applications, key facts, requirements vs you, application deadline and requirements, published cost with "≈", official page. Sections without data (rankings, careers, scholarships, campus image) are left out.
+// AI-assisted (Claude Code): Program detail 4/4b: pinned header on scroll with bookmark to Applications, key facts, requirements vs you, application deadline and requirements, published cost with "≈", official page, "Get feedback on my application" to Feedback 6a. Sections without data (rankings, careers, scholarships, campus image) are left out.
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { router, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
@@ -290,6 +290,9 @@ export default function ProgramDetail() {
           <Text style={styles.small}>{t("programDetail.opensInBrowser", { domain: domainOf(program.official_url) })}</Text>
           <Text style={styles.small}>{t("programDetail.checkedOn", { date: shortDate(program.checked_on) })}</Text>
         </View>
+
+        {/* Feedback 6a with this program preselected (flows.md §4) */}
+        <Button label={t("programDetail.getFeedback")} onPress={() => router.push({ pathname: "/feedback", params: { programId: program.id } })} />
       </ScrollView>
     </SafeAreaView>
   );

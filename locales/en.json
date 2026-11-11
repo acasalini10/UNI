@@ -233,7 +233,10 @@
     "deleteAccount": "Delete account",
     "deleteConfirmTitle": "Delete your account?",
     "deleteConfirmMessage": "Your profile, applications and documents will be deleted. This can't be undone.",
-    "deleteConfirmButton": "Delete"
+    "deleteConfirmButton": "Delete",
+    "privacyGroup": "Privacy and security",
+    "aiConsent": "AI feedback on my documents",
+    "aiConsentHint": "When on, your CV and motivational letter are shared with Anthropic, our AI provider, only when you ask for feedback."
   },
   "countries": {
     "AD": "Andorra",
@@ -647,7 +650,8 @@
     },
     "official": "Check official web page",
     "opensInBrowser": "{{domain}} · opens in your browser",
-    "checkedOn": "Checked on {{date}} · official page"
+    "checkedOn": "Checked on {{date}} · official page",
+    "getFeedback": "Get feedback on my application"
   },
   "applications": {
     "subtitle": "The master's you are applying to. Tap one to see what is missing.",
@@ -777,7 +781,8 @@
       "hint": "Programs from your Applications.",
       "choose": "Choose another program",
       "empty": "Feedback is written for one program. Add a university to your Applications first.",
-      "add": "Add a university first"
+      "add": "Add a university first",
+      "fromDetail": "From Program detail. It is not in your Applications."
     },
     "step2": {
       "title": "Your documents",
@@ -790,7 +795,7 @@
       "body": "To generate your feedback, UNI shares your CV and motivational letter with Anthropic, our AI provider. Your documents are used only to generate this feedback.",
       "link": "How we handle your documents",
       "agree": "I agree to share my documents to receive feedback.",
-      "once": "Your choice is saved on your account. Uncheck it to stop sending documents."
+      "once": "Your choice is saved on your account. You can turn it off in Settings."
     },
     "documents": {
       "cv": "CV",
