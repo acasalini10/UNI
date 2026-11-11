@@ -768,5 +768,68 @@
       "use": "Use selected file",
       "attachFailed": "Could not attach the file. Check your connection and try again."
     }
+  },
+  "feedback": {
+    "title": "Application feedback",
+    "subtitle": "We check your CV and motivational letter against what one program asks for, and tell you what to fix first.",
+    "step1": {
+      "title": "Program to check against",
+      "hint": "Programs from your Applications.",
+      "choose": "Choose another program",
+      "empty": "Feedback is written for one program. Add a university to your Applications first.",
+      "add": "Add a university first"
+    },
+    "step2": {
+      "title": "Your documents",
+      "fromProfile": "{{name}} · from My Profile",
+      "missing": "Missing",
+      "hint": "PDF only. Pick a file from My Profile or upload one from your phone."
+    },
+    "step3": {
+      "title": "Your documents and AI",
+      "body": "To generate your feedback, UNI shares your CV and motivational letter with Anthropic, our AI provider. Your documents are used only to generate this feedback.",
+      "link": "How we handle your documents",
+      "agree": "I agree to share my documents to receive feedback.",
+      "once": "Your choice is saved on your account. Uncheck it to stop sending documents."
+    },
+    "documents": {
+      "cv": "CV",
+      "statement": "Motivational letter"
+    },
+    "get": "Get feedback",
+    "missing": {
+      "prefix": "Still needed: {{items}}.",
+      "program": "a program",
+      "cv": "your CV",
+      "statement": "your motivational letter",
+      "consent": "your agreement in step 3"
+    },
+    "loading": {
+      "title": "Reading your documents…",
+      "body": "This takes 15 to 30 seconds. Keep the app open."
+    },
+    "priority": {
+      "fix_first": "Fix first",
+      "improve": "Improve"
+    },
+    "results": {
+      "subtitle": "Your CV and motivational letter, checked against what {{university}}'s {{program}} asks for.",
+      "subtitleNoProgram": "Your CV and motivational letter, checked against the program you chose.",
+      "fileRemoved": "File removed",
+      "issues": {
+        "one": "1 issue found",
+        "other": "{{count}} issues found"
+      },
+      "noIssues": "No issues found.",
+      "newVersion": "Upload a new version (PDF)"
+    },
+    "errors": {
+      "daily_limit": "You've used today's 3 checks. Try again tomorrow.",
+      "analysis_failed": "We could not analyze your documents. Try again.",
+      "too_large": "One of the files is larger than 10 MB. Choose a smaller PDF.",
+      "not_found": "One of the files or the program is no longer available. Choose them again.",
+      "consent_required": "Agree to step 3 to send your documents.",
+      "consent": "Could not save your choice. Check your connection and try again."
+    }
   }
 }
