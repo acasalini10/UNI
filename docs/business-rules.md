@@ -60,7 +60,10 @@ Other scales: the student picks "Other" and gets no fit labels (Not rated, secti
 
 No net cost (decision 2026-11-09). The app shows only the cost published on the university's site.
 - Fee: the international one only (non-EU / overseas).
-- Unit: the site's unit (per year, total or per credit), shown next to the amount. No conversion into a total.
+- Unit: total or per year, shown next to the amount (decision 2026-11-11). The amount is the site's figure, never an estimate:
+  - The site publishes a total or a yearly amount: used as it is.
+  - The site publishes only a per-semester amount: multiplied by 2 and stored as per year (an academic year has two semesters).
+  - The site publishes only a per-credit price: the total (price × credits) is used only when the site also gives the program's fixed number of credits. Otherwise the program is not added to the database.
 - Living costs are not included anywhere (decision 2026-10-17). Screens say "Living costs are not included" next to the cost.
 - The academic year of the amount is not stored for now.
 - The application fee is shown on its own in the key facts, never added to the cost.

@@ -27,7 +27,8 @@ Rule for anything not on this list:
 | [x] | TestFlight build with #11, #16, #21 sent to external beta review (build log must show both `EXPO_PUBLIC_SUPABASE_*` variables; demo account with 2 and 2b filled; Test Information checked against `app-store.md`) | Alessandro |
 | [x] | TestFlight public link for classmates (open; shared at the demo); track sign-ups and feedback rounds for the defense | Alessandro |
 | [x] | UK class values: the student's class keeps the middle of the band (First 9.5, 2:1 8.5, 2:2 7.5, Third 6.5); a program's minimum class uses the bottom of the band (9, 8, 7, 6). Changed in `grades.ts` by Claude Code (decision 2026-11-11) | Alessandro, with Claude Code |
-| [ ] | Program data: fill `cost_unit` (all 31 rows still on the default `total`) and leave `fees_total` blank when fees are not published (0 only if the site says none). Duke and Oxford deadlines, `checked_by` and the two IE universities stay as they are (decision 2026-11-06) | Valeria |
+| [x] | Program data: costs checked on the official pages, `cost_unit` only `total` or `per_year`, `fees_total` blank when not published (0 if included); Carnegie Mellon removed, 30 programs (decision 2026-11-11). Duke and Oxford deadlines, `checked_by` and the two IE universities stay as they are (decision 2026-11-06) | Alessandro |
+| [ ] | Program data: check University College London, MSc Management (UCL pages did not open on Nov 11): tuition, `fees_total` (still 0), `cost_unit` (still the default `total`) | Valeria |
 | [x] | Spanish strings: switch `locales/es.json` from Spain forms ("máster", "nota") to Mexican Spanish | Valeria |
 | [ ] | Screenshots and store description (ES and EN) | Valeria + Alessandro |
 | [ ] | Email content@qs.com for permission to show QS rankings | Alessandro |

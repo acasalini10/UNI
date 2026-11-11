@@ -33,8 +33,8 @@ One row per program. Column names match the database.
 | `min_ielts` | 7.0 | Blank if not published |
 | `highly_selective` | TRUE | Acceptance rate under ~20% or stated as highly selective |
 | `tuition_total` | 45000 | International tuition, in the unit of `cost_unit` |
-| `fees_total` | 3600 | Mandatory university fees, same unit. Blank if not published (0 only if the site says there are none) |
-| `cost_unit` | total | `per_year`, `total` or `per_credit`, as the site publishes tuition and fees |
+| `fees_total` | 3600 | Mandatory university fees, same unit. Blank if the site does not publish them in a unit we can store (total or per year); 0 only if the site says they are included or there are none |
+| `cost_unit` | total | `per_year` or `total`, for tuition and fees. Per semester × 2 = `per_year`; per credit only as `total` when the site gives a fixed number of credits, otherwise the program is left out (`business-rules.md` §4) |
 | `application_fee` | 85 | |
 | `test_required` | optional | `none`, `optional`, `required` (GMAT or GRE) |
 | `letters_required` | 3 | Reference letters |
