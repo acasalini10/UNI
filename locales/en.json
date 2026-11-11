@@ -236,7 +236,17 @@
     "deleteConfirmButton": "Delete",
     "privacyGroup": "Privacy and security",
     "aiConsent": "AI feedback on my documents",
-    "aiConsentHint": "When on, your CV and motivational letter are shared with Anthropic, our AI provider, only when you ask for feedback."
+    "aiConsentHint": "When on, your CV and motivational letter are shared with Anthropic, our AI provider, only when you ask for feedback.",
+    "notificationsGroup": "NOTIFICATIONS",
+    "reminders": "Deadline reminders",
+    "remindersHint": "A reminder at 9:00, 30, 7 and 1 day before the deadline of each application you have not submitted. Reminders stay on this phone.",
+    "remindersDenied": "Notifications for UNI are off in iOS Settings.",
+    "openIosSettings": "Open iOS Settings"
+  },
+  "reminders": {
+    "titleDays": "Deadline in %{days} days",
+    "titleTomorrow": "Deadline tomorrow",
+    "body": "%{program}, %{university}: applications close on %{date}."
   },
   "countries": {
     "AD": "Andorra",

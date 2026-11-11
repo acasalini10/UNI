@@ -15,7 +15,7 @@ Rule for anything not on this list:
 | [x] | Nov 13–14 | Feedback Edge Function: consent check, 3 rounds a day, program requirements in the prompt, Claude API call | Claude Code |
 | [x] | Nov 13–14 | Feedback screens 6a (with AI consent) and 6 | Claude Code |
 | [x] | Nov 14 | "Get feedback on my application" on Program detail 4 (opens 6a with the program) and AI consent switch in Settings 13 | Claude Code |
-| [ ] | Nov 15 | Deadline reminders (local notifications) | Claude Code |
+| [x] | Nov 15 | Deadline reminders (local notifications): 30, 7, 1 day before at 9:00; switch in Settings 13 | Claude Code |
 | [ ] | Nov 15 | Careers screen 8, only if time: hide every block without an official source | Claude Code |
 | [ ] | Nov 16–17 | Production build, TestFlight install, fixes | Alessandro, with Claude Code |
 | [ ] | Nov 17 | Rehearse the live demo | Alessandro + Valeria |
