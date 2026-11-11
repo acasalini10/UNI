@@ -102,3 +102,5 @@ Currency:
 ## 7. Careers (screen 8)
 
 Each block (recruiters, regions, salary, employment rate) is shown only if the program's official source publishes it. No estimates.
+- Regions: share by continent as a segmented bar (decision 2026-11-11).
+- Salary: the amount in the report's currency, then "≈" + the amount in the student's currency + the rate date, as in section 4. Display only.

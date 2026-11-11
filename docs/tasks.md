@@ -17,7 +17,7 @@ Rule for anything not on this list:
 | [x] | Nov 14 | "Get feedback on my application" on Program detail 4 (opens 6a with the program) and AI consent switch in Settings 13 | Claude Code |
 | [x] | Nov 15 | Deadline reminders (local notifications): 30, 7, 1 day before at 9:00; switch in Settings 13 | Claude Code |
 | [ ] | Optional | Careers data: figures from official career outcome reports for 5–8 demo programs (companies and roles, share by continent, average salary with currency, % employed within 3 months, report URL and year); no estimates (`data.md`) | Alessandro |
-| [ ] | Optional, after the data | Careers 8: migration (`program_careers`, `program_recruiters`, `program_regions`, RLS read-only), CSV sheets + `generate-seed.mjs`, `src/data/careers.ts`, screen with every block hidden without a source, preview and "See all" on 4. To decide first: donut (`react-native-svg`) or segmented bar; salary in the report's currency only or also "≈" (`business-rules.md` §7) | Claude Code |
+| [ ] | Optional, after the data | Careers 8: migration (`program_careers`, `program_recruiters`, `program_regions`, RLS read-only), CSV sheets + `generate-seed.mjs`, `src/data/careers.ts`, screen with every block hidden without a source, preview and "See all" on 4. Regions as a segmented bar; salary also with "≈" in the student's currency (decision 2026-11-11, `business-rules.md` §7) | Claude Code |
 | [ ] | Nov 16–17 | Production build, TestFlight install, fixes | Alessandro, with Claude Code |
 | [ ] | Nov 17 | Rehearse the live demo | Alessandro + Valeria |
 
