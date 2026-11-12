@@ -1,24 +1,24 @@
-name,city,country,initials
-Massachusetts Institute of Technology,Cambridge,US,MIT
-Columbia University,New York,US,CU
-"University of California, Berkeley",Berkeley,US,UCB
-Duke University,Durham,US,DUKE
-Purdue University,West Lafayette,US,PU
-Arizona State University,Tempe,US,ASU
-London School of Economics,London,GB,LSE
-Imperial College London,London,GB,ICL
-University College London,London,GB,UCL
-University of Warwick,Coventry,GB,WBS
-University of Edinburgh,Edinburgh,GB,UOE
-University of Oxford,Oxford,GB,OX
-IE Business School,Madrid,ES,IE
-ESADE,Barcelona,ES,ESA
-EADA Business School,Barcelona,ES,EADA
-Delft University of Technology,Delft,NL,TUD
-Trinity College Dublin,Dublin,IE,TCD
-ETH Zurich,Zurich,CH,ETH
-University of St. Gallen,St. Gallen,CH,HSG
-EPFL,Lausanne,CH,EPFL
-HEC Paris,Jouy-en-Josas,FR,HEC
-Università Bocconi,Milan,IT,UB
-IE University,Madrid,ES,IE
+name,city,country,initials,brand_color
+Massachusetts Institute of Technology,Cambridge,US,MIT,#750014
+Columbia University,New York,US,CU,#B9D9EB
+"University of California, Berkeley",Berkeley,US,UCB,#FC9313
+Duke University,Durham,US,DUKE,#C84E00
+Purdue University,West Lafayette,US,PU,#CFB991
+Arizona State University,Tempe,US,ASU,#FFC627
+London School of Economics,London,GB,LSE,#E0112B
+Imperial College London,London,GB,ICL,#40E0D0
+University College London,London,GB,UCL,#993BFF
+University of Warwick,Coventry,GB,WBS,#3C1053
+University of Edinburgh,Edinburgh,GB,UOE,#D0006F
+University of Oxford,Oxford,GB,OX,#69913B
+IE Business School,Madrid,ES,IE,#FF630F
+ESADE,Barcelona,ES,ESA,#007A63
+EADA Business School,Barcelona,ES,EADA,#410099
+Delft University of Technology,Delft,NL,TUD,#00A6D6
+Trinity College Dublin,Dublin,IE,TCD,#0569B9
+ETH Zurich,Zurich,CH,ETH,#007894
+University of St. Gallen,St. Gallen,CH,HSG,#00802F
+EPFL,Lausanne,CH,EPFL,#00A79F
+HEC Paris,Jouy-en-Josas,FR,HEC,#7F9CB7
+Università Bocconi,Milan,IT,UB,#0046AD
+IE University,Madrid,ES,IE,#FF630F

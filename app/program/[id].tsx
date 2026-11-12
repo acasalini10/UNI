@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): Program detail 4/4b: pinned header on scroll with bookmark to Applications, key facts, requirements vs you, application deadline and requirements, careers preview with "See all" to Careers 8 (hidden without career data), published cost with "≈", official page, "Get feedback on my application" to Feedback 6a. Sections without data (rankings, scholarships, campus image) are left out.
+// AI-assisted (Claude Code): Program detail 4/4b: university scene hero tinted with the university's brand color (decisions 2026-11-12) under a floating header that pins on scroll, with bookmark to Applications, key facts, requirements vs you, application deadline and requirements, careers preview with "See all" to Careers 8 (hidden without career data), published cost with "≈", official page, "Get feedback on my application" to Feedback 6a. Sections without data (rankings, scholarships) are left out. Brand color also accents the key facts strip.
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { router, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
@@ -14,13 +14,14 @@ import {
   type NativeScrollEvent,
   type NativeSyntheticEvent,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { BookmarkButton } from "@/components/BookmarkButton";
 import { Button } from "@/components/Button";
 import { employmentText, percent } from "@/components/careerText";
 import { FitChip } from "@/components/FitChip";
 import { InitialsBadge } from "@/components/InitialsBadge";
+import { ProgramHero, sceneAccent } from "@/components/scenes";
 import { fitReason, lengthText } from "@/components/ProgramCard";
 import { countryName } from "@/countries";
 import { savedPrograms, type ApplicationStatus } from "@/data/applications";
@@ -34,8 +35,9 @@ import { daysUntil, locale, shortDate } from "@/format";
 import { t } from "@/i18n";
 import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
 
-// Scroll offset after which the title moves into the pinned header (4b).
-const PIN_AFTER = 120;
+// Scene height under the status bar. Once it has scrolled away, the title moves into the pinned header (4b).
+const HERO_HEIGHT = 200;
+const PIN_AFTER = HERO_HEIGHT;
 
 function domainOf(url: string): string {
   return url.replace(/^https?:\/\//, "").split("/")[0].replace(/^www\./, "");
@@ -64,6 +66,7 @@ const statusIcon: Record<CheckStatus, { name: SymbolViewProps["name"]; color: st
 
 export default function ProgramDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const insets = useSafeAreaInsets();
   const [program, setProgram] = useState<ProgramWithUniversity | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [error, setError] = useState<"offline" | "unknown" | "not_found" | null>(null);
@@ -137,6 +140,7 @@ export default function ProgramDetail() {
   const unitText = t(`cost.units.${program.cost_unit}`);
   const minimum = publishedMinimum(program);
   const days = program.deadline ? daysUntil(program.deadline) : null;
+  const accent = sceneAccent(row.university, row.brandColor);
 
   function share() {
     void Share.share({ message: `${program!.program} · ${program!.universities.name}\n${program!.official_url}`, url: program!.official_url });
@@ -147,8 +151,151 @@ export default function ProgramDetail() {
   }
 
   return (
-    <SafeAreaView style={styles.safe} edges={["top"]}>
-      <View style={[styles.bar, pinned && styles.barPinned]}>
+    <View style={styles.safe}>
+      <ScrollView contentContainerStyle={styles.scroll} onScroll={onScroll} scrollEventThrottle={32}>
+        <ProgramHero university={row.university} brandColor={row.brandColor} height={HERO_HEIGHT + insets.top} />
+        <View style={styles.content}>
+          <View style={styles.identity}>
+            <InitialsBadge initials={row.initials} color={row.brandColor} />
+            <View style={styles.flex}>
+              <Text style={styles.university}>{row.university}</Text>
+              <Text style={styles.meta}>{program.universities.city} · {countryName(row.country)}</Text>
+            </View>
+          </View>
+          {canRate && <FitChip label={row.fit.label} />}
+          <Text style={styles.title} accessibilityRole="header">{row.program}</Text>
+          <Text style={styles.meta}>
+            {[program.field, lengthText(program.length_months), t("programDetail.taughtIn", { language: program.language })].join(" · ")}
+          </Text>
+
+          {/* Key facts */}
+          <View style={styles.facts}>
+            <View style={[styles.fact, { borderTopColor: accent }]}>
+              <Text style={styles.factLabel}>{t("programDetail.facts.deadline")}</Text>
+              <Text style={[styles.factValue, styles.factHighlight]}>{program.deadline ? shortDate(program.deadline) : t("programDetail.notPublished")}</Text>
+            </View>
+            <View style={[styles.fact, { borderTopColor: accent }]}>
+              <Text style={styles.factLabel}>{t("programDetail.facts.tuition")}</Text>
+              <Text style={styles.factValue}>{money(costs.tuition.original)}</Text>
+              <Text style={styles.factSub}>{unitText}</Text>
+            </View>
+            <View style={[styles.fact, { borderTopColor: accent }]}>
+              <Text style={styles.factLabel}>{t("programDetail.facts.applicationFee")}</Text>
+              <Text style={styles.factValue}>
+                {program.application_fee === null ? t("programDetail.notPublished") : formatMoney(program.application_fee, program.currency, locale())}
+              </Text>
+            </View>
+          </View>
+
+          {/* Requirements vs you */}
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>{t("programDetail.vsYou.title")}</Text>
+            <RequirementRow
+              status={gpa.status}
+              title={t("programDetail.vsYou.gpa")}
+              detail={gpa.minimum !== null ? t("programDetail.vsYou.gpaMinimum", { min: gpa.minimum.toFixed(1) }) : t("fit.noMinimum")}
+              hint={gpa.status === "no_minimum" ? t("fit.checkWithUniversity") : undefined}
+              value={
+                gpa.student === null
+                  ? t("programDetail.vsYou.notConverted")
+                  : gpa.difference !== null
+                    ? `${gpa.student.toFixed(1)} (${gpa.difference >= 0 ? "+" : ""}${gpa.difference.toFixed(1)})`
+                    : gpa.student.toFixed(1)
+              }
+            />
+            <RequirementRow
+              status={english.status}
+              title={t("programDetail.vsYou.english")}
+              detail={english.minimum !== null ? t("programDetail.vsYou.ieltsMinimum", { min: english.minimum.toFixed(1) }) : t("fit.noMinimum")}
+              hint={english.status === "no_minimum" ? t("fit.checkWithUniversity") : undefined}
+              value={english.student === null ? t("fit.missingIelts") : english.student.toFixed(1)}
+            />
+            <View style={styles.reasonBox}>
+              {canRate && (
+                <Text style={styles.reasonText}>
+                  {t("programDetail.vsYou.why", { label: t(`fit.labels.${row.fit.label}`), reason: fitReason(row) })}
+                </Text>
+              )}
+              <Text style={styles.reasonText}>{t("programDetail.vsYou.disclaimer")}</Text>
+            </View>
+          </View>
+
+          {/* Application */}
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>{t("programDetail.application.title")}</Text>
+            <Text style={styles.overline}>{t("programDetail.application.deadline")}</Text>
+            {program.deadline ? (
+              <View style={styles.timelineRow}>
+                <View style={styles.dot} />
+                <View style={styles.flex}>
+                  <Text style={styles.deadlineTitle}>{t("programDetail.application.applicationDeadline")}</Text>
+                  <Text style={styles.meta}>
+                    {shortDate(program.deadline)}
+                    {days !== null && ` · ${days >= 0 ? t("programDetail.application.daysLeft", { count: days }) : t("programDetail.application.closed")}`}
+                  </Text>
+                </View>
+              </View>
+            ) : (
+              <Text style={styles.meta}>{t("programDetail.notPublished")}</Text>
+            )}
+
+            <Text style={[styles.overline, styles.sectionGap]}>{t("programDetail.application.requirements")}</Text>
+            <Requirement
+              icon="graduationcap"
+              title={minimum ? t("programDetail.application.minGrade", { min: minimum }) : t("programDetail.application.noMinGrade")}
+              sub={gpa.minimum !== null ? t("programDetail.application.converted", { min: gpa.minimum.toFixed(1) }) : t("fit.checkWithUniversity")}
+            />
+            <Requirement
+              icon="text.bubble"
+              title={program.min_ielts !== null ? t("programDetail.application.ielts", { min: program.min_ielts.toFixed(1) }) : t("programDetail.application.noIelts")}
+              sub={program.min_ielts === null ? t("fit.checkWithUniversity") : undefined}
+            />
+            <Requirement icon="chart.bar" title={t(`programDetail.application.test.${program.test_required}`)} />
+            {program.letters_required > 0 && (
+              <Requirement icon="envelope" title={t("programDetail.application.letters", { count: program.letters_required })} />
+            )}
+          </View>
+
+          {/* Careers preview: employment and the first 3 recruiters; salary only when neither is published */}
+          {careers && <CareersPreview blocks={careers} programId={program.id} />}
+
+          {/* What it costs */}
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>{t("programDetail.costs.title")}</Text>
+            <CostLine label={t(`programs.card.cost.tuitionOnly.${program.cost_unit}`)} value={costs.tuition} />
+            {costs.fees ? (
+              <CostLine label={t(`programDetail.costs.fees.${program.cost_unit}`)} value={costs.fees} />
+            ) : (
+              <View style={styles.costLine}>
+                <Text style={styles.costLabel}>{t("programDetail.costs.feesLabel")}</Text>
+                <Text style={styles.costValue}>{t("programDetail.notPublished")}</Text>
+              </View>
+            )}
+            {costs.total && (
+              <View style={styles.totalBox}>
+                <CostLine label={t(`programs.card.cost.withFees.${program.cost_unit}`)} value={costs.total} strong />
+              </View>
+            )}
+            <Text style={styles.small}>{t("programDetail.costs.note")}</Text>
+          </View>
+
+          {/* Official page */}
+          <View style={styles.official}>
+            <Pressable accessibilityRole="link" onPress={openOfficial} style={styles.officialLink} hitSlop={spacing.sm}>
+              <Text style={styles.link}>{t("programDetail.official")}</Text>
+              <SymbolView name="arrow.up.right.square" tintColor={colors.link} size={18} />
+            </Pressable>
+            <Text style={styles.small}>{t("programDetail.opensInBrowser", { domain: domainOf(program.official_url) })}</Text>
+            <Text style={styles.small}>{t("programDetail.checkedOn", { date: shortDate(program.checked_on) })}</Text>
+          </View>
+
+          {/* Feedback 6a with this program preselected (flows.md §4) */}
+          <Button label={t("programDetail.getFeedback")} onPress={() => router.push({ pathname: "/feedback", params: { programId: program.id } })} />
+        </View>
+      </ScrollView>
+
+      {/* Over the scene; gets the page background once pinned (4b). */}
+      <View style={[styles.bar, styles.barFloating, { paddingTop: insets.top + spacing.sm }, pinned && styles.barPinned]}>
         {backButton}
         {pinned ? (
           <View style={styles.barTitle}>
@@ -166,146 +313,7 @@ export default function ProgramDetail() {
           <SymbolView name="square.and.arrow.up" tintColor={colors.text} size={sizes.icon} />
         </Pressable>
       </View>
-
-      <ScrollView contentContainerStyle={styles.content} onScroll={onScroll} scrollEventThrottle={32}>
-        <View style={styles.identity}>
-          <InitialsBadge initials={row.initials} color={row.brandColor} />
-          <View style={styles.flex}>
-            <Text style={styles.university}>{row.university}</Text>
-            <Text style={styles.meta}>{program.universities.city} · {countryName(row.country)}</Text>
-          </View>
-        </View>
-        {canRate && <FitChip label={row.fit.label} />}
-        <Text style={styles.title} accessibilityRole="header">{row.program}</Text>
-        <Text style={styles.meta}>
-          {[program.field, lengthText(program.length_months), t("programDetail.taughtIn", { language: program.language })].join(" · ")}
-        </Text>
-
-        {/* Key facts */}
-        <View style={styles.facts}>
-          <View style={styles.fact}>
-            <Text style={styles.factLabel}>{t("programDetail.facts.deadline")}</Text>
-            <Text style={[styles.factValue, styles.factHighlight]}>{program.deadline ? shortDate(program.deadline) : t("programDetail.notPublished")}</Text>
-          </View>
-          <View style={styles.fact}>
-            <Text style={styles.factLabel}>{t("programDetail.facts.tuition")}</Text>
-            <Text style={styles.factValue}>{money(costs.tuition.original)}</Text>
-            <Text style={styles.factSub}>{unitText}</Text>
-          </View>
-          <View style={styles.fact}>
-            <Text style={styles.factLabel}>{t("programDetail.facts.applicationFee")}</Text>
-            <Text style={styles.factValue}>
-              {program.application_fee === null ? t("programDetail.notPublished") : formatMoney(program.application_fee, program.currency, locale())}
-            </Text>
-          </View>
-        </View>
-
-        {/* Requirements vs you */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{t("programDetail.vsYou.title")}</Text>
-          <RequirementRow
-            status={gpa.status}
-            title={t("programDetail.vsYou.gpa")}
-            detail={gpa.minimum !== null ? t("programDetail.vsYou.gpaMinimum", { min: gpa.minimum.toFixed(1) }) : t("fit.noMinimum")}
-            hint={gpa.status === "no_minimum" ? t("fit.checkWithUniversity") : undefined}
-            value={
-              gpa.student === null
-                ? t("programDetail.vsYou.notConverted")
-                : gpa.difference !== null
-                  ? `${gpa.student.toFixed(1)} (${gpa.difference >= 0 ? "+" : ""}${gpa.difference.toFixed(1)})`
-                  : gpa.student.toFixed(1)
-            }
-          />
-          <RequirementRow
-            status={english.status}
-            title={t("programDetail.vsYou.english")}
-            detail={english.minimum !== null ? t("programDetail.vsYou.ieltsMinimum", { min: english.minimum.toFixed(1) }) : t("fit.noMinimum")}
-            hint={english.status === "no_minimum" ? t("fit.checkWithUniversity") : undefined}
-            value={english.student === null ? t("fit.missingIelts") : english.student.toFixed(1)}
-          />
-          <View style={styles.reasonBox}>
-            {canRate && (
-              <Text style={styles.reasonText}>
-                {t("programDetail.vsYou.why", { label: t(`fit.labels.${row.fit.label}`), reason: fitReason(row) })}
-              </Text>
-            )}
-            <Text style={styles.reasonText}>{t("programDetail.vsYou.disclaimer")}</Text>
-          </View>
-        </View>
-
-        {/* Application */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{t("programDetail.application.title")}</Text>
-          <Text style={styles.overline}>{t("programDetail.application.deadline")}</Text>
-          {program.deadline ? (
-            <View style={styles.timelineRow}>
-              <View style={styles.dot} />
-              <View style={styles.flex}>
-                <Text style={styles.deadlineTitle}>{t("programDetail.application.applicationDeadline")}</Text>
-                <Text style={styles.meta}>
-                  {shortDate(program.deadline)}
-                  {days !== null && ` · ${days >= 0 ? t("programDetail.application.daysLeft", { count: days }) : t("programDetail.application.closed")}`}
-                </Text>
-              </View>
-            </View>
-          ) : (
-            <Text style={styles.meta}>{t("programDetail.notPublished")}</Text>
-          )}
-
-          <Text style={[styles.overline, styles.sectionGap]}>{t("programDetail.application.requirements")}</Text>
-          <Requirement
-            icon="graduationcap"
-            title={minimum ? t("programDetail.application.minGrade", { min: minimum }) : t("programDetail.application.noMinGrade")}
-            sub={gpa.minimum !== null ? t("programDetail.application.converted", { min: gpa.minimum.toFixed(1) }) : t("fit.checkWithUniversity")}
-          />
-          <Requirement
-            icon="text.bubble"
-            title={program.min_ielts !== null ? t("programDetail.application.ielts", { min: program.min_ielts.toFixed(1) }) : t("programDetail.application.noIelts")}
-            sub={program.min_ielts === null ? t("fit.checkWithUniversity") : undefined}
-          />
-          <Requirement icon="chart.bar" title={t(`programDetail.application.test.${program.test_required}`)} />
-          {program.letters_required > 0 && (
-            <Requirement icon="envelope" title={t("programDetail.application.letters", { count: program.letters_required })} />
-          )}
-        </View>
-
-        {/* Careers preview: employment and the first 3 recruiters; salary only when neither is published */}
-        {careers && <CareersPreview blocks={careers} programId={program.id} />}
-
-        {/* What it costs */}
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>{t("programDetail.costs.title")}</Text>
-          <CostLine label={t(`programs.card.cost.tuitionOnly.${program.cost_unit}`)} value={costs.tuition} />
-          {costs.fees ? (
-            <CostLine label={t(`programDetail.costs.fees.${program.cost_unit}`)} value={costs.fees} />
-          ) : (
-            <View style={styles.costLine}>
-              <Text style={styles.costLabel}>{t("programDetail.costs.feesLabel")}</Text>
-              <Text style={styles.costValue}>{t("programDetail.notPublished")}</Text>
-            </View>
-          )}
-          {costs.total && (
-            <View style={styles.totalBox}>
-              <CostLine label={t(`programs.card.cost.withFees.${program.cost_unit}`)} value={costs.total} strong />
-            </View>
-          )}
-          <Text style={styles.small}>{t("programDetail.costs.note")}</Text>
-        </View>
-
-        {/* Official page */}
-        <View style={styles.official}>
-          <Pressable accessibilityRole="link" onPress={openOfficial} style={styles.officialLink} hitSlop={spacing.sm}>
-            <Text style={styles.link}>{t("programDetail.official")}</Text>
-            <SymbolView name="arrow.up.right.square" tintColor={colors.link} size={18} />
-          </Pressable>
-          <Text style={styles.small}>{t("programDetail.opensInBrowser", { domain: domainOf(program.official_url) })}</Text>
-          <Text style={styles.small}>{t("programDetail.checkedOn", { date: shortDate(program.checked_on) })}</Text>
-        </View>
-
-        {/* Feedback 6a with this program preselected (flows.md §4) */}
-        <Button label={t("programDetail.getFeedback")} onPress={() => router.push({ pathname: "/feedback", params: { programId: program.id } })} />
-      </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -399,6 +407,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: layout.screenPaddingX,
     paddingVertical: spacing.sm,
   },
+  barFloating: { position: "absolute", top: 0, left: 0, right: 0 },
   barPinned: { borderBottomWidth: layout.borderWidth, borderBottomColor: colors.border, backgroundColor: colors.bg },
   barTitle: { flex: 1, flexDirection: "row", alignItems: "center", gap: spacing.sm },
   barProgram: { ...typography.bodyStrong, color: colors.text },
@@ -411,7 +420,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.surface,
   },
-  content: { paddingHorizontal: layout.screenPaddingX, paddingBottom: layout.screenPaddingBottom * 2, gap: spacing.md },
+  scroll: { paddingBottom: layout.screenPaddingBottom * 2 },
+  content: { paddingHorizontal: layout.screenPaddingX, gap: spacing.md, marginTop: -spacing.xl },
   center: { flex: 1, alignItems: "center", justifyContent: "center", gap: spacing.lg, paddingHorizontal: layout.screenPaddingX },
   stateTitle: { ...typography.bodyStrong, color: colors.text, textAlign: "center" },
   identity: { flexDirection: "row", alignItems: "center", gap: spacing.md, paddingTop: spacing.sm },
@@ -427,6 +437,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     borderWidth: layout.borderWidth,
     borderColor: colors.border,
+    borderTopWidth: 3,
     backgroundColor: colors.surface,
   },
   factLabel: { ...typography.small, color: colors.textMuted },
