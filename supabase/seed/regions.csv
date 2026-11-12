@@ -1,0 +1,42 @@
+university,program,region,share_pct,scope,scope_label
+Massachusetts Institute of Technology,Master of Business Analytics,United States,95.4,program,
+Massachusetts Institute of Technology,Master of Business Analytics,Europe,3.1,program,
+Massachusetts Institute of Technology,Master of Business Analytics,Asia,1.5,program,
+Imperial College London,MSc Business Analytics and AI,United Kingdom,67,program,
+Imperial College London,MSc in Management,United Kingdom,56,program,
+University of Warwick,MSc Management,United Kingdom,42,program,
+University of Warwick,MSc Management,India,21,program,
+University of Warwick,MSc Management,China,18,program,
+University of Warwick,MSc Management,Thailand,6,program,
+University of Warwick,MSc Management,Taiwan,2,program,
+University of Oxford,MSc Financial Economics,London,35,program,
+University of Oxford,MSc Financial Economics,Hong Kong,15,program,
+University of Oxford,MSc Financial Economics,North America,11,program,
+IE University,Master in Business Analytics and Data Science,Europe,44,program,
+IE University,Master in Business Analytics and Data Science,Spain,34,program,
+IE University,Master in Business Analytics and Data Science,Asia,9,program,
+IE University,Master in Business Analytics and Data Science,MEA,9,program,
+IE University,Master in Business Analytics and Data Science,LATAM,4,program,
+Columbia University,MS in Industrial Engineering,United States,60,department,Columbia IEOR MS Operations Research and MS Industrial Engineering (combined)
+Columbia University,MS in Industrial Engineering,Asia,40,department,Columbia IEOR MS Operations Research and MS Industrial Engineering (combined)
+Imperial College London,MSc Finance,United Kingdom,65,school,Imperial Business School Finance Master's programmes
+ESADE,MSc in International Management,Europe,55,school,Esade MSc programmes (all)
+ESADE,MSc in International Management,Spain,38,school,Esade MSc programmes (all)
+ESADE,MSc in International Management,Asia,3,school,Esade MSc programmes (all)
+ESADE,MSc in International Management,LATAM,2,school,Esade MSc programmes (all)
+ESADE,MSc in International Management,Middle East,1,school,Esade MSc programmes (all)
+ESADE,MSc in International Management,North America,1,school,Esade MSc programmes (all)
+ESADE,MSc in Business Analytics,Europe,55,school,Esade MSc programmes (all)
+ESADE,MSc in Business Analytics,Spain,38,school,Esade MSc programmes (all)
+ESADE,MSc in Business Analytics,Asia,3,school,Esade MSc programmes (all)
+ESADE,MSc in Business Analytics,LATAM,2,school,Esade MSc programmes (all)
+ESADE,MSc in Business Analytics,Middle East,1,school,Esade MSc programmes (all)
+ESADE,MSc in Business Analytics,North America,1,school,Esade MSc programmes (all)
+HEC Paris,Master in Management (Grande École),France,68,program,
+HEC Paris,Master in Management (Grande École),Europe & UK,19,program,
+HEC Paris,Master in Management (Grande École),North America,5,program,
+HEC Paris,Master in Management (Grande École),Middle East,3,program,
+HEC Paris,Master in Management (Grande École),Central South Asia,2,program,
+HEC Paris,Master in Management (Grande École),Latin America,1,program,
+HEC Paris,Master in Management (Grande École),Africa,1,program,
+HEC Paris,Master in Management (Grande École),Asia & Oceania,1,program,

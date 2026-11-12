@@ -1,4 +1,4 @@
-// AI-assisted (Claude Code): Program detail 4/4b: pinned header on scroll with bookmark to Applications, key facts, requirements vs you, application deadline and requirements, published cost with "≈", official page, "Get feedback on my application" to Feedback 6a. Sections without data (rankings, careers, scholarships, campus image) are left out.
+// AI-assisted (Claude Code): Program detail 4/4b: pinned header on scroll with bookmark to Applications, key facts, requirements vs you, application deadline and requirements, careers preview with "See all" to Careers 8 (hidden without career data), published cost with "≈", official page, "Get feedback on my application" to Feedback 6a. Sections without data (rankings, scholarships, campus image) are left out.
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { router, useLocalSearchParams } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
@@ -18,11 +18,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { BookmarkButton } from "@/components/BookmarkButton";
 import { Button } from "@/components/Button";
+import { employmentText, percent } from "@/components/careerText";
 import { FitChip } from "@/components/FitChip";
 import { InitialsBadge } from "@/components/InitialsBadge";
 import { fitReason, lengthText } from "@/components/ProgramCard";
 import { countryName } from "@/countries";
 import { savedPrograms, type ApplicationStatus } from "@/data/applications";
+import { hasCareerData, type CareerBlocks } from "@/data/careerBlocks";
+import { getCareers } from "@/data/careers";
 import { getProfile, type Profile } from "@/data/profile";
 import { detailCosts, getProgram, studentScores, toRows, type ProgramWithUniversity } from "@/data/programs";
 import { formatMoney, type CostValues } from "@/lib/cost";
@@ -66,6 +69,8 @@ export default function ProgramDetail() {
   const [error, setError] = useState<"offline" | "unknown" | "not_found" | null>(null);
   const [pinned, setPinned] = useState(false);
   const [saved, setSaved] = useState<{ status: ApplicationStatus | undefined } | null>(null);
+  // Careers preview; stays null (section hidden) while loading, on error or without data.
+  const [careers, setCareers] = useState<CareerBlocks | null>(null);
   // Bumped by "Try again" to run the load effect again.
   const [attempt, setAttempt] = useState(0);
 
@@ -79,6 +84,9 @@ export default function ProgramDetail() {
       if (!profileResult.ok) return setError(profileResult.error);
       setProgram(programResult.data);
       setProfile(profileResult.data);
+      void getCareers(id, profileResult.data).then((careersResult) => {
+        if (active && careersResult.ok && hasCareerData(careersResult.data)) setCareers(careersResult.data);
+      });
     });
     return () => {
       active = false;
@@ -261,6 +269,9 @@ export default function ProgramDetail() {
           )}
         </View>
 
+        {/* Careers preview: employment and the first 3 recruiters; salary only when neither is published */}
+        {careers && <CareersPreview blocks={careers} programId={program.id} />}
+
         {/* What it costs */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{t("programDetail.costs.title")}</Text>
@@ -321,6 +332,43 @@ function Requirement({ icon, title, sub }: { icon: SymbolViewProps["name"]; titl
         <Text style={styles.reqTitle}>{title}</Text>
         {sub && <Text style={styles.meta}>{sub}</Text>}
       </View>
+    </View>
+  );
+}
+
+function CareersPreview({ blocks, programId }: { blocks: CareerBlocks; programId: string }) {
+  const { employment, salary, recruiters } = blocks;
+  const showSalary = salary && !employment && !recruiters;
+  return (
+    <View style={styles.card}>
+      <View style={styles.cardHeader}>
+        <Text style={styles.cardTitle}>{t("programDetail.careers.title")}</Text>
+        <Pressable accessibilityRole="link" onPress={() => router.push({ pathname: "/careers/[id]", params: { id: programId } })} hitSlop={spacing.sm}>
+          <Text style={styles.seeAll}>{t("programDetail.careers.seeAll")}</Text>
+        </Pressable>
+      </View>
+      {employment && (
+        <View>
+          <Text style={styles.costValue}>
+            <Text style={styles.costStrong}>{percent(employment.pct)}</Text> {employmentText(employment)}
+          </Text>
+          {employment.source.scopeLabel && <Text style={styles.small}>{t("careers.source.dataFor", { label: employment.source.scopeLabel })}</Text>}
+        </View>
+      )}
+      {recruiters && (
+        <View>
+          <Text style={styles.overline}>{t("careers.recruiters.title")}</Text>
+          <Text style={styles.costValue}>{recruiters.items.slice(0, 3).join(" · ")}</Text>
+          {recruiters.source.scopeLabel && <Text style={styles.small}>{t("careers.source.dataFor", { label: recruiters.source.scopeLabel })}</Text>}
+        </View>
+      )}
+      {showSalary && (
+        <View>
+          <Text style={styles.overline}>{t(`careers.salary.${salary.stat}`)}</Text>
+          <Text style={styles.costValue}>{formatMoney(salary.amount, salary.currency, locale())}</Text>
+          {salary.source.scopeLabel && <Text style={styles.small}>{t("careers.source.dataFor", { label: salary.source.scopeLabel })}</Text>}
+        </View>
+      )}
     </View>
   );
 }
@@ -394,6 +442,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
   },
   cardTitle: { ...typography.cardTitle, color: colors.text },
+  cardHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", gap: spacing.md },
+  seeAll: { ...typography.bodySmall, color: colors.link },
   reqRow: {
     flexDirection: "row",
     alignItems: "center",

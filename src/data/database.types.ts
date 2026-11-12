@@ -273,6 +273,150 @@ export type Database = {
         }
         Relationships: []
       }
+      program_careers: {
+        Row: {
+          avg_salary: number | null
+          checked_on: string
+          created_at: string
+          employed_months: number | null
+          employed_pct: number | null
+          id: string
+          notes: string | null
+          program_id: string
+          report_url: string
+          report_year: string | null
+          salary_currency: string | null
+          salary_stat: string | null
+          scope: string
+          scope_label: string | null
+          top_roles: string[]
+        }
+        Insert: {
+          avg_salary?: number | null
+          checked_on: string
+          created_at?: string
+          employed_months?: number | null
+          employed_pct?: number | null
+          id?: string
+          notes?: string | null
+          program_id: string
+          report_url: string
+          report_year?: string | null
+          salary_currency?: string | null
+          salary_stat?: string | null
+          scope: string
+          scope_label?: string | null
+          top_roles?: string[]
+        }
+        Update: {
+          avg_salary?: number | null
+          checked_on?: string
+          created_at?: string
+          employed_months?: number | null
+          employed_pct?: number | null
+          id?: string
+          notes?: string | null
+          program_id?: string
+          report_url?: string
+          report_year?: string | null
+          salary_currency?: string | null
+          salary_stat?: string | null
+          scope?: string
+          scope_label?: string | null
+          top_roles?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_careers_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: true
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      program_recruiters: {
+        Row: {
+          company: string
+          created_at: string
+          id: string
+          position: number
+          program_id: string
+          roles: string | null
+          scope: string
+          scope_label: string | null
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          id?: string
+          position: number
+          program_id: string
+          roles?: string | null
+          scope: string
+          scope_label?: string | null
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          id?: string
+          position?: number
+          program_id?: string
+          roles?: string | null
+          scope?: string
+          scope_label?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_recruiters_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      program_regions: {
+        Row: {
+          created_at: string
+          id: string
+          position: number
+          program_id: string
+          region: string
+          scope: string
+          scope_label: string | null
+          share_pct: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          position: number
+          program_id: string
+          region: string
+          scope: string
+          scope_label?: string | null
+          share_pct: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          position?: number
+          program_id?: string
+          region?: string
+          scope?: string
+          scope_label?: string | null
+          share_pct?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "program_regions_program_id_fkey"
+            columns: ["program_id"]
+            isOneToOne: false
+            referencedRelation: "programs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       programs: {
         Row: {
           application_fee: number | null
