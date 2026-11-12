@@ -189,6 +189,30 @@ export type Database = {
           },
         ]
       }
+      institutions: {
+        Row: {
+          country: string
+          created_at: string
+          id: string
+          name: string
+          search_name: string
+        }
+        Insert: {
+          country: string
+          created_at?: string
+          id?: string
+          name: string
+          search_name: string
+        }
+        Update: {
+          country?: string
+          created_at?: string
+          id?: string
+          name?: string
+          search_name?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           ai_consent: boolean

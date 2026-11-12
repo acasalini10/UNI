@@ -1,5 +1,5 @@
 // AI-assisted (Copilot): added the title-only Profile tab.
-// AI-assisted (Claude Code): replaced the dev-only sign out with a gear that opens Settings 13; added the display currency row, saved on change. My Profile 5: identity, academic and funding summaries with Edit (2 and 2b in edit mode), per-kind PDF upload with status.
+// AI-assisted (Claude Code): replaced the dev-only sign out with a gear that opens Settings 13; added the display currency row, saved on change. My Profile 5: identity, academic and funding summaries with Edit (2 and 2b in edit mode), per-kind PDF upload with status. Study fields shown by their ISCED-F names (Nov 12).
 import { SymbolView, type SymbolViewProps } from "expo-symbols";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState, type ReactNode } from "react";
@@ -19,6 +19,7 @@ import {
   type UserDocument,
 } from "@/data/documents";
 import { displayCurrency, getProfile, updateProfile, type Profile } from "@/data/profile";
+import { fieldName, readFieldCodes, studiesText } from "@/fields";
 import { monthYear, shortDate } from "@/format";
 import { t } from "@/i18n";
 import { colors, layout, radius, sizes, spacing, typography } from "@/theme";
@@ -135,7 +136,7 @@ export default function ProfileTab() {
               )}
               <View style={styles.flex}>
                 <Text style={styles.name}>{[profile.first_name, profile.last_name].filter(Boolean).join(" ")}</Text>
-                <Text style={styles.meta}>{[profile.current_university, profile.current_studies].filter(Boolean).join(" · ")}</Text>
+                <Text style={styles.meta}>{[profile.current_university, studiesText(profile.current_studies)].filter(Boolean).join(" · ")}</Text>
               </View>
             </View>
 
@@ -148,7 +149,7 @@ export default function ProfileTab() {
                   value={t("profile.my.testScore", { test: t(`profile.tests.${profile.test_type}`), score: profile.test_score })}
                 />
               )}
-              <Row label={t("profile.my.rows.fields")} value={profile.fields.join(", ") || notAdded} />
+              <Row label={t("profile.my.rows.fields")} value={readFieldCodes(profile.fields).map(fieldName).join(", ") || notAdded} />
               <Row label={t("profile.my.rows.targets")} value={countries(profile.target_countries) ?? notAdded} />
               <Row label={t("profile.my.rows.start")} value={profile.planned_start ? monthYear(profile.planned_start) : notAdded} />
             </Section>

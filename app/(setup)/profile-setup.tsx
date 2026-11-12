@@ -1,14 +1,18 @@
-// AI-assisted (Claude Code): screen 2, academic profile setup with typed profile persistence; country pickers with search, translated scale labels, GMAT/GRE choice and start-date chips. Edit mode (?edit=1, from My Profile): Save goes back and keeps setup_step.
+// AI-assisted (Claude Code): screen 2, academic profile setup with typed profile persistence; country pickers with search, current university searched in `institutions` (or typed when not listed), study fields from ISCED-F 2013 lists (current studies with "Other" and free text), translated scale labels, GMAT/GRE choice and start-date chips. Edit mode (?edit=1, from My Profile): Save goes back and keeps setup_step.
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Button } from "@/components/Button";
 import { CountryPicker } from "@/components/CountryPicker";
 import { FormError } from "@/components/Message";
 import { ProfileSetupLayout } from "@/components/ProfileSetupLayout";
+import { SearchPicker, type SearchResult } from "@/components/SearchPicker";
 import { TextField } from "@/components/TextField";
+import { countryName } from "@/countries";
+import { searchInstitutions } from "@/data/institutions";
 import { getProfile, updateProfile } from "@/data/profile";
+import { OTHER_FIELD, fieldArea, fieldCodes, fieldName, fieldSearchText, readFieldCodes, readStudies } from "@/fields";
 import { t } from "@/i18n";
 import { colors, layout, radius, spacing, typography } from "@/theme";
 
@@ -17,6 +21,9 @@ const ukClasses = ["first", "2:1", "2:2", "third"] as const;
 const tests = ["none", "gmat", "gre"] as const;
 type Scale = (typeof scales)[number];
 type Test = (typeof tests)[number];
+
+// i18n-js splits keys on ".", so "4.0" cannot be part of a key: the saved value stays "4.0", the key is "gpa4".
+const scaleKeys: Record<Scale, string> = { "10": "10", "4.0": "gpa4", "100": "100", "30": "30", uk_class: "uk_class", other: "other" };
 
 // Master's programs start in September or January. Offer the next four intakes that are at least
 // six months away, so there is still time to apply. Values are "YYYY-MM".
@@ -44,8 +51,12 @@ export default function ProfileSetup() {
   const [lastName, setLastName] = useState("");
   const [residence, setResidence] = useState<string[]>([]);
   const [university, setUniversity] = useState("");
-  const [studies, setStudies] = useState("");
-  const [fields, setFields] = useState("");
+  // "My university is not in the list": the name is typed in a text field.
+  const [universityTyped, setUniversityTyped] = useState(false);
+  // An ISCED code, OTHER_FIELD (then studiesOther holds the text) or "" when not picked.
+  const [studiesCode, setStudiesCode] = useState("");
+  const [studiesOther, setStudiesOther] = useState("");
+  const [fields, setFields] = useState<string[]>([]);
   const [grade, setGrade] = useState("");
   const [scale, setScale] = useState<Scale>("10");
   const [gradeClass, setGradeClass] = useState("");
@@ -76,8 +87,14 @@ export default function ProfileSetup() {
       setLastName(profile.last_name ?? "");
       setResidence(profile.country_of_residence ? [profile.country_of_residence] : []);
       setUniversity(profile.current_university ?? "");
-      setStudies(profile.current_studies ?? "");
-      setFields(profile.fields.join(", "));
+      const studies = readStudies(profile.current_studies);
+      if (studies && "code" in studies) setStudiesCode(studies.code);
+      else if (studies) {
+        setStudiesCode(OTHER_FIELD);
+        setStudiesOther(studies.other);
+      }
+      // Free-text fields saved before the lists are dropped; the student picks again.
+      setFields(readFieldCodes(profile.fields));
       setGrade(profile.grade?.toString() ?? "");
       setScale((profile.grade_scale as Scale | null) ?? "10");
       setGradeClass(profile.grade_class ?? "");
@@ -89,9 +106,31 @@ export default function ProfileSetup() {
     });
   }, []);
 
+  // Same order as the ISCED-F codes, so fields of one area stay together; the area is shown under each name.
+  const fieldOptions = useMemo(
+    () => fieldCodes.map((code) => ({ value: code, label: fieldName(code), detail: fieldArea(code), searchText: fieldSearchText(code) })),
+    [],
+  );
+
+  const residenceCode = residence[0] ?? null;
+  const findUniversities = useCallback(
+    async (query: string): Promise<SearchResult> => {
+      const result = await searchInstitutions(query, residenceCode);
+      if (!result.ok) return { ok: false };
+      return {
+        ok: true,
+        options: result.data.map((item) => ({ value: item.name, label: item.name, detail: countryName(item.country), key: `${item.name}|${item.country}` })),
+      };
+    },
+    [residenceCode],
+  );
+
+  const studies = studiesCode === OTHER_FIELD ? studiesOther.trim() : studiesCode;
+
   const canContinue =
     !loading &&
-    [firstName, lastName, university, studies, fields].every((value) => value.trim()) &&
+    [firstName, lastName, university, studies].every((value) => value.trim()) &&
+    fields.length > 0 &&
     residence.length === 1 &&
     targets.length > 0 &&
     plannedStart.length > 0 &&
@@ -110,8 +149,8 @@ export default function ProfileSetup() {
       last_name: lastName.trim(),
       country_of_residence: residence[0],
       current_university: university.trim(),
-      current_studies: studies.trim(),
-      fields: fields.split(",").map((value) => value.trim()).filter(Boolean),
+      current_studies: studies,
+      fields,
       grade: scale === "uk_class" ? null : Number(grade.replace(",", ".")),
       grade_class: scale === "uk_class" ? gradeClass : null,
       grade_scale: scale,
@@ -160,16 +199,54 @@ export default function ProfileSetup() {
             </View>
           </View>
           <CountryPicker label={t("profile.setup.residence")} value={residence} onChange={setResidence} />
-          <TextField label={t("profile.setup.university")} value={university} onChangeText={setUniversity} />
-          <TextField label={t("profile.setup.studying")} value={studies} onChangeText={setStudies} />
+          <SearchPicker
+            label={t("profile.setup.university")}
+            value={university ? [university] : []}
+            onChange={([name]) => {
+              setUniversity(name);
+              setUniversityTyped(false);
+            }}
+            summary={university}
+            placeholder={t("profile.setup.universityPlaceholder")}
+            searchPlaceholder={t("profile.setup.universitySearch")}
+            noResults={t("profile.setup.universityNoResults")}
+            typeToSearch={t("profile.setup.universityTypeToSearch")}
+            search={findUniversities}
+            footer={{ label: t("profile.setup.universityNotListed"), onPress: () => setUniversityTyped(true) }}
+          />
+          {universityTyped && <TextField label={t("profile.setup.universityTypedLabel")} value={university} onChangeText={setUniversity} autoFocus />}
+          <SearchPicker
+            label={t("profile.setup.studying")}
+            value={studiesCode ? [studiesCode] : []}
+            onChange={([code]) => setStudiesCode(code)}
+            options={fieldOptions}
+            summary={studiesCode === OTHER_FIELD ? t("profile.setup.otherField") : studiesCode ? fieldName(studiesCode) : ""}
+            placeholder={t("profile.setup.studyingPlaceholder")}
+            searchPlaceholder={t("profile.setup.fieldSearch")}
+            noResults={t("profile.setup.fieldNoResults")}
+            footer={{ label: t("profile.setup.otherField"), onPress: () => setStudiesCode(OTHER_FIELD) }}
+          />
+          {studiesCode === OTHER_FIELD && (
+            <TextField label={t("profile.setup.otherFieldLabel")} value={studiesOther} onChangeText={setStudiesOther} autoFocus={!studiesOther} />
+          )}
 
           <Text style={styles.section}>{t("profile.setup.masters")}</Text>
-          <TextField label={t("profile.setup.fields")} value={fields} onChangeText={setFields} placeholder={t("profile.setup.fieldsPlaceholder")} />
+          <SearchPicker
+            label={t("profile.setup.fields")}
+            value={fields}
+            onChange={setFields}
+            max={3}
+            options={fieldOptions}
+            summary={fields.map(fieldName).join(", ")}
+            placeholder={t("profile.setup.fieldsPlaceholder")}
+            searchPlaceholder={t("profile.setup.fieldSearch")}
+            noResults={t("profile.setup.fieldNoResults")}
+          />
 
           <Text style={styles.label}>{t("profile.setup.scale")}</Text>
           <View style={styles.chips}>
             {scales.map((value) => (
-              <Choice key={value} label={t(`profile.scales.${value}`)} selected={scale === value} onPress={() => setScale(value)} />
+              <Choice key={value} label={t(`profile.scales.${scaleKeys[value]}`)} selected={scale === value} onPress={() => setScale(value)} />
             ))}
           </View>
           {scale === "uk_class" ? (
@@ -186,7 +263,7 @@ export default function ProfileSetup() {
               label={t("profile.setup.grade")}
               value={grade}
               onChangeText={setGrade}
-              placeholder={t(`profile.gradePlaceholders.${scale}`)}
+              placeholder={t(`profile.gradePlaceholders.${scaleKeys[scale]}`)}
               keyboardType="decimal-pad"
             />
           )}
