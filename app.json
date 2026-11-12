@@ -24,7 +24,8 @@
       "expo-font",
       "expo-splash-screen",
       "expo-apple-authentication",
-      "expo-web-browser"
+      "expo-web-browser",
+      "./plugins/withoutPushEntitlement"
     ],
     "extra": {
       "eas": {
