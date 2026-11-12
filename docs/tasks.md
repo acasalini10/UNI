@@ -32,6 +32,7 @@ Rule for anything not on this list:
 | [x] | Spanish strings: switch `locales/es.json` from Spain forms ("máster", "nota") to Mexican Spanish | Valeria |
 | [ ] | Screenshots and store description (ES and EN) | Valeria + Alessandro |
 | [ ] | Email content@qs.com for permission to show QS rankings | Alessandro |
+| [ ] | Give every program an ISCED-F 2013 code (column in `programs.csv` and `programs`), so Programs can filter by the fields in the student's profile | Alessandro |
 
 ## After the demo
 | ✓ | Task | Who |
