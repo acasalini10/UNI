@@ -7,8 +7,8 @@
 - [ ] App Store Connect: create the app record (name, bundle ID `com.acasalini.uni`, App ID already registered Nov 3)
 
 ## Required by App Review
-- [ ] Privacy policy URL (a public page is enough)
-- [ ] Support URL or email
+- [x] Privacy policy URL: https://acasalini10.github.io/UNI/privacy.html (Nov 5)
+- [x] Support URL: https://acasalini10.github.io/UNI/support.html, email unially.app.help@gmail.com (Nov 12; paste the URL in App Store Connect → App Information)
 - [ ] In-app account deletion (required when the app has sign-up)
 - [ ] Demo account for the reviewer (email and password) in the review notes, with a profile already filled in
 - [ ] No placeholder or sample content; every program links to its official page
@@ -42,7 +42,7 @@
 Paste into App Store Connect → TestFlight. Test Information is per language: fill English and Spanish. Update "What to Test" for every build sent to testers.
 
 Before sending a build to beta review:
-- [ ] Privacy policy URL (Valeria): required in Test Information for external testing
+- [x] Privacy policy URL (Valeria): required in Test Information for external testing
 - [ ] Feedback email (the dedicated Gmail or a support address)
 - [ ] Demo account created in the Supabase project the build uses, with profile filled in; email and password added below in App Store Connect only, never in git
 - [ ] Contact for the reviewer: first name, last name, phone, email
