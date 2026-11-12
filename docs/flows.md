@@ -88,7 +88,7 @@ Each card: initials badge, university, program, country and length, label, one-l
 States: loading, no programs match filters ("Clear filters"), grade scale "Other" (cards without labels + banner), no connection.
 
 ## 4 · Program detail (4b = scrolled, header pinned)
-Sections in order: campus image, badge, university, city · label, title, school, length, language · key facts **Deadline · Tuition · Application fee** · requirements vs you (GPA, English, background) with the reason for the label and "This is not an admission probability" · application timeline (opens, deadline, decisions, start) and requirements list · rankings · careers preview (top recruiters, top roles) · what it costs (published international fee with its unit, "≈" in the student's currency with the rate date, "Living costs are not included") · scholarships (list only, never subtracted) · funding · "Checked on <date> · official page".
+Sections in order: campus image, badge, university, city · label, title, school, length, language · key facts **Deadline · Tuition · Application fee** · requirements vs you (GPA, English, background) with the reason for the label and "This is not an admission probability" · application timeline (opens, deadline, decisions, start) and requirements list · rankings · careers preview (employment and the first 3 recruiters, salary if neither is published; hidden without career data) · what it costs (published international fee with its unit, "≈" in the student's currency with the rate date, "Living costs are not included") · scholarships (list only, never subtracted) · funding · "Checked on <date> · official page".
 | Element | Tap goes to |
 | --- | --- |
 | Back | 3 (same scroll position and filters) |
@@ -142,8 +142,8 @@ Documents checked and program name. All issues shown, each with a priority badge
 Only the latest round is shown. A list of past rounds is not in v1.
 
 ## 8 · Careers
-Companies that hire graduates (2–3 roles each), where graduates work by continent (donut + legend), average salary (gross per year), % employed within 3 months, source link.
-Only figures published by an official source (see `data.md`). A block without a source is hidden; if no block has a source, the "See all" link in 4 is hidden.
+Route `app/careers/[id].tsx`, opened by "See all" on 4. Blocks in order: employment ("X% employed within N months"), average or median salary with "≈", where graduates work (segmented bar + legend, grey "Not broken down"), recruiters ("Recruiters include"), roles. Under each block: "Data for: <scope label>" when the figures are not the program's own, "Report <year>", and "View the report" (in-app browser).
+Only figures published by an official source (see `data.md`, rules in `business-rules.md` §7). A block without data is hidden; if no block has data, the screen shows only "No career data published for this program." and 4 has no careers section (so no "See all").
 
 ## 9 · Add a university
 Search by name or city, live results (badge, name, city), clear button.

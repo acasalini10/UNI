@@ -70,6 +70,11 @@ export const fitColors = {
 
 export type FitLabel = keyof typeof fitColors;
 
+// Segments of the regions bar on Careers 8, in order (up to 8 regions per report); the rest of 100% is `chartRest`.
+// AI-assisted (Claude Code): added Nov 12 for Careers 8.
+export const chartColors = ['#3B82F6', '#FBBF24', '#34D399', '#F87171', '#A78BFA', '#22D3EE', '#FB923C', '#F472B6'] as const;
+export const chartRest = '#5A7092';
+
 export const fonts = {
     regular: 'PlusJakartaSans_400Regular',
     medium: 'PlusJakartaSans_500Medium',

@@ -101,6 +101,16 @@ Currency:
 
 ## 7. Careers (screen 8)
 
-Each block (recruiters, regions, salary, employment rate) is shown only if the program's official source publishes it. No estimates.
-- Regions: share by continent as a segmented bar (decision 2026-11-11).
-- Salary: the amount in the report's currency, then "≈" + the amount in the student's currency + the rate date, as in section 4. Display only.
+Data in `program_careers`, `program_recruiters`, `program_regions` (sheets in `data.md`). Blocks built by `toCareerBlocks` in `src/data/careerBlocks.ts`.
+
+- Every empty cell means the report does not publish that figure. A block without data is hidden. No estimates.
+- If no block has data, screen 8 shows only "No career data published for this program." and Program detail 4 has no careers section.
+- Scope: `program`, `department` or `school`, set per sheet (employment can be the program's and regions the school's). When it is not `program`, the block shows `scope_label` as its source: "Data for: LSE Department of Management". Department or school data are allowed only when the program's own figure is missing (decision 2026-11-11).
+- Source: under every block, the scope label (if any), the report year as "Report <year>" and a link to `report_url`. `report_year` is text ("2025", "2023-2024") and may be blank: then only the link. `programs.careers_url` is not used.
+- Employment: "X% employed within N months". If `employed_months` is blank, only "X% employed".
+- Salary: `salary_stat` decides the label: `mean` → "Average salary", `median` → "Median salary"; a median is never called an average. The amount is in the report's currency, then "≈" + the amount in the student's currency + the rate date, as in section 4 (same `rates.json` and `formatMoney`). Display only. Only salaries in a real currency: figures published only in $PPP or measured 3 years after graduation are not stored.
+- Regions: a horizontal segmented bar (decision 2026-11-11), regions named as in the report and kept in its order. Shares may not add up to 100: the rest is a grey segment "Not broken down".
+- Recruiters: companies in the report's order, titled "Recruiters include" (reports often list them alphabetically, so they are not "top"). `roles` per company is not shown (no report links roles to companies).
+- Roles: `top_roles`, a list separated by ";".
+- `notes` is for the team only: never shown in the app.
+- Preview on 4: employment and the first 3 recruiters, each with its scope label; the salary only when neither is published. "See all" opens 8.

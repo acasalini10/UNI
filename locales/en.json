@@ -657,7 +657,42 @@
     "official": "Check official web page",
     "opensInBrowser": "{{domain}} · opens in your browser",
     "checkedOn": "Checked on {{date}} · official page",
-    "getFeedback": "Get feedback on my application"
+    "getFeedback": "Get feedback on my application",
+    "careers": {
+      "title": "Careers",
+      "seeAll": "See all"
+    }
+  },
+  "careers": {
+    "title": "Careers",
+    "empty": "No career data published for this program.",
+    "employment": {
+      "title": "Employment",
+      "withinMonths": {
+        "one": "employed within 1 month",
+        "other": "employed within {{count}} months"
+      },
+      "employed": "employed"
+    },
+    "salary": {
+      "mean": "Average salary",
+      "median": "Median salary"
+    },
+    "regions": {
+      "title": "Where graduates work",
+      "notBrokenDown": "Not broken down"
+    },
+    "recruiters": {
+      "title": "Recruiters include"
+    },
+    "roles": {
+      "title": "Roles graduates took"
+    },
+    "source": {
+      "dataFor": "Data for: {{label}}",
+      "report": "Report {{year}}",
+      "open": "View the report"
+    }
   },
   "applications": {
     "subtitle": "The master's you are applying to. Tap one to see what is missing.",

@@ -647,7 +647,42 @@
     "official": "Ver la página oficial",
     "opensInBrowser": "{{domain}} · se abre en tu navegador",
     "checkedOn": "Revisado el {{date}} · página oficial",
-    "getFeedback": "Revisar mi solicitud"
+    "getFeedback": "Revisar mi solicitud",
+    "careers": {
+      "title": "Empleabilidad",
+      "seeAll": "Ver todo"
+    }
+  },
+  "careers": {
+    "title": "Empleabilidad",
+    "empty": "Este programa no tiene datos de empleo publicados.",
+    "employment": {
+      "title": "Empleo",
+      "withinMonths": {
+        "one": "con empleo en 1 mes",
+        "other": "con empleo en {{count}} meses"
+      },
+      "employed": "con empleo"
+    },
+    "salary": {
+      "mean": "Salario promedio",
+      "median": "Salario mediano"
+    },
+    "regions": {
+      "title": "Dónde trabajan los egresados",
+      "notBrokenDown": "Sin desglose"
+    },
+    "recruiters": {
+      "title": "Algunas empresas que contratan"
+    },
+    "roles": {
+      "title": "Puestos de los egresados"
+    },
+    "source": {
+      "dataFor": "Datos de: {{label}}",
+      "report": "Informe {{year}}",
+      "open": "Ver el informe"
+    }
   },
   "applications": {
     "subtitle": "Los másteres a los que vas a aplicar. Toca uno para ver qué te falta.",

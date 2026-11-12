@@ -42,12 +42,38 @@ One row per program. Column names match the database.
 | `deadline` | 2027-01-15 | Next intake, main round |
 | `official_url` | https://… | Page where requirements and fees appear |
 | `ranking_url` | https://… | University's page on the ranking site |
-| `careers_url` | https://… | Official career outcomes report; blank if none |
+| `careers_url` | https://… | Not used: the report link lives in `careers.csv` (see Careers sheets) |
 | `checked_on` | 2026-10-20 | |
 | `checked_by` | Valeria | |
 
 Rankings go in a second sheet, one row per rank shown: `program` (or blank for a university-wide rank), `university`, `scope` (`university` or `program`), `area` (`national` or `world`), `ranking_name` (e.g. "QS World University Rankings"), `rank` (as published, e.g. "114" or "101–150"), `year`, `url`, `checked_on`.
 
-Careers figures (companies and roles, share by region, average salary, employment rate within 3 months, report year) go in a second sheet, one row per program, only for programs with a `careers_url`.
+### Careers sheets
+Three sheets, saved as `supabase/seed/careers.csv`, `recruiters.csv` and `regions.csv`. Each row names its program with `university` + `program`, written exactly as in `programs.csv` (no IDs); `scripts/generate-seed.mjs` stops with an error if a pair is not found. A blank cell means the report does not publish that figure: never estimate it. Display rules in `business-rules.md` §7. The `careers_url` column of `programs.csv` is not used (decision on removing it pending).
+
+Every sheet has `scope` (`program`, `department` or `school`: whose figures they are) and `scope_label` (required when the scope is not `program`, e.g. "LSE Department of Management"). The scope is per sheet: for the same program, employment can be the program's and regions the school's. Within one sheet, all rows of a program share one scope.
+
+`careers.csv`: one row per program; programs without a report have no row.
+
+| Column | Example | Notes |
+| --- | --- | --- |
+| `university`, `program` | Massachusetts Institute of Technology, Master of Business Analytics | As in `programs.csv` |
+| `scope`, `scope_label` | program, (blank) | Applies to salary, employment and roles |
+| `report_url` | https://… | Official career outcomes report; the source link of every block |
+| `report_year` | 2025 | Text as published ("2023-2024", "2019/20-2023/24"); blank if the report gives none |
+| `avg_salary` | 139496 | Base salary in a real currency. Salaries published only in $PPP or measured 3 years after graduation are left out |
+| `salary_currency` | USD | Must exist in `src/data/rates.json` |
+| `salary_stat` | mean | `mean` or `median`, as the report says. Salary, currency and stat are all filled or all blank |
+| `employed_pct` | 95.5 | % of graduates employed |
+| `employed_months` | 3 | Months after graduation; blank if the report gives no timeframe |
+| `top_roles` | Data Scientist; Data Analyst | Separated by ";" |
+| `notes` | | For the team only; never shown |
+| `checked_on` | 2026-11-11 | |
+
+`recruiters.csv`: one row per company, in the report's order. Columns `university`, `program`, `company`, `roles` (blank: no report links roles to companies), `scope`, `scope_label`.
+
+`regions.csv`: one row per region, in the report's order. Columns `university`, `program`, `region` (as written in the report, e.g. "Europe & UK", "London"), `share_pct` (above 0, up to 100; the shares of a program may add up to less than 100), `scope`, `scope_label`.
+
+Recruiters and regions need the program's row in `careers.csv`, which holds the report link.
 
 Target: 30 to 50 programs by Oct 25, in the fields and countries with the most demand.
