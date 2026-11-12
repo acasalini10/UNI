@@ -12,7 +12,7 @@ import { TextField } from "@/components/TextField";
 import { countryName } from "@/countries";
 import { searchInstitutions } from "@/data/institutions";
 import { getProfile, updateProfile } from "@/data/profile";
-import { OTHER_FIELD, fieldArea, fieldCodes, fieldName, fieldSearchText, readFieldCodes, readStudies } from "@/fields";
+import { OTHER_FIELD, fieldCodes, fieldDetail, fieldName, fieldSearchText, readFieldCodes, readStudies } from "@/fields";
 import { t } from "@/i18n";
 import { colors, layout, radius, spacing, typography } from "@/theme";
 
@@ -108,7 +108,7 @@ export default function ProfileSetup() {
 
   // Same order as the ISCED-F codes, so fields of one area stay together; the area is shown under each name.
   const fieldOptions = useMemo(
-    () => fieldCodes.map((code) => ({ value: code, label: fieldName(code), detail: fieldArea(code), searchText: fieldSearchText(code) })),
+    () => fieldCodes.map((code) => ({ value: code, label: fieldName(code), detail: fieldDetail(code), searchText: fieldSearchText(code) })),
     [],
   );
 

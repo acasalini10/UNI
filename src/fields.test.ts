@@ -1,12 +1,25 @@
 // AI-assisted (Claude Code): tests for the ISCED-F field list and the profile study-field rules.
 /// <reference types="jest" />
-import { fieldCodes, fieldName, fieldSearchText, isFieldCode, readFieldCodes, readStudies, studiesText } from "./fields";
+import { fieldCodes, fieldDetail, fieldName, fieldSearchText, isFieldCode, readFieldCodes, readStudies, studiesText } from "./fields";
 
 describe("ISCED-F fields", () => {
-  it("lists detailed 4-digit codes only, without generic, inter-disciplinary or n.e.c. entries", () => {
-    expect(fieldCodes.length).toBe(77);
+  it("lists detailed 4-digit codes only, without generic, n.e.c. or inter-disciplinary entries except engineering (0788)", () => {
+    expect(fieldCodes.length).toBe(78);
     expect(fieldCodes.every((code) => /^\d{4}$/.test(code))).toBe(true);
-    expect(fieldCodes.some((code) => code.startsWith("00") || code.endsWith("8") || code.endsWith("9"))).toBe(false);
+    expect(fieldCodes.filter((code) => code.startsWith("00") || code.endsWith("8") || code.endsWith("9"))).toEqual(["0788"]);
+  });
+
+  it("finds common degree names through the aliases, in English and Spanish", () => {
+    const find = (query: string) => fieldCodes.filter((code) => fieldSearchText(code).includes(query));
+    expect(find("industrial engineering")).toEqual(["0788"]);
+    expect(find("ingenieria industrial")).toEqual(["0788"]);
+    expect(find("computer science")).toEqual(["0613"]);
+    expect(find("data science")).toEqual(["0542", "0613"].sort((a, b) => fieldCodes.indexOf(a) - fieldCodes.indexOf(b)));
+  });
+
+  it("shows the included degree names under an aliased field, the area otherwise", () => {
+    expect(fieldDetail("0788")).toBe("Includes: Industrial engineering, Engineering management, Systems engineering");
+    expect(fieldDetail("0313")).toBe("Social sciences, journalism and information");
   });
 
   it("names a field in English", () => {

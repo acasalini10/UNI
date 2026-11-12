@@ -73,7 +73,8 @@
       "universityTypeToSearch": "Escribe al menos 2 letras para buscar.",
       "universityNoResults": "Ninguna universidad coincide con tu búsqueda.",
       "universityNotListed": "Mi universidad no está en la lista",
-      "universityTypedLabel": "Nombre de tu universidad"
+      "universityTypedLabel": "Nombre de tu universidad",
+      "fieldIncludes": "Incluye: %{names}"
     },
     "funding": {
       "title": "Presupuesto y financiación",
@@ -918,7 +919,8 @@
       "083": "Pesca",
       "084": "Veterinaria",
       "091": "Salud",
-      "092": "Bienestar"
+      "092": "Bienestar",
+      "078": "Ingeniería, industria y construcción, interdisciplinarios"
     },
     "detailed": {
       "1011": "Servicios domésticos",
@@ -983,6 +985,7 @@
       "0724": "Minería y extracción",
       "0731": "Arquitectura y urbanismo",
       "0732": "Construcción e ingeniería civil",
+      "0788": "Ingeniería, industria y construcción, interdisciplinarios",
       "0811": "Producción agrícola y ganadera",
       "0812": "Horticultura",
       "0821": "Silvicultura",
@@ -998,6 +1001,28 @@
       "0921": "Asistencia a adultos mayores y personas con discapacidad",
       "0922": "Asistencia a la infancia y servicios para jóvenes",
       "0923": "Trabajo social y orientación"
+    },
+    "aliases": {
+      "0211": "Diseño gráfico; Multimedia",
+      "0231": "Traducción; Interpretación",
+      "0311": "Econometría",
+      "0312": "Relaciones internacionales",
+      "0321": "Comunicación; Ciencias de la comunicación",
+      "0411": "Contaduría; Contaduría pública",
+      "0413": "Administración de empresas; Recursos humanos; Logística; Cadena de suministro; Administración pública; Emprendimiento",
+      "0512": "Biotecnología",
+      "0541": "Análisis de datos",
+      "0542": "Actuaría; Ciencia de datos; Analítica de negocios",
+      "0613": "Ciencias de la computación; Ingeniería de software; Informática; Ingeniería en sistemas computacionales; Ciencia de datos; Analítica de negocios",
+      "0711": "Ingeniería química; Ingeniería biotecnológica",
+      "0712": "Ingeniería ambiental",
+      "0713": "Ingeniería eléctrica; Ingeniería en energía",
+      "0714": "Ingeniería electrónica; Mecatrónica; Robótica",
+      "0715": "Ingeniería mecánica; Ingeniería metalúrgica",
+      "0716": "Ingeniería aeroespacial; Ingeniería automotriz; Ingeniería naval",
+      "0732": "Ingeniería civil",
+      "0788": "Ingeniería industrial; Ingeniería en administración; Ingeniería de sistemas",
+      "0915": "Nutrición"
     }
   }
 }

@@ -119,7 +119,8 @@
       "universityTypeToSearch": "Type at least 2 letters to search.",
       "universityNoResults": "No university matches your search.",
       "universityNotListed": "My university is not in the list",
-      "universityTypedLabel": "Your university's name"
+      "universityTypedLabel": "Your university's name",
+      "fieldIncludes": "Includes: %{names}"
     },
     "funding": {
       "title": "Budget and funding",
@@ -928,7 +929,8 @@
       "083": "Fisheries",
       "084": "Veterinary",
       "091": "Health",
-      "092": "Welfare"
+      "092": "Welfare",
+      "078": "Inter-disciplinary engineering, manufacturing and construction"
     },
     "detailed": {
       "1011": "Domestic services",
@@ -993,6 +995,7 @@
       "0724": "Mining and extraction",
       "0731": "Architecture and town planning",
       "0732": "Building and civil engineering",
+      "0788": "Inter-disciplinary engineering, manufacturing and construction",
       "0811": "Crop and livestock production",
       "0812": "Horticulture",
       "0821": "Forestry",
@@ -1008,6 +1011,28 @@
       "0921": "Care of the elderly and of disabled adults",
       "0922": "Child care and youth services",
       "0923": "Social work and counselling"
+    },
+    "aliases": {
+      "0211": "Graphic design; Multimedia",
+      "0231": "Translation; Interpreting",
+      "0311": "Econometrics",
+      "0312": "International relations",
+      "0321": "Communication; Mass communication",
+      "0411": "Accounting",
+      "0413": "Business administration; MBA; Human resources; Logistics; Supply chain management; Public administration; Entrepreneurship; Management science",
+      "0512": "Biotechnology",
+      "0541": "Data analysis",
+      "0542": "Actuarial science; Data science; Business analytics",
+      "0613": "Computer science; Software engineering; Informatics; Computer systems analysis; Data science; Business analytics",
+      "0711": "Chemical engineering; Biotechnology engineering",
+      "0712": "Environmental engineering",
+      "0713": "Electrical engineering; Energy engineering",
+      "0714": "Electronic engineering; Mechatronics; Robotics",
+      "0715": "Mechanical engineering; Metallurgical engineering",
+      "0716": "Aerospace engineering; Automotive engineering; Naval engineering",
+      "0732": "Civil engineering",
+      "0788": "Industrial engineering; Engineering management; Systems engineering",
+      "0915": "Nutrition"
     }
   }
 }
