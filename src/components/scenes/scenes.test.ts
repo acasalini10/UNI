@@ -1,3 +1,4 @@
+// AI-assisted (Claude Code): tests for the university scenes: one color and one scene per university, none shared, colors far enough apart.
 /// <reference types="jest" />
 /// <reference types="node" />
 // AI-assisted (Claude Code): every university in the seed has a brand color and its own scene; no two share either (except the declared IE pair), and colors stay far enough apart to tell badges apart on Programs 3.

@@ -47,7 +47,7 @@ One row per program. Column names match the database.
 | `ranking_url` | https://… | University's page on the ranking site |
 | `careers_url` | https://… | Not used: the report link lives in `careers.csv` (see Careers sheets) |
 | `checked_on` | 2026-10-20 | |
-| `checked_by` | Valeria | |
+| `checked_by` | Alessandro | |
 
 Rankings go in a second sheet, one row per rank shown: `program` (or blank for a university-wide rank), `university`, `scope` (`university` or `program`), `area` (`national` or `world`), `ranking_name` (e.g. "QS World University Rankings"), `rank` (as published, e.g. "114" or "101–150"), `year`, `url`, `checked_on`.
 

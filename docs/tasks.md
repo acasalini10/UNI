@@ -19,7 +19,7 @@ Rule for anything not on this list:
 | [x] | Optional | Careers data: figures from official career outcome reports for 24 programs in `supabase/seed/careers.csv`, `recruiters.csv`, `regions.csv` (sheets in `data.md`); no estimates | Alessandro |
 | [x] | Optional, after the data | Careers 8: migration (`program_careers`, `program_recruiters`, `program_regions`, RLS read-only), CSV sheets + `generate-seed.mjs`, `src/data/careers.ts`, screen with every block hidden without a source, preview and "See all" on 4. Regions as a segmented bar; salary also with "≈" in the student's currency (decision 2026-11-11, `business-rules.md` §7) | Claude Code |
 | [ ] | Nov 16–17 | Production build, TestFlight install, fixes | Alessandro, with Claude Code |
-| [ ] | Nov 17 | Rehearse the live demo | Alessandro + Valeria |
+| [ ] | Nov 17 | Rehearse the live demo | Alessandro |
 
 ## In parallel (not code)
 | ✓ | Task | Who |
@@ -28,9 +28,9 @@ Rule for anything not on this list:
 | [x] | TestFlight public link for classmates (open; shared at the demo); track sign-ups and feedback rounds for the defense | Alessandro |
 | [x] | UK class values: the student's class keeps the middle of the band (First 9.5, 2:1 8.5, 2:2 7.5, Third 6.5); a program's minimum class uses the bottom of the band (9, 8, 7, 6). Changed in `grades.ts` by Claude Code (decision 2026-11-11) | Alessandro, with Claude Code |
 | [x] | Program data: costs checked on the official pages, `cost_unit` only `total` or `per_year`, `fees_total` blank when not published (0 if included); Carnegie Mellon removed, 30 programs (decision 2026-11-11). Duke and Oxford deadlines, `checked_by` and the two IE universities stay as they are (decision 2026-11-06) | Alessandro |
-| [ ] | Program data: check University College London, MSc Management (UCL pages did not open on Nov 11): tuition, `fees_total` (still 0), `cost_unit` (still the default `total`) | Valeria |
-| [x] | Spanish strings: switch `locales/es.json` from Spain forms ("máster", "nota") to Mexican Spanish | Valeria |
-| [ ] | Screenshots and store description (ES and EN) | Valeria + Alessandro |
+| [ ] | Program data: check University College London, MSc Management (UCL pages did not open on Nov 11): tuition, `fees_total` (still 0), `cost_unit` (still the default `total`) | Alessandro |
+| [x] | Spanish strings: switch `locales/es.json` from Spain forms ("máster", "nota") to Mexican Spanish | Alessandro |
+| [ ] | Screenshots and store description (ES and EN) | Alessandro |
 | [ ] | Email content@qs.com for permission to show QS rankings | Alessandro |
 | [ ] | Give every program an ISCED-F 2013 code (column in `programs.csv` and `programs`), so Programs can filter by the fields in the student's profile | Alessandro |
 
@@ -40,17 +40,17 @@ Rule for anything not on this list:
 | [ ] | Revoke the Sign in with Apple token on Delete account (before App Store release, decision 2026-11-08) | Claude Code |
 | [ ] | Google sign-in (postponed, decision 2026-11-03) | Claude Code |
 | [ ] | Settings 13: remaining rows (Language) as their features exist; AI consent switch done | Claude Code |
-| [ ] | CS50 README sections, written by me | Alessandro |
+| [x] | CS50 README sections, written by me | Alessandro |
 | [ ] | Rewrite the Nov 11 UK class change in `src/lib/grades.ts` myself before the CS50 submission (written by Claude Code for lack of time) | Alessandro |
-| [ ] | CS50 video (max 3 min) and submit50, by Dec 31 | Alessandro |
+| [x] | CS50 video (max 3 min) and form; submit50 by Dec 31 | Alessandro |
 
 ## Done
 | Date | Task | Who |
 | --- | --- | --- |
 | Oct 15 | Apple Developer Program enrolled; identity check approved | Alessandro |
-| Oct 15 | Expo account (Valeria added); Expo Go on iPhone | Alessandro |
+| Oct 15 | Expo account; Expo Go on iPhone | Alessandro |
 | Oct 15 | Next.js replaced with Expo (Expo Router, TypeScript, Jest, ESLint) | Claude Code |
-| Oct 17 | Final screen design on the canvas; one PNG per screen in `docs/screens/` | Alessandro + Valeria |
+| Oct 17 | Final screen design on the canvas; one PNG per screen in `docs/screens/` | Alessandro |
 | Oct 18 | Supabase project and client; schema with RLS; private Storage bucket for PDFs | Claude Code |
 | Oct 28 | i18n setup; upgrade to Expo SDK 58 | Claude Code |
 | Oct 29 | `src/theme.ts` (colors, fonts, spacing) | Copilot |
@@ -60,13 +60,13 @@ Rule for anything not on this list:
 | Nov 5 | Profile setup 2 and 2b (#11); first-time routing (#17) | Copilot, Claude Code |
 | Nov 5 | Settings 13 minimal: email, Log out (#16); Terms and Privacy (#24); Delete account (#28) | Claude Code |
 | Nov 5 | `eas.json`, certificates, first production builds on TestFlight internal testing (#12, #20, #21) | Alessandro, with Claude Code |
-| Nov 5 | App icon (#18) | Valeria + Alessandro |
-| Nov 5 | Privacy policy page, support email (#19) | Valeria |
+| Nov 5 | App icon (#18) | Alessandro |
+| Nov 5 | Privacy policy page, support email (#19) | Alessandro |
 | Nov 6 | Terms of service (#23); country pickers on 2 and 2b (#25) | Claude Code |
-| Nov 6 | Program data sheet: 31 programs, 24 universities, imported into Supabase (#26) | Valeria, Claude Code |
+| Nov 6 | Program data sheet: 31 programs, 24 universities, imported into Supabase (#26) | Alessandro, Claude Code |
 | Nov 8 | Delete account: Edge Function, all rows and files (#28) | Claude Code |
-| Nov 9 | Business rules closed: grade conversion, missing minimums, cost display, currency (#29) | Alessandro + Valeria |
-| Nov 9 | Every DECIDE item in `flows.md` closed | Alessandro + Valeria |
+| Nov 9 | Business rules closed: grade conversion, missing minimums, cost display, currency (#29) | Alessandro |
+| Nov 9 | Every DECIDE item in `flows.md` closed | Alessandro |
 | Nov 9 | Display currency: `profiles.currency`, picker on 2b, row on the Profile tab, `rates.json`; tested in Expo Go | Claude Code |
 | Nov 9 | `grades.ts`, `fit.ts`, `cost.ts` (#30); review and tests by Claude Code at Alessandro's request | Alessandro |
 | Nov 9 | Cost unit per program (`programs.cost_unit`, nullable `fees_total`); `getCardCost` by Alessandro (#33) | Claude Code, Alessandro |

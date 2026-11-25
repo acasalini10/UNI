@@ -42,7 +42,7 @@
 Paste into App Store Connect → TestFlight. Test Information is per language: fill English and Spanish. Update "What to Test" for every build sent to testers.
 
 Before sending a build to beta review:
-- [x] Privacy policy URL (Valeria): required in Test Information for external testing
+- [x] Privacy policy URL (Alessandro): required in Test Information for external testing
 - [ ] Feedback email (the dedicated Gmail or a support address)
 - [ ] Demo account created in the Supabase project the build uses, with profile filled in; email and password added below in App Store Connect only, never in git
 - [ ] Contact for the reviewer: first name, last name, phone, email
