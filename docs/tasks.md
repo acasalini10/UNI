@@ -42,7 +42,7 @@ Rule for anything not on this list:
 | [ ] | Settings 13: remaining rows (Language) as their features exist; AI consent switch done | Claude Code |
 | [x] | CS50 README sections, written by me | Alessandro |
 | [ ] | Rewrite the Nov 11 UK class change in `src/lib/grades.ts` myself before the CS50 submission (written by Claude Code for lack of time) | Alessandro |
-| [x] | CS50 video (max 3 min) and form; submit50 by Dec 31 | Alessandro |
+| [x] | CS50 video (max 3 min), form and submit50 (sent Nov 25) | Alessandro |
 
 ## Done
 | Date | Task | Who |
