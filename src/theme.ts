@@ -1,3 +1,4 @@
+// AI-assisted (Claude Code): design tokens (colors, fonts, spacing) taken from the design canvas.
 // UNI design tokens, extracted from the design canvas (dark navy theme).
 // Values are the ones used across the screens; spacing is rounded to a 2/4px grid.
 // Fonts: Plus Jakarta Sans via @expo-google-fonts/plus-jakarta-sans.
